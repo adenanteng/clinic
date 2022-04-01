@@ -1,0 +1,10 @@
+{
+    "countries": [
+        {
+            "id": 102,
+            "short_code": "ID",
+            "name": "Indonesia",
+            "phone_code": 62
+        }
+    ]
+}
