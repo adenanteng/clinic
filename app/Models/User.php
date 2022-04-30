@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -117,6 +118,7 @@ class User extends Authenticatable implements HasMedia
         'gender',
         'marriage',
         'religion',
+        'profession',
     ];
 
     const LANGUAGES = [
@@ -150,83 +152,9 @@ class User extends Authenticatable implements HasMedia
     ];
 
     const TIME_ZONE_ARRAY = [
-        'Asia/Almaty',
-        'Asia/Amman',
-        'Asia/Anadyr',
-        'Asia/Aqtau',
-        'Asia/Aqtobe',
-        'Asia/Ashgabat',
-        'Asia/Atyrau',
-        'Asia/Baghdad',
-        'Asia/Baku',
-        'Asia/Bangkok',
-        'Asia/Barnaul',
-        'Asia/Beirut',
-        'Asia/Bishkek',
-        'Asia/Brunei',
-        'Asia/Chita',
-        'Asia/Choibalsan',
-        'Asia/Colombo',
-        'Asia/Damascus',
-        'Asia/Dhaka',
-        'Asia/Dili',
-        'Asia/Dubai',
-        'Asia/Dushanbe',
-        'Asia/Famagusta',
-        'Asia/Gaza',
-        'Asia/Hebron',
-        'Asia/Ho_Chi_Minh',
-        'Asia/Hong_Kong',
-        'Asia/Hovd',
-        'Asia/Irkutsk',
         'Asia/Jakarta',
         'Asia/Jayapura',
-        'Asia/Jerusalem',
-        'Asia/Kabul',
-        'Asia/Kamchatka',
-        'Asia/Karachi',
-        'Asia/Kathmandu',
-        'Asia/Khandyga',
-        'Asia/Kolkata',
-        'Asia/Krasnoyarsk',
-        'Asia/Kuala_Lumpur',
-        'Asia/Kuching',
-        'Asia/Macau',
-        'Asia/Magadan',
-        'Asia/Makassar',
-        'Asia/Manila',
-        'Asia/Nicosia',
-        'Asia/Novokuznetsk',
-        'Asia/Novosibirsk',
-        'Asia/Omsk',
-        'Asia/Oral',
         'Asia/Pontianak',
-        'Asia/Pyongyang',
-        'Asia/Qatar',
-        'Asia/Qostanay', // https://bugs.chromium.org/p/chromium/issues/detail?id=928068
-        'Asia/Qyzylorda',
-        'Asia/Riyadh',
-        'Asia/Sakhalin',
-        'Asia/Samarkand',
-        'Asia/Seoul',
-        'Asia/Shanghai',
-        'Asia/Singapore',
-        'Asia/Srednekolymsk',
-        'Asia/Taipei',
-        'Asia/Tashkent',
-        'Asia/Tbilisi',
-        'Asia/Tehran',
-        'Asia/Thimphu',
-        'Asia/Tokyo',
-        'Asia/Tomsk',
-        'Asia/Ulaanbaatar',
-        'Asia/Urumqi',
-        'Asia/Ust-Nera',
-        'Asia/Vladivostok',
-        'Asia/Yakutsk',
-        'Asia/Yangon',
-        'Asia/Yekaterinburg',
-        'Asia/Yerevan',
     ];
 
     protected $with = ['media'];
@@ -245,10 +173,9 @@ class User extends Authenticatable implements HasMedia
 
     const MALE = 1;
     const FEMALE = 2;
-
     const GENDER = [
-        self::MALE   => 'Male',
-        self::FEMALE => 'Female',
+        self::MALE   => 'Laki-laki',
+        self::FEMALE => 'Perempuan',
     ];
 
     public static $rules = [
@@ -294,6 +221,9 @@ class User extends Authenticatable implements HasMedia
         return asset('web/media/avatars/male.png');
     }
 
+    /**
+     * @return string
+     */
     public function getRoleNameAttribute()
     {
         $role = $this->roles()->first();
@@ -309,6 +239,14 @@ class User extends Authenticatable implements HasMedia
     public function getFullNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->dob)->age;
     }
 
     /**

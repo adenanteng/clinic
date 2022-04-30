@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Appointment;
 use App\Models\Country;
 use App\Models\Patient;
 use App\Models\User;
@@ -50,6 +51,8 @@ class PatientRepository extends BaseRepository
     {
         $data['patientUniqueId'] = mb_strtoupper(Patient::generatePatientUniqueId());
 
+        $data['payment'] = Appointment::PAYMENT_GATEWAY;
+
         $data['countries'] = Country::toBase()->pluck('name', 'id');
         $data['bloodGroupList'] = Patient::BLOOD_GROUP_ARRAY;
         $data['nricGroupList'] = Patient::NRIC_GROUP_ARRAY;
@@ -70,15 +73,35 @@ class PatientRepository extends BaseRepository
         try {
             DB::beginTransaction();
             $addressInputArray = Arr::only($input, ['address1', 'address2', 'city_id', 'state_id', 'country_id', 'postal_code']);
-            $input['patient_unique_id'] = Str::upper($input['patient_unique_id']);
+
+            foreach ($input['payment_gateway_id'] as $index=>$gate) {
+                if ($gate == null) {
+                    unset ($input['payment_gateway_id'][$index]);
+                    unset ($input['payment_card'][$index]);
+                }
+            }
+            foreach ($input['payment_card'] as $index=>$card) {
+                if ($card == null) {
+                    unset ($input['payment_gateway_id'][$index]);
+                    unset ($input['payment_card'][$index]);
+                }
+            }
+
+            $input['payment_gateway_id'][] = '1';
+            $input['payment_card'][] = null;
+//            $paymentInputArray = Arr::only($input, ['payment_gateway_id', 'payment_card']);
+//            dd($paymentInputArray);
 
             $pieces = explode(" ", $input['full_name']);
             $input['first_name'] = $pieces[0];
             if (!empty($pieces[1])) {
                 $input['last_name'] = $pieces[1];
             }
+            unset($input['full_name']);
 
-//            $input['email'] = setEmailLowerCase($input['email']);
+//            if (!empty($input['email'])) {
+//                $input['email'] = setEmailLowerCase($input['email']);
+//            }
 
             $patientArray = Arr::only($input, ['patient_unique_id']);
             $input['type'] = User::PATIENT;
@@ -88,6 +111,13 @@ class PatientRepository extends BaseRepository
 
             $patient = $user->patient()->create($patientArray);
             $address = $patient->address()->create($addressInputArray);
+
+            foreach ($input['payment_gateway_id'] as $key=>$payment) {
+                $bayar['payment_gateway_id'] = $input['payment_gateway_id'][$key];
+                $bayar['payment_card'] = $input['payment_card'][$key];
+                $payment = $patient->payment()->create($bayar);
+            }
+
             $user->assignRole('patient');
             if (isset($input['profile']) && ! empty($input['profile'])) {
                 $patient->addMedia($input['profile'])->toMediaCollection(Patient::PROFILE, config('app.media_disc'));
@@ -110,13 +140,40 @@ class PatientRepository extends BaseRepository
      */
     public function update($input, $patient)
     {
+//        dd($input);
         try {
             DB::beginTransaction();
-
-            $addressInputArray = Arr::only($input,
-                ['address1', 'address2', 'city_id', 'state_id', 'country_id', 'postal_code']);
+            $addressInputArray = Arr::only($input, ['address1', 'address2', 'city_id', 'state_id', 'country_id', 'postal_code']);
             $input['type'] = User::PATIENT;
-            $input['email'] = setEmailLowerCase($input['email']);
+
+            foreach ($input['payment_gateway_id'] as $index=>$gate) {
+                if ($gate == null) {
+                    unset ($input['payment_gateway_id'][$index]);
+                    unset ($input['payment_card'][$index]);
+                }
+            }
+            foreach ($input['payment_card'] as $index=>$card) {
+                if ($card == null) {
+                    unset ($input['payment_gateway_id'][$index]);
+                    unset ($input['payment_card'][$index]);
+                }
+            }
+
+            $input['payment_gateway_id'][] = '1';
+            $input['payment_card'][] = null;
+
+            $pieces = explode(" ", $input['full_name']);
+            $input['first_name'] = $pieces[0];
+            if (!empty($pieces[1])) {
+                $input['last_name'] = $pieces[1];
+            }
+            unset($input['full_name']);
+
+//            if(!empty($input['email'])) {
+//                $input['email'] = setEmailLowerCase($input['email']);
+//            }
+
+//            dd($input);
             /** @var Patient $patient */
             $patient->user()->update(Arr::except($input, [
                 'address1', 'address2', 'city_id', 'state_id', 'country_id', 'postal_code', 'patient_unique_id',
@@ -131,6 +188,12 @@ class PatientRepository extends BaseRepository
                 $patient->addMedia($input['profile'])->toMediaCollection(Patient::PROFILE, config('app.media_disc'));
             }
 
+            foreach ($input['payment_gateway_id'] as $key=>$payment) {
+                $bayar['payment_gateway_id'] = $input['payment_gateway_id'][$key];
+                $bayar['payment_card'] = $input['payment_card'][$key];
+                $payment = $patient->payment()->create($bayar);
+            }
+            
             DB::commit();
 
             return true;
@@ -146,8 +209,11 @@ class PatientRepository extends BaseRepository
      */
     public function getPatientData($input)
     {
-        $patient = Patient::with(['user.address', 'appointments', 'address'])->findOrFail($input['id']);
+        $patient = Patient::where('patient_unique_id', '=', $input)->with(['user.address', 'appointments', 'address'])->first();
+//        dd(json_decode($patient));
+//        $patient = Patient::with(['user.address', 'appointments', 'address'])->whereId($input)->first();
 
         return $patient;
     }
+
 }

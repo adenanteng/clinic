@@ -16,7 +16,7 @@ class CreateLiveConsultationsTable extends Migration
         Schema::create('live_consultations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('doctor_id');
-            $table->unsignedInteger('patient_id');
+            $table->unsignedBigInteger('patient_id');
             $table->string('consultation_title');
             $table->dateTime('consultation_date');
             $table->boolean('host_video');

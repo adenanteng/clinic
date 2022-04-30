@@ -35,26 +35,20 @@
                         <div class="d-flex justify-content-start justify-content-sm-end flex-sm-row flex-column" data-kt-user-table-toolbar="base">
                             @role('patient')
                             <div class="d-flex align-items-center my-sm-0 my-1 align-self-sm-center">
-                                <a href="{{ route('patients.appointments.calendar') }}"
-                                   class="btn btn-icon btn-light me-2"><i
-                                            class="fas fa-calendar-alt fs-2"></i></a>
+                                <a href="{{ route('patients.appointments.calendar') }}" class="btn btn-icon btn-light me-2">
+                                    <i class="fas fa-calendar-alt fs-2"></i>
+                                </a>
                                 <div class="me-4 dropdown">
-                                    <a href="javascript:void(0)" class="btn btn-flex btn-light fw-bolder" id="filterBtn"
-                                       data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                       data-kt-menu-flip="top-end">
+                                    <a href="javascript:void(0)" class="btn btn-flex btn-light fw-bolder" id="filterBtn" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                     <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
-											<svg xmlns="http://www.w3.org/2000/svg"
-                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                                 viewBox="0 0 24 24" version="1.1">
-												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-													<rect x="0" y="0" width="24" height="24"/>
-													<path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z"
-                                                          fill="#000000"/>
-												</g>
-											</svg>
-										</span>{{__('messages.common.filter')}}</a>
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                         id="filter">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"/>
+                                                <path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z" fill="#000000"/>
+                                            </g>
+                                        </svg>
+                                    </span>{{__('messages.common.filter')}}</a>
+                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="filter">
                                         <div class="px-7 py-5">
                                             <div class="fs-5 text-dark fw-bolder">{{__('messages.common.filter_option')}}</div>
                                         </div>
@@ -63,8 +57,7 @@
                                             <div class="mb-10">
                                                 <label class="form-label fw-bold">{{__('messages.appointment.date')}}</label>
                                                 <div>
-                                                    <input class="form-control form-control-solid"
-                                                           placeholder="Pick date rage" id="patientAppointmentDate"/>
+                                                    <input class="form-control form-control-solid" placeholder="Pick date rage" id="patientAppointmentDate"/>
                                                 </div>
                                             </div>
                                             <div class="mb-10">
@@ -76,7 +69,7 @@
                                             <div class="mb-10">
                                                 <label class="form-label fw-bold">{{__('messages.doctor.status')}}</label>
                                                 <div>
-                                                    {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::BOOKED,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'patientAppointmentStatus']) }}
+                                                    {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::ALL,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'patientAppointmentStatus']) }}
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-end">
@@ -91,18 +84,14 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center my-sm-0 my-1 align-self-sm-center">
-                                <a type="button" class="btn btn-primary"
-                                   href="{{ route('patients.appointments.create')}}">
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                         height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
-                                        <rect fill="#000000" opacity="0.5"
-                                              transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)"
-                                              x="4" y="11" width="16" height="2" rx="1"/>
-                                    </svg>
-                                </span>{{ __('messages.appointment.add_new_appointment') }}</a>
+                                <a type="button" class="btn btn-primary" href="{{ route('patients.appointments.create')}}">
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
+                                            <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1"/>
+                                        </svg>
+                                    </span>{{ __('messages.appointment.add_new_appointment') }}
+                                </a>
                             </div>
                             @else
                                 <div class="d-flex align-items-center my-sm-0 my-1 align-self-sm-center">
@@ -147,7 +136,7 @@
                                             <div class="mb-10">
                                                 <label class="form-label fw-bold">{{__('messages.doctor.status')}}</label>
                                                 <div>
-                                                    {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::BOOKED,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'appointmentStatus']) }}
+                                                    {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::ALL,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'appointmentStatus']) }}
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-end">
@@ -161,15 +150,15 @@
                                     </div>
                                 </div>
                                 </div>
-                                <div class="d-flex align-items-center my-sm-0 my-1 align-self-sm-center">
-                                    <a type="button" class="btn btn-primary" href="{{ route('appointments.create')}}">
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
-                                            <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1"/>
-                                        </svg>
-                                    </span>{{ __('messages.appointment.add_new_appointment') }}</a>
-                                </div>
+{{--                                <div class="d-flex align-items-center my-sm-0 my-1 align-self-sm-center">--}}
+{{--                                    <a type="button" class="btn btn-primary" href="{{ route('appointments.create')}}">--}}
+{{--                                    <span class="svg-icon svg-icon-2">--}}
+{{--                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">--}}
+{{--                                            <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>--}}
+{{--                                            <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1"/>--}}
+{{--                                        </svg>--}}
+{{--                                    </span>{{ __('messages.appointment.add_new_appointment') }}</a>--}}
+{{--                                </div>--}}
                             @endrole
                         </div>
                     </div>
@@ -193,55 +182,11 @@
     </script>
     <script src="{{ mix('assets/js/custom/custom-datatable.js') }}"></script>
     @if(getLogInUser()->hasRole('patient'))
-        <script src="//js.stripe.com/v3/"></script>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
             let book = "{{ \App\Models\Appointment::ALL }}";
             let statusArray = JSON.parse('@json(\App\Models\Appointment::STATUS)');
-            let appointmentStripePaymentUrl = '{{ url('appointment-stripe-charge') }}';
-            let stripe = Stripe('{{ config('services.stripe.key') }}');
             let pending = "{{\App\Models\Appointment::PAYMENT_TYPE[1]}}";
             let paid = "{{\App\Models\Appointment::PAYMENT_TYPE[2]}}";
-            let stripeMethod = "{{\App\Models\Appointment::STRIPE}}";
-            let paystackMethod = "{{\App\Models\Appointment::PAYSTACK}}";
-            let paypalMethod = "{{\App\Models\Appointment::PAYPAL}}";
-            let allPaymentCount = "{{\App\Models\Appointment::ALL_PAYMENT}}";
-            let razorpayMethod = "{{ \App\Models\Appointment::RAZORPAY }}";
-            let authorizeMethod = "{{ \App\Models\Appointment::AUTHORIZE }}";
-            let paytmMethod = "{{ \App\Models\Appointment::PAYTM }}";
-            let options = {
-                'key': "{{ config('payments.razorpay.key') }}",
-                'amount': 0, //  100 refers to 1
-                'currency': 'INR',
-                'name': "{{getAppName()}}",
-                'order_id': '',
-                'description': '',
-                'image': '{{ asset(getAppLogo()) }}', // logo here
-                'callback_url': "{{ route('razorpay.success') }}",
-                'prefill': {
-                    'email': '', // recipient email here
-                    'name': '', // recipient name here
-                    'contact': '', // recipient phone here
-                    'appointmentID': '', // appointmentID here
-                },
-                'readonly': {
-                    'name': 'true',
-                    'email': 'true',
-                    'contact': 'true',
-                },
-                'theme': {
-                    'color': '#4FB281',
-                },
-                'modal': {
-                    'ondismiss': function () {
-                        $('#paymentGatewayModal').modal('hide');
-                        displayErrorMessage('Payment not completed.');
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-                    },
-                },
-            }
         </script>
         <script src="{{mix('assets/js/appointments/patient-appointments.js')}}"></script>
     @else

@@ -46,11 +46,9 @@ mix.babel('node_modules/intl-tel-input/build/js/utils.js',
 mix.sass('resources/assets/scss/style.scss', 'assets/css/style.css').
     sass('resources/assets/scss/custom.scss', 'assets/css/custom.css').
     sass('resources/assets/scss/app.scss', 'assets/css/app.css').
-    sass('resources/assets/front/scss/front-custom.scss',
-        'assets/front/css/front-custom.css').
-    sass('resources/assets/scss/custom-dark-mode.scss',
-        'assets/css/custom-dark-mode.css').
-    version();
+    sass('resources/assets/front/scss/front-custom.scss', 'assets/front/css/front-custom.css').
+    sass('resources/assets/scss/custom-dark-mode.scss', 'assets/css/custom-dark-mode.css')
+    .version();
 
 mix.copy('node_modules/fullcalendar/main.min.css', 'public/assets/css/plugins/fullcalendar.bundle.css');
 mix.copy('node_modules/flatpickr/dist/flatpickr.css', 'public/assets/css/plugins/flatpickr.css');
@@ -190,4 +188,11 @@ mix.js('resources/assets/js/custom/custom.js',
         'public/assets/js/custom/create-account.js').
     js('resources/assets/js/live_consultations/live_consultations.js',
         'public/assets/js/live_consultations/live_consultations.js').
+    js('resources/assets/js/pharmacys/pharmacys.js',
+        'public/assets/js/pharmacys/pharmacys.js').
+    js('resources/assets/js/pharmacys/show-page.js',
+        'public/assets/js/pharmacys/show-page.js').
+    // js('resources/js/app.js',
+    //     'public/assets/js/app.js').
+
     version();

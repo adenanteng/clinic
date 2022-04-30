@@ -57,7 +57,7 @@
                             <i class="far fa-bell"></i>
                             @if(count($notifications) != 0)
                                 <span class="badge navbar-badge bg-primary notification-count notification-message-counter rounded-circle position-absolute translate-middle d-flex justify-content-center align-items-center"
-                                      id="counter">{{ count($notifications) }}</span> 
+                                      id="counter">{{ count($notifications) }}</span>
                             @endif
                         </div>
                         <!--begin::Menu-->
@@ -70,8 +70,8 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="dropdown-list-content dropdown-list-icons force-scroll"> 
+
+                            <div class="dropdown-list-content dropdown-list-icons force-scroll">
                                 @if(count($notifications) > 0)
                                     @foreach($notifications as $notification)
                                         <a href="#" data-id="{{ $notification->id }}"
@@ -97,7 +97,7 @@
                                     <div class="empty-state fs-6 text-gray-800 fw-bold text-center mt-5"
                                          data-height="400">
                                         <p>{{ __('messages.notification.you_don`t_have_any_new_notification') }}</p>
-                                    </div> 
+                                    </div>
                                 @endif
                                     <div class="empty-state fs-6 text-gray-800 fw-bold text-center mt-5 d-none" data-height="400">
                                         <p>{{ __('messages.notification.you_don`t_have_any_new_notification') }}</p>
@@ -109,7 +109,7 @@
                     </div>
                     <!--end::Notifications-->
                     @endif
-                    
+
                     <!--begin::User-->
                     @php $styleCss = 'style'; @endphp
                     <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">

@@ -27,7 +27,7 @@
                         <div class="row mb-7">
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.appointment.patient') }}</label>
                             <div class="col-lg-8 fv-row">
-                                <a href="{{route('patients.show',$appointment['data']->patient->id)}}"
+                                <a href="{{route('patients.show',$appointment['data']->patient->patient_unique_id)}}"
                                    class="col-lg-8 fv-row">
                                     <span class="fw-bolder fs-6 text-gray-800 text-hover-primary">{{$appointment['data']->patient->user->full_name}}</span>
                                 </a>

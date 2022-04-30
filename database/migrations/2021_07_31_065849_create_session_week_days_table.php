@@ -20,8 +20,8 @@ class CreateSessionWeekDaysTable extends Migration
             $table->string('day_of_week');
             $table->string('start_time');
             $table->string('end_time');
-            $table->string('start_time_type');
-            $table->string('end_time_type');
+            $table->string('start_time_type')->nullable();
+            $table->string('end_time_type')->nullable();
             $table->timestamps();
         });
     }

@@ -139,7 +139,7 @@
 {{--        </li>--}}
 {{--        <li class="nav-item ms-auto">--}}
 {{--            @role('doctor')--}}
-{{--            <a href="{{route('doctors.appointments')}}" class="btn btn-primary ps-7" data-kt-menu-trigger="click"--}}
+{{--            <a href="{{route('appointments')}}" class="btn btn-primary ps-7" data-kt-menu-trigger="click"--}}
 {{--               data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"--}}
 {{--               data-kt-menu-flip="bottom">{{__('messages.common.back')}}</a>--}}
 {{--            @else--}}

@@ -3,8 +3,8 @@
      data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
      data-kt-drawer-toggle="#kt_aside_mobile_toggle">
     <div class="aside-logo flex-column-auto h-75px px-2" id="kt_aside_logo">
-        <a href="{{ url('/') }}" class="d-flex align-items-center">
-            <img alt="Logo" src="{{ asset(getAppLogo()) }}" class="h-60px w-90px logo me-5">
+        <a href="{{ url('/') }}" class="d-flex align-items-center p-5">
+            <img alt="Logo" src="{{ asset(getAppLogo()) }}" class="h-40px w-auto logo me-5">
             <span class="text-white logo">{{ getAppName() }}</span>
         </a>
         <div id="kt_aside_toggle"

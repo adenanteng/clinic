@@ -117,5 +117,5 @@ class Doctor extends Model
     {
         return $this->hasMany(Review::class);
     }
-    
+
 }

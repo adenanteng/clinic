@@ -1,3 +1,5 @@
+@import '/node_modules/tom-select/dist/css/tom-select.default.css';
+
 .time-slot {
     border-radius: 30px;
     margin-bottom: 10px;
@@ -462,7 +464,7 @@
         line-height: 0;
         border: 1px solid #fff;
         padding: 0 !important;
-        
+
         @media (max-width: 768px) {
             top: 5px !important;
             right: -9px !important;

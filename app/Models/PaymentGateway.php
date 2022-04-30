@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\PaymentGateway
@@ -26,11 +27,20 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentGateway extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'payment_gateways';
-    
+
     protected $fillable =[
       'payment_gateway_id',
-      'payment_gateway',
+      'payment_category_id',
+      'payment_name',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function payment_categories()
+    {
+        return $this->belongsTo(PaymentCategory::class, 'payment_category_id');
+    }
 }

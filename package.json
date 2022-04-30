@@ -11,25 +11,29 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.1.0",
+        "bootstrap-daterangepicker": "^3.1.0",
+        "flatpickr": "^4.6.9",
+        "fullcalendar": "^5.8.0",
+        "handlebars": "^4.7.7",
+        "izitoast": "^1.4.0",
+        "jsrender": "^1.0.5",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.2.1",
         "postcss-import": "^12.0.1",
-        "handlebars": "^4.7.7",
-        "jsrender": "^1.0.5",
-        "izitoast": "^1.4.0",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.36.0",
-        "sass-loader": "^12.1.0",
-        "fullcalendar": "^5.8.0",
-        "flatpickr": "^4.6.9",
-        "bootstrap-daterangepicker": "^3.1.0"
+        "sass-loader": "^12.1.0"
     },
     "dependencies": {
+        "@alpinejs/persist": "^3.10.2",
+        "alpinejs": "^3.10.2",
+        "alpinejs-component": "^1.1.2",
         "apexcharts": "^3.29.0",
         "bootstrap-datepicker": "^1.9.0",
         "datatables": "^1.10.18",
         "intl-tel-input": "^17.0.13",
-        "jquery": "^3.2.1"
+        "jquery": "^3.2.1",
+        "tom-select": "^2.0.1"
     }
 }

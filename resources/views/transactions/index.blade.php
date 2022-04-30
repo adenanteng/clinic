@@ -27,19 +27,15 @@
     <script src="{{ mix('assets/js/custom/custom-datatable.js') }}"></script>
     <script>
         let manuallyMethod = "{{\App\Models\Appointment::MANUALLY}}";
-        let stripeMethod = "{{\App\Models\Appointment::STRIPE}}";
-        let paystckMethod = "{{\App\Models\Appointment::PAYSTACK}}";
-        let paypalMethod = "{{\App\Models\Appointment::PAYPAL}}";
-        let razorpayMethod = "{{\App\Models\Appointment::RAZORPAY}}";
-        let authorizeMethod = "{{ \App\Models\Appointment::AUTHORIZE }}";
-        let paytmMethod = "{{ \App\Models\Appointment::PAYTM }}";
+        let stripeMethod = "{{\App\Models\Appointment::BPJS_MANDIRI}}";
+        let paystckMethod = "{{\App\Models\Appointment::BPJS_KETENAGAKERJAAN}}";
+        let paypalMethod = "{{\App\Models\Appointment::JASA_RAHARJA}}";
+        let razorpayMethod = "{{\App\Models\Appointment::ASTRA_LIFE}}";
         let manually = "{{\App\Models\Appointment::PAYMENT_METHOD[1]}}"
         let stripe = "{{\App\Models\Appointment::PAYMENT_METHOD[2]}}";
         let paystck = "{{\App\Models\Appointment::PAYMENT_METHOD[3]}}";
         let paypal = "{{\App\Models\Appointment::PAYMENT_METHOD[4]}}";
         let razorpay = "{{\App\Models\Appointment::PAYMENT_METHOD[5]}}";
-        let authorize = "{{\App\Models\Appointment::PAYMENT_METHOD[6]}}";
-        let paytm = "{{\App\Models\Appointment::PAYMENT_METHOD[7]}}";
     </script>
     @if(getLogInUser()->hasRole('patient'))
         <script src="{{mix('assets/js/transactions/patient-transactions.js')}}"></script>

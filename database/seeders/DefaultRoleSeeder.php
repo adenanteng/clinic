@@ -87,11 +87,10 @@ class DefaultRoleSeeder extends Seeder
 //            $doctor->assignRole($doctorRole);
 //        }
 //
-//
 //        $patientRole = Role::whereName('patient')->first();
-//        $doctor = User::whereEmail('patient@clinic.com')->first();
-//        if ($doctor) {
-//            $doctor->assignRole($patientRole);
+//        $patient = User::whereEmail('patient@clinic.com')->first();
+//        if ($patient) {
+//            $patient->assignRole($patientRole);
 //        }
     }
 }

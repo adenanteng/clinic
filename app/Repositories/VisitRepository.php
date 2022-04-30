@@ -3,12 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Doctor;
+use App\Models\Pharmacy;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\Visit;
 use App\Models\Patient;
+use App\Models\VisitPrescription;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EncounterRepository
@@ -77,7 +82,31 @@ class VisitRepository extends BaseRepository
     public function getShowData($id)
     {
         return Visit::with([
-            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'prescriptions',
-        ])->findOrFail($id);
+            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'prescriptions.pharmacys.procurements',
+        ])->where('appointment_id', $id);
+    }
+
+    /**
+     * @return array
+     */
+    public function getSoapData()
+    {
+        $soap['prognosis'] = Visit::PROGNOSIS;
+        $soap['awareness'] = Visit::AWARENESS;
+        $soap['staff'] = User::where('type', User::DOCTOR)->orWhere('type', User::STAFF)->get()->pluck('full_name', 'id');
+
+        return $soap;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrescriptionData()
+    {
+        $prescription['drug'] = Pharmacy::all()->pluck('name', 'id');
+
+        return $prescription;
     }
 }
+
+

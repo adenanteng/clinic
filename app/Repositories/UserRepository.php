@@ -2,22 +2,18 @@
 
 namespace App\Repositories;
 
-use App\DataTable\UserDataTable;
+use App\DataTables\UserDataTable;
 use App\Models\Appointment;
 use App\Models\Country;
 use App\Models\Doctor;
 use App\Models\DoctorSession;
 use App\Models\Patient;
-use App\Models\Permission;
 use App\Models\Qualification;
 use App\Models\Specialization;
 use App\Models\User;
 use Arr;
 use Carbon\Carbon;
 use Hash;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;

@@ -47,9 +47,11 @@ class Visit extends Model
     public $table = 'visits';
 
     public $fillable = [
-        'visit_date',
+        'date',
         'doctor_id',
         'patient_id',
+        'service_id',
+        'appointment_id',
         'description',
     ];
 
@@ -59,10 +61,11 @@ class Visit extends Model
      * @var array
      */
     protected $casts = [
-        'visit_date'  => 'string',
+//        'date'  => 'string',
         'doctor'      => 'integer',
         'patient'     => 'integer',
         'description' => 'string',
+//        'appointment_id' => 'string',
     ];
 
     /**
@@ -71,9 +74,34 @@ class Visit extends Model
      * @var array
      */
     public static $rules = [
-        'visit_date' => 'required',
+//        'date' => 'required',
         'doctor_id'  => 'required',
         'patient_id' => 'required',
+//        'appointment_id' => 'required',
+    ];
+
+    const EXCELLENT = 1;
+    const GOOD = 2;
+    const FAIR = 3;
+    const POOR = 4;
+    const HOPELESS = 5;
+    const PROGNOSIS = [
+        self::EXCELLENT => 'Bagus',
+        self::GOOD  => 'Baik',
+        self::FAIR  => 'Sedang',
+        self::POOR  => 'Buruk',
+        self::HOPELESS    => 'Tidak ada harapan',
+    ];
+
+    const COMPOS_MENTIS = 1;
+    const SOMNOLENCE = 2;
+    const SOPOR = 3;
+    const COMA = 4;
+    const AWARENESS = [
+        self::COMPOS_MENTIS => 'Compos Mentis',
+        self::SOMNOLENCE => 'Somnolence',
+        self::SOPOR => 'Sopor',
+        self::COMA => 'Coma',
     ];
 
     /**
@@ -90,6 +118,14 @@ class Visit extends Model
     public function visitPatient()
     {
         return $this->belongsTo(Patient::class, 'patient_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function visitAppointment()
+    {
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
     /**

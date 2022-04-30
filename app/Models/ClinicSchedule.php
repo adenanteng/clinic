@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClinicSchedule extends Model
 {
     use HasFactory;
-    
+
      protected $table = 'clinic_schedules';
 
     const Mon = 1;
@@ -40,23 +40,23 @@ class ClinicSchedule extends Model
     const Sun = 0;
 
     const WEEKDAY = [
-        self::Mon => 'MON',
-        self::Tue => 'TUE',
-        self::Wed => 'WED',
-        self::Thu => 'THU',
-        self::Fri => 'FRI',
-        self::Sat => 'SAT',
-        self::Sun => 'SUN',
+        self::Mon => 'SEN',
+        self::Tue => 'SEL',
+        self::Wed => 'RAB',
+        self::Thu => 'KAM',
+        self::Fri => 'JUM',
+        self::Sat => 'SAB',
+        self::Sun => 'MIN',
     ];
 
     const WEEKDAY_FULL_NAME = [
-        self::Mon => 'Monday',
-        self::Tue => 'Tuesday',
-        self::Wed => 'Wednesday',
-        self::Thu => 'Thursday',
-        self::Fri => 'Friday',
-        self::Sat => 'Saturday',
-        self::Sun => 'Sunday',
+        self::Mon => 'Senin',
+        self::Tue => 'Selasa',
+        self::Wed => 'Rabu',
+        self::Thu => 'Kamis',
+        self::Fri => 'Jumat',
+        self::Sat => 'Sabtu',
+        self::Sun => 'Minggu',
     ];
 
     public $fillable = [

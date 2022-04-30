@@ -32,6 +32,7 @@ return [
     'login'                      => 'Login',
     'register'                   => 'Register',
     'visits'                     => 'Visits',
+    'pharmacys'                  => 'Pharmacys',
     'front_cms'                  => 'Front CMS',
     'sliders'                    => 'Sliders',
     'front_services'             => 'Front Services',
@@ -55,6 +56,7 @@ return [
     'reviews'                    => 'Reviews',
     'google_calendar'            => 'Google Calendar',
     'live_consultations'         => 'Live Consultations',
+    'command'                   => 'command',
 
     'web' => [
         'emergency_help'                                                                                                                                   => 'Emergency Help',
@@ -281,7 +283,7 @@ return [
         'profession'          => 'Profession',
         'nric_type'           => 'Identity Card Type',
         'nric_id'             => 'Identity Card No',
-        'poly'                => 'Poliklinik',
+        'payment_information' => 'Payment Information',
         'payment_no'          => 'Payment No',
     ],
 
@@ -453,6 +455,8 @@ return [
         'payment_status'        => 'Payment Status',
         'Select_payment_method' => 'Select payment method',
         'payment_method'        => 'Payment Method',
+        'opd'                   => 'Rawat Jalan',
+        'ipd'                   => 'Rawat Inap',
     ],
 
     'doctor_appointment' => [
@@ -501,11 +505,40 @@ return [
         'notes'         => 'Notes',
         'visit_detail'  => 'Visit Detail',
         'prescriptions' => 'Prescriptions',
+        'billing'       => 'Billing',
+        'history'       => 'Riwayat',
+        'Document'      => 'Dokumen Penunjang',
+
+        'observation_name' => 'Observation Name',
+        'symptoms' => 'Symptoms',
+        'anamnesis' => 'anamnesis',
+        'prognosis' => 'prognosis',
+        'temperature' => 'temperature',
+        'awareness' => 'awareness',
+        'height' => 'height',
+        'weight' => 'weight',
+        'systole' => 'systole',
+        'diastole' => 'diastole',
+        'respiratory_rate' => 'respiratory Rate',
+        'heart_rate' => 'heart Rate',
+        'subjective' => 'Subjective',
+        'objective' => 'Objective',
+        'assessment' => 'Assessment',
+        'plan' => 'plan',
+        'staff_id' => 'staff',
+
+
+
 
     ],
 
     'prescription' => [
         'name'      => 'Name',
+        'frequency' => 'Frequency',
+        'duration'  => 'Duration',
+    ],
+
+    'pharmacy' => [
         'frequency' => 'Frequency',
         'duration'  => 'Duration',
     ],

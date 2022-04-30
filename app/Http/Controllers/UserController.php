@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTable\UserDataTable;
+use App\DataTables\UserDataTable;
 use App\Http\Requests\CreateQualificationRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateChangePasswordRequest;

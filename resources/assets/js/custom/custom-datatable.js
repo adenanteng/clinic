@@ -4,6 +4,7 @@ window.handleSearchDatatable = (tbl) => {
     $('input[name="search"][data-datatable-filter="search"]').
         unbind().
         bind('input', function (e) {
+            console.log(this.value)
             if (this.value.length > 0 || e.keyCode == 13) {
                 tbl.search(this.value).draw();
             }

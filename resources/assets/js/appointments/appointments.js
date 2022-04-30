@@ -16,15 +16,11 @@ $(document).ready(function () {
         endDate: end,
         ranges: {
             'Today': [moment(), moment()],
-            'Yesterday': [
-                moment().subtract(1, 'days'),
-                moment().subtract(1, 'days')],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
             'This Week': [moment().startOf('week'), moment().endOf('week')],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [
-                moment().subtract(1, 'month').startOf('month'),
-                moment().subtract(1, 'month').endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
         },
     }, cb);
 
@@ -44,12 +40,8 @@ $(document).ready(function () {
         ajax: {
             url: url,
             data: function (data) {
-                data.status = $('#appointmentStatus').
-                    find('option:selected').
-                    val();
-                data.payment_type = $('#paymentStatus').
-                    find('option:selected').
-                    val();
+                data.status = $('#appointmentStatus').find('option:selected').val();
+                data.payment_type = $('#paymentStatus').find('option:selected').val();
                 data.filter_date = filterDate.val();
             },
         },
@@ -57,11 +49,15 @@ $(document).ready(function () {
             {
                 'targets': [0, 1],
                 'width': '25%',
+                'searchable': true,
+                'orderable': true,
             },
             {
                 'targets': [2],
                 'width': '25%',
                 'className': 'text-center',
+                'searchable': true,
+                'orderable': true,
             },
             {
                 'targets': [3],
@@ -83,26 +79,18 @@ $(document).ready(function () {
         columns: [
             {
                 data: function (row) {
-                    let reviewHtmlData  = getAvgReviewHtmlData(row.doctor.reviews)
-                    let url = !isEmpty(userRole) ? route(
-                        'patients.appointments.show', row.id) : route(
-                        'appointments.show', row.id);
+                    let url = !isEmpty(userRole) ? route('patients.appointments.show', row.id) : route('appointments.show', row.id);
                     return `<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                         <div class="symbol-label">
-                            <img src="${row.doctor.user.profile_image}" alt=""
-                                 class="w-100 object-cover">
+                            <img src="${row.doctor.user.profile_image}" alt="" class="w-100 object-cover">
                         </div>
                     </div>
                     <div class="d-inline-block align-top">
                         <div class="d-inline-block align-self-center d-flex">
-                            <a href="${(adminRole == true) ? route('doctors.show',
-                        row.doctor.id) : url}"
-                           class="text-primary-800 mb-1 d-inline-block align-self-center">${row.doctor.user.full_name}</a>
-                                <div class="star-ratings d-inline-block align-self-center ms-2">
-                                     ${reviewHtmlData}
-                                </div>
+                            <a href="${(adminRole == true) ? route('doctors.show', row.doctor.id) : url}" class="text-primary-800 mb-1 d-inline-block align-self-center">
+                                ${row.doctor.user.full_name}</a>
                         </div>
-                        <span class="d-block text-muted fw-bold">${row.doctor.user.email}</span>
+                        <span class="d-block text-muted fw-bold">${row.services.name}</span>
                     </div>`;
                 },
                 name: 'doctor.user.full_name',
@@ -121,12 +109,12 @@ $(document).ready(function () {
                         </a>
                     </div>
                     <div class="d-inline-block align-top">
-                        <a href="${(adminRole == true) ? route('patients.show',
-                        row.patient.id) : url}"
+                        <a href="${(adminRole == true) ? route('patients.show', row.patient.id) : url}"
                            class="text-primary-800 mb-1 d-block">${row.patient.user.full_name}</a>
-                           <span class="d-block text-muted fw-bold">${row.patient.user.email}</span>
+                           <span class="d-block text-muted fw-bold">${row.patient.patient_unique_id}</span>
                     </div>`;
                 },
+
                 name: 'patient.user.full_name',
             },
             {
@@ -163,8 +151,8 @@ $(document).ready(function () {
                             <div class="w-150px d-flex align-items-center">
                             <span class="slot-color-dot bg-${colours[status]} rounded-circle me-2"></span>
                             <select class="form-select-sm form-select-solid form-select status-change appointment-status" data-id="${row.id}">
-                                <option class="booked" disabled value="${book}" ${row.status == book ? 'selected' : ''}>Booked</option>
-                                <option value="${checkIn}" ${row.status == checkIn ? 'selected' : ''} ${row.status == checkIn ? 'selected' : ''} ${(row.status == cancel || row.status == checkOut) ? 'disabled' : ''}>Check In</option>
+                                <option class="booked" value="${book}" ${row.status == book ? 'selected' : ''} ${( row.status == checkOut) ? 'disabled' : ''} >Booked</option>
+                                <option value="${checkIn}" ${row.status == checkIn ? 'selected' : ''} ${(row.status == book || row.status == cancel || row.status == checkOut) ? 'disabled' : ''}>Check In</option>
                                 <option value="${checkOut}" ${row.status == checkOut ? 'selected' : ''} ${(row.status == cancel || row.status == book) ? 'disabled' : ''}>Check Out</option>
                                 <option value="${cancel}" ${row.status == cancel ? 'selected' : ''} ${row.status == checkIn ? 'disabled' : ''} ${row.status == checkOut ? 'disabled' : ''}>Cancelled</option>
                             </select>
@@ -174,17 +162,20 @@ $(document).ready(function () {
             },
             {
                 data: function (row) {
-                    let data = [
-                        {
-                            'id': row.id,
-                            'role': userRole,
-                            'showUrl': route('appointments.show', row.id),
-                        },
-                    ];
+                        let data = [
+                            {
+                                'id': row.id,
+                                'role': userRole,
+                                'showUrl': route('appointments.show', row.id),
+                                'visitUrl': route('visits.show', row.appointment_unique_id)
+                            },
+                        ];
 
+                    console.log(row)
                     return prepareTemplateRender('#appointmentsTemplate', data);
                 }, name: 'id',
             },
+
         ],
         'fnInitComplete': function () {
             $('#appointmentStatus').change(function () {

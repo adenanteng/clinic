@@ -15,10 +15,33 @@ class CreateVisitObservationsTable extends Migration
     {
         Schema::create('visit_observations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('observation_name');
             $table->unsignedBigInteger('visit_id');
-            $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('observation_name');
+//            subjective
+            $table->string('symptoms');
+            $table->string('anamnesis');
+            $table->string('prognosis');
+//            objective
+            $table->unsignedInteger('temperature');
+            $table->unsignedInteger('awareness');
+            $table->unsignedInteger('height');
+            $table->unsignedInteger('weight');
+            $table->unsignedInteger('systole');
+            $table->unsignedInteger('diastole');
+            $table->unsignedInteger('respiratory_rate');
+            $table->unsignedInteger('heart_rate');
+//            assessment
+            $table->string('assessment');
+//            plan
+            $table->string('plan');
+
+            $table->unsignedBigInteger('create_user_id');
+            $table->unsignedBigInteger('update_user_id');
+
             $table->timestamps();
+
+            $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');
+//            $table->foreign('staff_id')->references('id')->on('doctors')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -96,4 +96,12 @@ class Kernel extends HttpKernel
         'checkImpersonateUser' => checkImpersonateUser::class,
         'setLanguage'          => SetLanguage::class,
     ];
+
+    protected function bootstrappers()
+    {
+        return array_merge(
+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
+            parent::bootstrappers(),
+        );
+    }
 }

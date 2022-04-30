@@ -16,16 +16,18 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->string('visit_date');
+            $table->string('date');
             $table->unsignedBigInteger('doctor_id');
-            $table->unsignedInteger('patient_id');
-            $table->integer('payment_method');
+            $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('service_id');
+            $table->string('appointment_id')->unique();
             $table->text('description')->nullable();
             $table->timestamps();
 
+            $table->foreign('appointment_id')->references('appointment_unique_id')->on('appointments')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
-
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

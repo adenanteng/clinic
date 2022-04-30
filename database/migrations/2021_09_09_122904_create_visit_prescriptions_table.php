@@ -16,13 +16,16 @@ class CreateVisitPrescriptionsTable extends Migration
         Schema::create('visit_prescriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('visit_id');
-            $table->string('prescription_name');
-            $table->string('frequency');
-            $table->string('duration');
-            $table->text('description');
+//            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('drug_id');
+            $table->unsignedInteger('frequency');
+            $table->unsignedInteger('duration');
+            $table->text('description')->nullable();
+            $table->unsignedInteger('status')->default(1);
             $table->timestamps();
 
             $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('drug_id')->references('id')->on('pharmacies')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

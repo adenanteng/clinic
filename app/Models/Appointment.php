@@ -6,6 +6,7 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -72,8 +73,8 @@ class Appointment extends Model
         'service_id',
         'payable_amount',
         'appointment_unique_id',
-        'from_time_type',
-        'to_time_type',
+//        'from_time_type',
+//        'to_time_type',
         'payment_type',
         'payment_method',
     ];
@@ -83,7 +84,6 @@ class Appointment extends Model
     const CHECK_IN = 2;
     const CHECK_OUT = 3;
     const CANCELLED = 4;
-
     const STATUS = [
         self::BOOKED    => 'Booked',
         self::CHECK_IN  => 'Check In',
@@ -122,41 +122,43 @@ class Appointment extends Model
         self::PAID        => 'Paid',
     ];
 
+    const TUNAI = 1;
+    const BPJS = 2;
+    const ASURANSI = 3;
+    const REKANAN = 4;
+    const PAYMENT_CATEGORY = [
+        self::TUNAI  => 'Tunai',
+        self::BPJS    => 'BPJS',
+        self::ASURANSI  => 'Asuransi',
+        self::REKANAN    => 'Rekanan',
+    ];
+
     const MANUALLY = 1;
-    const STRIPE = 2;
-    const PAYSTACK = 3;
-    const PAYPAL = 4;
-    const RAZORPAY = 5;
-    const AUTHORIZE = 6;
-    const PAYTM = 7;
+    const BPJS_MANDIRI = 2;
+    const BPJS_KETENAGAKERJAAN = 3;
+    const JASA_RAHARJA = 4;
+    const ASTRA_LIFE = 5;
     const PAYMENT_METHOD = [
-        self::MANUALLY  => 'Manually',
-        self::STRIPE    => 'Stripe',
-        self::PAYSTACK  => 'Paystack',
-        self::PAYPAL    => 'Paypal',
-        self::RAZORPAY  => 'Razorpay',
-        self::AUTHORIZE => 'Authorize',
-        self::PAYTM     => 'Paytm',
+        self::MANUALLY        => 'Manual',
+        self::BPJS_MANDIRI  => 'BPJS Mandiri',
+        self::BPJS_KETENAGAKERJAAN  => 'BPJS Ketenagakerjaan',
+        self::JASA_RAHARJA  => 'Jasa Raharja',
+        self::ASTRA_LIFE    => 'Astra Life',
     ];
 
     const PAYMENT_GATEWAY = [
-        self::STRIPE   => 'Stripe',
-        self::PAYSTACK => 'Paystack',
-        self::PAYPAL => 'Paypal',
-        self::RAZORPAY => 'Razorpay',
-        self::AUTHORIZE => 'Authorize',
-        self::PAYTM     => 'Paytm',
+        self::BPJS_MANDIRI  => 'BPJS Mandiri',
+        self::BPJS_KETENAGAKERJAAN  => 'BPJS Ketenagakerjaan',
+        self::JASA_RAHARJA  => 'Jasa Raharja',
+        self::ASTRA_LIFE    => 'Astra Life',
     ];
 
-    const UMUM = 1;
-    const KEBIDANAN = 2;
-    const GIGI = 3;
-    const KIA = 4;
-    const POLI_GROUP = [
-        self::UMUM       => 'Poli Umum',
-        self::KEBIDANAN    => 'Poli Kebidanan',
-        self::GIGI  => 'Poli Gigi',
-        self::KIA => 'Poli KIA',
+    const PATIENT_NEW_CHARGE = 20000;
+    const PATIENT_OLD_CHARGE = 5000;
+    const ODP_CHARGE = [
+        self::PATIENT_NEW_CHARGE  => 'Adm. pasien baru',
+        self::PATIENT_OLD_CHARGE  => 'Adm. pasien lama',
+
     ];
 
     /**
@@ -180,7 +182,7 @@ class Appointment extends Model
      */
     public static function generateAppointmentUniqueId()
     {
-        $appointmentUniqueId = Str::random(6);
+        $appointmentUniqueId = 'med' . Str::random(6);
         while (true) {
             $isExist = self::whereAppointmentUniqueId($appointmentUniqueId)->exists();
             if ($isExist) {
@@ -235,5 +237,14 @@ class Appointment extends Model
     public function transaction()
     {
         return $this->hasOne(Transaction::class, 'appointment_id', 'appointment_unique_id');
+    }
+
+    /**
+     *
+     * @return HasOne
+     */
+    public function visit()
+    {
+        return $this->hasOne(Visit::class, 'appointment_id');
     }
 }

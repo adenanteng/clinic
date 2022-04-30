@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AuthorizePaymentController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClinicScheduleController;
+use App\Http\Controllers\CommandController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\PaystackController;
 use App\Http\Controllers\PayTMController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceCategoryController;
@@ -35,9 +37,12 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+//use RuntimeException;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,22 +92,16 @@ Route::get('paystack-payment-success',
     [PaystackController::class, 'handleGatewayCallback'])->name('paystack.success');
 
 // paypal routes
-Route::get('/paypal-payment', function () {
-    return view('payments.paypal.index');
-})->name('paypal.index');
-
-//RazorPay Route
-Route::post('razorpay-onboard', [RazorpayController::class, 'onBoard'])->name('razorpay.init');
-Route::post('razorpay-payment-success', [RazorpayController::class, 'paymentSuccess'])
-    ->name('razorpay.success');
-Route::post('razorpay-payment-failed', [RazorpayController::class, 'paymentFailed'])
-    ->name('razorpay.failed');
-Route::get('razorpay-payment-webhook', [RazorpayController::class, 'paymentSuccessWebHook'])
-    ->name('razorpay.webhook');
-
+Route::get('/paypal-payment', function () {return view('payments.paypal.index');})->name('paypal.index');
 Route::get('paypal-onboard', [PaypalController::class, 'onBoard'])->name('paypal.init');
 Route::get('paypal-payment-success', [PaypalController::class, 'success'])->name('paypal.success');
 Route::get('paypal-payment-failed', [PaypalController::class, 'failed'])->name('paypal.failed');
+
+//RazorPay Route
+Route::post('razorpay-onboard', [RazorpayController::class, 'onBoard'])->name('razorpay.init');
+Route::post('razorpay-payment-success', [RazorpayController::class, 'paymentSuccess'])->name('razorpay.success');
+Route::post('razorpay-payment-failed', [RazorpayController::class, 'paymentFailed'])->name('razorpay.failed');
+Route::get('razorpay-payment-webhook', [RazorpayController::class, 'paymentSuccessWebHook'])->name('razorpay.webhook');
 
 // Authorize Route
 Route::get('authorize-onboard', [AuthorizePaymentController::class, 'onboard'])->name('authorize.init');
@@ -143,14 +142,20 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus']], function () {
 
 Route::get('cancel-appointment/{patient_id}/{appointment_unique_id}',[AppointmentController::class, 'cancelAppointment'])->name('cancelAppointment');
 
-Route::group(['prefix'     => 'admin',
-              'middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersonateUser', 'permission:manage_admin_dashboard',],
-],
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersonateUser', 'permission:manage_admin_dashboard',],],
     function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    });
+    }
+);
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersonateUser']], function () {
+Route::group(['prefix' => 'doctors', 'as' => 'doctors.', 'middleware' => ['auth', 'xss', 'checkUserStatus', 'role:doctor'],],
+    function () {
+        //doctor dashboard route
+        Route::get('/dashboard', [DashboardController::class, 'doctorDashboard'])->name('dashboard');
+    }
+);
+
+Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersonateUser']], function () {
     //Impersonate
     Route::impersonate();
     Route::get('impersonate/{id}',[UserController::class, 'impersonate'])->name('impersonate');
@@ -210,8 +215,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserSta
     // Patient Routes
     Route::group(['middleware' => ['permission:manage_patients']], function () {
         Route::resource('patients', PatientController::class);
-        Route::get('patient-appointments',
-            [PatientController::class, 'patientAppointment'])->name('patients.appointment');
+        Route::get('patients/{id}', [PatientController::class, 'show']);
+        Route::get('patient-appointments', [PatientController::class, 'patientAppointment'])->name('patients.appointment');
     });
 
     // Doctor Schedule Routes
@@ -245,6 +250,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserSta
         Route::get('admin-appointments-calendar', [AppointmentController::class, 'appointmentCalendar'])->name('appointments.calendar');
         Route::get('transactions', [TransactionController::class, 'index'])->name('transactions');
         Route::get('transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+        Route::get('appointments/create', [AppointmentController::class, 'create']);
+
+    });
+
+    // Pharmacy route
+    Route::group(['middleware' => ['permission:manage_appointments']], function () {
+        Route::resource('pharmacys', PharmacyController::class);
+        Route::get('send-prescription/{id}', [PharmacyController::class, 'sendPrescription'])->name('send.prescription');
+        Route::get('done-prescription/{id}', [PharmacyController::class, 'donePrescription'])->name('done.prescription');
+//        Route::post('appointments/{appointment}', [AppointmentController::class, 'changeStatus'])->name('change-status');
+//        Route::post('appointments-payment/{id}', [AppointmentController::class, 'changePaymentStatus'])->name('change-payment-status');
+
     });
 
     // Currency route
@@ -256,18 +273,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserSta
     Route::group(['middleware' => ['permission:manage_patient_visits']], function () {
         Route::resource('visits', VisitController::class);
         Route::post('add-problem', [VisitController::class, 'addProblem'])->name('add.problem');
-        Route::post('delete-problem/{problem}',
-            [VisitController::class, 'deleteProblem'])->name('delete.problem');
+        Route::post('delete-problem/{problem}', [VisitController::class, 'deleteProblem'])->name('delete.problem');
         Route::post('add-observation', [VisitController::class, 'addObservation'])->name('add.observation');
-        Route::post('delete-observation/{observation}',
-            [VisitController::class, 'deleteObservation'])->name('delete.observation');
+        Route::post('delete-observation/{observation}', [VisitController::class, 'deleteObservation'])->name('delete.observation');
         Route::post('add-note', [VisitController::class, 'addNote'])->name('add.note');
         Route::post('delete-note/{note}', [VisitController::class, 'deleteNote'])->name('delete.note');
         Route::post('add-prescription', [VisitController::class, 'addPrescription'])->name('add.prescription');
-        Route::post('delete-prescription/{prescription}',
-            [VisitController::class, 'deletePrescription'])->name('delete.prescription');
-        Route::get('edit-prescription/{prescription}',
-            [VisitController::class, 'editPrescription'])->name('edit.prescription');
+        Route::post('delete-prescription/{prescription}', [VisitController::class, 'deletePrescription'])->name('delete.prescription');
+        Route::get('edit-prescription/{prescription}', [VisitController::class, 'editPrescription'])->name('edit.prescription');
+
     });
 
     // Slider route
@@ -288,20 +302,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserSta
     Route::post('/email/verification-notification/{userId}',[UserController::class, 'resendEmailVerification'])->name('resend.email.verification');
 
     // Logs Route
-    Route::get('logs', [LogViewerController::class, 'index']);
+    Route::get('/logs', [LogViewerController::class, 'index']);
 
-    Route::post('/notification/{notification}/read',
-        [NotificationController::class, 'readNotification'])->name('notifications.read');
-    Route::post('/read-all-notification',
-        [NotificationController::class, 'readAllNotification'])->name('notifications.read.all');
+    Route::post('/notification/{notification}/read', [NotificationController::class, 'readNotification'])->name('notifications.read');
+    Route::post('/read-all-notification', [NotificationController::class, 'readAllNotification'])->name('notifications.read.all');
 
+});
+
+Route::get('/search', [CommandController::class, 'search']);
+
+Route::get('/bugsnag', function () {
+    return Bugsnag::notifyException(new RuntimeException("Test error"));
 });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/doctor.php';
+//require __DIR__.'/doctor.php';
 require __DIR__.'/patient.php';
-
-// upgrade to v3.0.0
-Route::get('/upgrade-to-v3-0-0', function () {
-    Artisan::call('db:seed', ['--class' => 'DefaultPaymentGatewaySeeder']);
-});

@@ -34,6 +34,22 @@ class VisitObservation extends Model
     public $fillable = [
         'observation_name',
         'visit_id',
+        'symptoms',
+        'anamnesis',
+        'prognosis',
+        'temperature',
+        'awareness',
+        'height',
+        'weight',
+        'systole',
+        'diastole',
+        'respiratory_rate',
+        'heart_rate',
+        'assessment',
+        'plan',
+        'create_user_id',
+        'update_user_id',
+
     ];
 
     /**

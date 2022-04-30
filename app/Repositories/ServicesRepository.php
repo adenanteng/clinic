@@ -23,7 +23,7 @@ class ServicesRepository extends AppBaseController
     protected $fieldSearchable = [
         'category_id',
         'name',
-        'charges',
+//        'charges',
         'doctors',
         'status'
     ];
@@ -56,7 +56,7 @@ class ServicesRepository extends AppBaseController
         try {
             DB::beginTransaction();
 
-            $input['charges'] = str_replace(',', '', $input['charges']);
+//            $input['charges'] = str_replace(',', '', $input['charges']);
             $input['status'] = (isset($input['status'])) ? 1 : 0;
             $services = Service::create($input);
             if (isset($input['doctors']) && !empty($input['doctors'])) {
@@ -82,7 +82,7 @@ class ServicesRepository extends AppBaseController
     {
         try {
             DB::beginTransaction();
-            $input['charges'] = str_replace(',', '', $input['charges']);
+//            $input['charges'] = str_replace(',', '', $input['charges']);
             $input['status'] = (isset($input['status'])) ? 1 : 0;
             $service->update($input);
             $service->serviceDoctors()->sync($input['doctors']);
@@ -92,7 +92,7 @@ class ServicesRepository extends AppBaseController
                 $service->media()->delete();
                 $service->addMedia($input['icon'])->toMediaCollection(Service::ICON, config('app.media_disc'));
             }
-            
+
             DB::commit();
             return true;
         } catch (Exception $e) {

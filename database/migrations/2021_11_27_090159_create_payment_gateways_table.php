@@ -15,9 +15,13 @@ class CreatePaymentGatewaysTable extends Migration
     {
         Schema::create('payment_gateways', function (Blueprint $table) {
             $table->id();
-            $table->integer('payment_gateway_id');
-            $table->string('payment_gateway');
+            $table->Biginteger('payment_category_id');
+            $table->integer('payment_gateway_id')->unique();
+            $table->string('payment_name');
+            $table->boolean('status')->default(1);
             $table->timestamps();
+
+            $table->foreign('payment_category_id')->references('payment_category_id')->on('payment_categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

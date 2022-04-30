@@ -64,14 +64,9 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="btn btn-primary btn-active-primary my-1 dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Daftarkan
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{{ route('visits.create') }}">Rawat Jalan</a></li>
-                        <li><a class="dropdown-item" href="#">Rawat Inap</a></li>
-                        <li><a class="dropdown-item" href="#">IGD</a></li>
-                    </ul>
+                    <a class="btn btn-primary btn-active-primary my-1 " href="{{ url('appointments/create?patient='.$patient->patient_unique_id) }}">
+                        Daftarkan Kunjungan
+                    </a>
                 </div>
             </div>
             <div class="d-flex overflow-auto h-55px">
@@ -97,7 +92,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="card-body  border-top p-9">
+                    <div class="card-body border-top p-9">
                         <div class="row mb-7">
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.blood_group') }}</label>
                             <div class="col-lg-8 fv-row">
@@ -107,7 +102,7 @@
                         <div class="row mb-7">
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.user.gender') }}</label>
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ ($patient->user->gender == 1) ? __('messages.doctor.male') : __('messages.doctor.female') }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ !empty($patient->user->gender) ? \App\Models\Patient::GENDER_GROUP_ARRAY[$patient->user->gender] : __('messages.common.n/a')  }}</span>
                             </div>
                         </div>
                         <div class="row mb-7">

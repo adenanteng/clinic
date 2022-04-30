@@ -67,7 +67,7 @@ class Service extends Model implements HasMedia
         self::DEACTIVE => 'Deactive',
     ];
     const ICON = 'icon';
-    
+
     protected $appends = ['icon'];
     /**
      * The attributes that should be casted to native types.

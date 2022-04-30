@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->integer('nric_type')->nullable();
-            $table->integer('nric_id')->nullable();
+            $table->unsignedBigInteger('nric_id')->nullable();
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
             $table->integer('type')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('region_code')->default(62)->nullable();
+            $table->string('time_zone')->nullable();
+            $table->boolean('dark_mode')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

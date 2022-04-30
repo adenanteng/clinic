@@ -88,7 +88,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('doctors.patient.detail',$appointment->patient_id)}}"
+                                                        <a href="{{route('patient.detail',$appointment->patient_id)}}"
                                                            class="text-primary-800 mb-1 fs-6">
                                                             {{$appointment->patient->user->fullname}}</a>
                                                         <span class="text-muted fw-bold d-block">{{$appointment->patient->user->email}}</span>

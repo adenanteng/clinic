@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\DataTables\VisitDataTable;
 use App\Http\Requests\CreateVisitPrescriptionRequest;
+use App\Models\Appointment;
+use App\Models\Doctor;
+use App\Models\User;
 use App\Models\Visit;
 use App\Models\VisitNote;
 use App\Models\VisitObservation;
 use App\Models\VisitPrescription;
 use App\Models\VisitProblem;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -19,6 +23,8 @@ use App\Http\Requests\UpdateVisitRequest;
 use App\Repositories\VisitRepository;
 use Flash;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
+use PhpParser\Comment\Doc;
 use Response;
 use Datatables;
 
@@ -78,20 +84,31 @@ class VisitController extends AppBaseController
     /**
      * @param $id
      *
-     * @return Application|Factory|View|RedirectResponse
+     * @return Application|Factory|View
      */
     public function show($id)
     {
-        if (getLogInUser()->hasRole('doctor')) {
-            $doctor = Visit::whereId($id)->whereDoctorId(getLogInUser()->doctor->id);
-            if (! $doctor->exists()) {
-                return redirect()->back();
-            }
+        if (empty(Appointment::where('appointment_unique_id', $id)->first())) {
+            abort(404);  //404 page
         }
 
-        $visit = $this->visitRepository->getShowData($id);
+        if (empty(Visit::where('appointment_id', $id)->first())) {
+            $appointment = Appointment::where('appointment_unique_id', $id)->first()->toArray();
+            $appointment['appointment_id'] = $appointment['appointment_unique_id'];
+//            $appointment->date = Carbon::now();
+//            dd($appointment);
+            $this->visitRepository->create($appointment);
+            $status = Appointment::where('appointment_unique_id', $id)->update(['status' => 2]);
+            Flash::success('Visit created successfully.');
+        }
 
-        return view('visits.show', compact('visit'));
+
+        $visit = $this->visitRepository->getShowData($id)->first();
+        $observation = $this->visitRepository->getSoapData();
+        $prescription = $this->visitRepository->getPrescriptionData();
+
+//        dd($visit, $observation, $prescription);
+        return view('visits.show', compact('visit', 'observation', 'prescription'));
     }
 
     /**
@@ -181,12 +198,34 @@ class VisitController extends AppBaseController
     public function addObservation(Request $request)
     {
         $input = $request->all();
+        $name = VisitObservation::where('visit_id', $input['visit_id'])->count();
+        $name +=1;
+        $input['observation_name'] = $input['observation_name'] . ' ' . $name;
+
         $observation = VisitObservation::create([
-            'observation_name' => $input['observation_name'], 'visit_id' => $input['visit_id'],
+            'visit_id'          => $input['visit_id'],
+            'observation_name'  => $input['observation_name'],
+            'symptoms'          => $input['symptoms'],
+            'anamnesis'         => $input['anamnesis'],
+            'prognosis'         => $input['prognosis'],
+            'temperature'       => $input['temperature'],
+            'awareness'         => $input['awareness'],
+            'height'            => $input['height'],
+            'weight'            => $input['weight'],
+            'systole'           => $input['systole'],
+            'diastole'          => $input['diastole'],
+            'respiratory_rate'  => $input['respiratory_rate'],
+            'heart_rate'        => $input['heart_rate'],
+            'plan'              => $input['plan'],
+            'assessment'        => $input['assessment'],
+            'create_user_id'    => $input['staff_id'],
+            'update_user_id'    => $input['staff_id'],
+
         ]);
         $observationData = VisitObservation::whereVisitId($input['visit_id'])->get();
 
-        return $this->sendResponse($observationData, 'Observation added successfully.');
+//        return $this->sendResponse($observationData, 'Observation added successfully.');
+        return redirect()->back()->with('success', 'your message,here');
     }
 
     /**
@@ -250,7 +289,7 @@ class VisitController extends AppBaseController
             $message = 'Visit Prescription added successfully.';
         }
 
-        $visitPrescriptions = VisitPrescription::whereVisitId($input['visit_id'])->get();
+        $visitPrescriptions = VisitPrescription::whereVisitId($input['visit_id'])->with('pharmacys')->get();
 
         return $this->sendResponse($visitPrescriptions, $message);
     }

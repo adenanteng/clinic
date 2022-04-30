@@ -65,27 +65,11 @@ class Patient extends Model implements HasMedia
     const B = 2;
     const AB = 3;
     const O = 4;
-//    const O_POSITIVE = 1;
-//    const A_POSITIVE = 2;
-//    const B_POSITIVE = 3;
-//    const AB_POSITIVE = 4;
-//    const O_NEGATIVE = 5;
-//    const A_NEGATIVE = 6;
-//    const B_NEGATIVE = 7;
-//    const AB_NEGATIVE = 8;
     const BLOOD_GROUP_ARRAY = [
         self::A  => 'A',
         self::B  => 'B',
         self::AB  => 'AB',
         self::O => 'O',
-//        self::O_POSITIVE  => 'O+',
-//        self::A_POSITIVE  => 'A+',
-//        self::B_POSITIVE  => 'B+',
-//        self::AB_POSITIVE => 'AB+',
-//        self::O_NEGATIVE  => 'O-',
-//        self::A_NEGATIVE  => 'A-',
-//        self::B_NEGATIVE  => 'B-',
-//        self::AB_NEGATIVE => 'AB-',
     ];
 
     const KTP = 1;
@@ -161,11 +145,12 @@ class Patient extends Model implements HasMedia
         'first_name' => 'nullable',
         'last_name'  => 'nullable',
         'profile'    => 'nullable|mimes:jpeg,jpg,png',
+        'email'      => 'nullable|email|unique:users,email',
     ];
 
     protected $appends = ['profile'];
 
-    protected $with = ['media'];
+    protected $with = ['media', 'address'];
 
     /**
      * @return string
@@ -203,6 +188,7 @@ class Patient extends Model implements HasMedia
             return $media->getFullUrl();
         }
         $gender = $this->user->gender;
+//        $gender = self::MALE;
         if ($gender == self::FEMALE){
 
             return asset('web/media/avatars/female.png');
@@ -233,6 +219,14 @@ class Patient extends Model implements HasMedia
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'patient_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function payment()
+    {
+        return $this->hasMany(PatientPayment::class, 'patient_id');
     }
 
     /**

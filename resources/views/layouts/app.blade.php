@@ -24,12 +24,23 @@
         <link href="{{ mix('assets/css/custom.css') }}" rel="stylesheet" type="text/css"/>
     @endif
     <link href="{{ mix('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <script defer src="{{ asset('assets/js/alpine.js') }}"></script>
+
+    <style>
+        .icon{
+            width: 3rem;
+        }
+        .item{
+            width: 100%;
+        }
+    </style>
+{{--    <script defer src="https://unpkg.com/alpinejs@3.9.6/dist/cdn.min.js"></script>--}}
 </head>
 @php $styleCss = 'style'; @endphp
 <body id="kt_body"
       class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed {{ (Auth::user()->dark_mode) ? 'dark-mode' : ''}}"
 {{ $styleCss }}="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px"
-data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="">
+data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="" >
 <div class="main-content">
     <div class="d-flex flex-column flex-root">
         <div class="page d-flex flex-row flex-column-fluid">
@@ -50,22 +61,22 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="">
     </div>
 
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-            <span class="svg-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24px"
-                         height="24px" viewBox="0 0 24 24" version="1.1">
-                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <polygon points="0 0 24 0 24 24 0 24"/>
-                            <rect fill="#000000" opacity="0.5" x="11" y="10" width="2" height="10" rx="1"/>
-                            <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-                                  fill="#000000" fill-rule="nonzero"/>
-                        </g>
-                    </svg>
-                </span>
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                 height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <polygon points="0 0 24 0 24 24 0 24"/>
+                    <rect fill="#000000" opacity="0.5" x="11" y="10" width="2" height="10" rx="1"/>
+                    <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero"/>
+                </g>
+            </svg>
+        </span>
     </div>
     @include('profile.changePassword')
     @include('profile.email_notification')
-</div>
+    @include('layouts.command')
 
+</div>
 <script src="{{ asset('assets/js/apexcharts/apexcharts.js') }}"></script>
 <script src="{{ asset('backend/js/vendor.js') }}"></script>
 <script src="{{ asset('backend/js/datatables.js') }}"></script>
@@ -89,6 +100,89 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="">
     });
     let changePasswordUrl = "{{ route('user.changePassword') }}";
     let updateLanguageURL = "{{ route('change-language')}}";
+</script>
+<script>
+
+    $(document).on('click','#cmd', function() {
+        $('.pass-check-meter div.flex-grow-1').removeClass('active');
+        $('#cmdModal').modal('show').appendTo('body');
+    });
+    document.addEventListener('keydown', function (event) {
+        // event.preventDefault();
+        if (event.ctrlKey && event.key === '/') {
+            $('.pass-check-meter div.flex-grow-1').removeClass('active');
+            $('#cmdModal').modal('show').appendTo('body');
+        }
+    });
+
+    new TomSelect('#select-repo',{
+        valueField: 'id',
+        labelField: 'name',
+        searchField: ['first_name','last_name','full_name','dob','role_name'],
+        // fetch remote data
+        load: function(query, callback) {
+            let self = this;
+            if( self.loading > 1 ){
+                callback();
+                return;
+            }
+            let url = '/search?q=';
+            fetch(url)
+                .then(response => response.json())
+                .then(json => {
+                    callback(json.data.items);
+                    self.settings.load = null;
+                }).catch(()=>{
+                callback();
+            });
+        },
+        // custom rendering function for options
+        render: {
+            option: function(item, escape) {
+                return `<a class="py-2 d-flex" href="/${ escape(item.role_name)}s/${ escape(item.role_name) === 'Patient' ? item.patient.patient_unique_id : item.id }">
+							<div class="icon me-3">
+								<img class="img-fluid" src="${item.profile_image}" />
+							</div>
+							<div>
+								<div class="mb-1">
+									<span class="h4">
+										${ escape(item.full_name) }
+									</span>
+									<span class="text-muted"> ${ escape(item.role_name) === 'Patient' ? item.patient.patient_unique_id : '' }</span>
+								</div>
+						 		<div class="description">${ escape(item.role_name) }</div>
+							</div>
+						</a>`;
+            },
+        },
+    });
+
+    // $(document).ready(function() {
+    //     $(".js-cmd").select2({
+    //         ajax: {
+    //             url: '/search',
+    //             dataType: 'json',
+    //             delay: 250,
+    //             processResults: function (data) {
+    //                 return {
+    //                     results:  $.map(data, function (item) {
+    //                         return {
+    //                             text: item.full_name,
+    //                             id: item.id
+    //                         }
+    //                     })
+    //                 };
+    //             },
+    //             cache: true
+    //         },
+    //         dropdownParent: $('#cmdModal'),
+    //         placeholder: 'Cari apapun disini',
+    //         minimumInputLength: 1,
+    //
+    //     });
+    // });
+
+
 </script>
 </body>
 </html>

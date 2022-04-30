@@ -32,6 +32,9 @@ class DatabaseSeeder extends Seeder
         $this->call(AddEmailVerifiedFieldSettingTableSeeder::class);
         $this->call(AddAboutUsImageFieldsSettingSeeder::class);
         $this->call(AddAboutExperienceFieldInSettingSeeder::class);
+        $this->call(DefaultPaymentCategoriesSeeder::class);
         $this->call(DefaultPaymentGatewaySeeder::class);
+        $this->call(PharmacySeeder::class);
+        $this->call(PharmacyProcurementSeeder::class);
     }
 }

@@ -52,18 +52,19 @@ $(document).ready(function () {
                         </div>
                     </div>
                     <div class="d-inline-block align-top">
-                        <a href="${route('patients.show', row.id)}"
+                        <a href="${route('patients.show', row.patient_unique_id)}"
                            class="text-primary-800 mb-1 d-inline-block">${row.user.full_name}</a>
                         <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-default"
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="Patient Unique ID">${row.patient_unique_id}</a>
-                        <span class="d-block text-muted fw-bold">${row.user.email}</span>
+                        <span class="d-block text-muted fw-bold">${row.address.address1}</span>
                     </div>`;
                 },
                 name: 'user.first_name',
             },
             {
                 data: function (row) {
+                    console.log(row)
                     return `<span class="badge badge-light-danger">${row.appointments_count}</span>`;
                 },
                 name: 'appointments_count',
@@ -90,7 +91,7 @@ $(document).ready(function () {
             {
                 data: function (row) {
                     return `<span class="badge badge-light-info">${moment.parseZone(
-                        row.created_at).format('Do MMM, Y h:mm A')}</span>`;
+                        row.created_at).format('Do MMM, Y H:mm')}</span>`;
                 },
                 name: 'created_at',
             },
@@ -99,7 +100,7 @@ $(document).ready(function () {
                     let data = [
                         {
                             'id': row.id,
-                            'editUrl': route('patients.edit', row.id),
+                            'editUrl': route('patients.edit', row.patient_unique_id),
                             'userId': row.user_id,
                             'emailVerified': isEmpty(row.user.email_verified_at),
                         },
@@ -127,7 +128,7 @@ $(document).on('change','.email-verified',function(e){
     $.ajax({
         type: 'POST',
         url: route('emailVerified'),
-        data: { 
+        data: {
             id: recordId,
             value : value,
         },

@@ -37,9 +37,9 @@
                         <li><a href="{{ route('medicalContact') }}"
                                class="{{ Request::is('medical-contact*') ? 'text-primary' : '' }}"><span>{{ __('messages.web.contact_us') }}</span></a>
                         </li>
-                        <li><a href="{{ route('front.faqs') }}"
-                               class="{{ Request::is('front-faqs*') ? 'text-primary' : '' }}"><span>{{ __('messages.web.faqs') }}</span></a>
-                        </li>
+{{--                        <li><a href="{{ route('front.faqs') }}"--}}
+{{--                               class="{{ Request::is('front-faqs*') ? 'text-primary' : '' }}"><span>{{ __('messages.web.faqs') }}</span></a>--}}
+{{--                        </li>--}}
                         <li>
                             <a href="{{ route('terms.conditions') }}"
                                class="{{ Request::is('terms-conditions*') ? 'text-primary' : '' }}"><span>{{ __('messages.terms_conditions') }}</span></a>

@@ -6,6 +6,7 @@ use Database\Factories\RoleFactory;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Role as roleModal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,4 +51,5 @@ class Role extends roleModal
         'display_name'  => 'required|unique:roles,display_name',
         'permission_id' => 'required',
     ];
+
 }

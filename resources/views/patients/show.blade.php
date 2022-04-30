@@ -14,7 +14,7 @@
             <div class="d-flex justify-content-end ms-auto">
                 @if(!getLogInUser()->hasRole('doctor'))
                     <div class="d-flex align-items-center py-1 me-2">
-                        <a href="{{route('patients.edit',$patient->id)}}"
+                        <a href="{{route('patients.edit', $patient->id)}}"
                            class="btn btn-sm btn-flex btn-light btn-active-primary fw-bolder">{{ __('messages.common.edit') }}</a>
                     </div>
                 @endif

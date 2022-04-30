@@ -161,8 +161,7 @@
                                         <tr class="w-md-50 w-100 d-flex justify-content-between border-0">
                                             <td>
                                                 <div class="form-check form-check-custom form-check-solid">
-                                                    <input class="form-check-input" type="checkbox" value="{{$key}}"
-                                                           name="payment_gateway[]"
+                                                    <input class="form-check-input" type="checkbox" value="{{$key}}" name="payment_gateway[]"
                                                            id="{{$key}}" {{in_array($paymentGateway, $selectedPaymentGateways) ?'checked':''}} />
                                                     <label class="form-check-label" for="{{$key}}">
                                                         {{$paymentGateway}}
@@ -176,7 +175,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card-footer d-flex py-6 px-9">
                         {{ Form::submit(__('messages.user.save_changes'),['class' => 'btn btn-primary']) }}
                     </div>

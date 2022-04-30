@@ -82,38 +82,18 @@ $(document).on('click', '.remove-problem', function (e) {
 // Add Visit Observation Data
 $(document).on('submit', '#addVisitObservation', function (e) {
     e.preventDefault();
-    let observationName = $('#observationName').val();
-    let empty2 = observationName.trim().replace(/ \r\n\t/g, '') === '';
 
-    if (empty2) {
-        displayErrorMessage(
-            'Observation field is not contain only white space');
-        return false;
-    }
     let btnSubmitEle = $(this).find('#observationSubmitBtn');
     setAdminBtnLoader(btnSubmitEle);
-    let observationAddUrl = doctorLogin ? route(
-        'doctors.visits.add.observation') : route('add.observation');
+    let observationAddUrl = doctorLogin ? route('doctors.visits.add.observation') : route('add.observation');
     $.ajax({
         url: observationAddUrl,
         type: 'POST',
         data: $(this).serialize(),
         dataType: 'json',
+
         success: function (result) {
-            $('ul#observationLists').empty();
-            if (result.data.length > 0) {
-                displaySuccessMessage(result.message);
-                $.each(result.data, function (i, val) {
-                    $('#observationName').val('');
-                    $('#observationLists').
-                        append(
-                            `<li class="list-group-item text-break text-wrap d-flex justify-content-between align-items-center py-5">${val.observation_name}<span class="remove-observation" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete" data-id="${val.id}"><a href="javascript:void(0)"><i class="fas fa-trash text-danger"></i></a></span></li>`);
-                });
-            } else {
-                $('#observationLists').
-                    append(
-                        `<p class="text-center fw-bold text-muted mt-3">${noRecordsFound}</p>`);
-            }
+
         },
         complete: function () {
             $('#observationSubmitBtn').attr('disabled', false)
@@ -129,7 +109,7 @@ $(document).on('click', '.remove-observation', function (e) {
     let observationDeleteUrl = doctorLogin ? route(
         'doctors.visits.delete.observation', id) : route('delete.observation',
         id);
-    $(this).closest('li').remove();
+
     $.ajax({
         url: observationDeleteUrl,
         type: 'POST',
@@ -236,11 +216,15 @@ $(document).on('submit', '#addPrescription', function (e) {
             $('#addPrescription')[0].reset();
             $('.visit-prescriptions').empty();
             $('#prescriptionId').val('');
+            $('#drugId').val('');
+            $('#frequencyId').val('');
+            $('#durationId').val('');
+            $('#descriptionId').val('');
             $.each(result.data, function (i, val) {
                 let data = [
                     {
                         'id': val.id,
-                        'name': val.prescription_name,
+                        'name': val.pharmacys.name,
                         'frequency': val.frequency,
                         'duration': val.duration,
                     }];
@@ -249,7 +233,7 @@ $(document).on('submit', '#addPrescription', function (e) {
                     '#visitsPrescriptionTblTemplate', data);
                 $('.visit-prescriptions').append(visitPrescriptionTblData);
             });
-
+            console.log(result.data)
             $('#addVisitPrescription').removeClass('show');
             displaySuccessMessage(result.message);
         },
@@ -273,7 +257,7 @@ function renderData (id) {
         success: function (result) {
             $('#addPrescription')[0].reset();
             $('#prescriptionId').val(result.data.id);
-            $('#prescriptionNameId').val(result.data.prescription_name);
+            $('#prescriptionNameId').val(result.data.drug.name);
             $('#frequencyId').val(result.data.frequency);
             $('#durationId').val(result.data.duration);
             $('#descriptionId').val(result.data.description);
@@ -323,3 +307,5 @@ $(document).on('click', '.delete-prescription-btn', function (e) {
 $(document).on('click', '.reset-form', function () {
     $('#addPrescription')[0].reset();
 });
+
+

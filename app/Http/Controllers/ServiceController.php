@@ -116,7 +116,7 @@ class ServiceController extends AppBaseController
     public function destroy(Service $service): JsonResponse
     {
         $checkRecord = Appointment::whereServiceId($service->id)->exists();
-        
+
         if ($checkRecord) {
             return $this->sendError('Service used somewhere else.');
         }

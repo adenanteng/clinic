@@ -24,31 +24,28 @@ class DefaultPaymentGatewaySeeder extends Seeder
         $paymentGateways = [
             [
                 'payment_gateway_id' => Appointment::MANUALLY,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[1],
+                'payment_category_id' => Appointment::TUNAI,
+                'payment_name'    => Appointment::PAYMENT_METHOD[1],
             ],
             [
-                'payment_gateway_id' => Appointment::STRIPE,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[2],
+                'payment_gateway_id' => Appointment::BPJS_MANDIRI,
+                'payment_category_id' => Appointment::BPJS,
+                'payment_name'    => Appointment::PAYMENT_METHOD[2],
             ],
             [
-                'payment_gateway_id' => Appointment::PAYSTACK,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[3],
+                'payment_gateway_id' => Appointment::BPJS_KETENAGAKERJAAN,
+                'payment_category_id' => Appointment::BPJS,
+                'payment_name'    => Appointment::PAYMENT_METHOD[3],
             ],
             [
-                'payment_gateway_id' => Appointment::PAYPAL,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[4],
+                'payment_gateway_id' => Appointment::JASA_RAHARJA,
+                'payment_category_id' => Appointment::ASURANSI,
+                'payment_name'    => Appointment::PAYMENT_METHOD[4],
             ],
             [
-                'payment_gateway_id' => Appointment::RAZORPAY,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[5],
-            ],
-            [
-                'payment_gateway_id' => Appointment::AUTHORIZE,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[6],
-            ],
-            [
-                'payment_gateway_id' => Appointment::PAYTM,
-                'payment_gateway'    => Appointment::PAYMENT_METHOD[7],
+                'payment_gateway_id' => Appointment::ASTRA_LIFE,
+                'payment_category_id' => Appointment::ASURANSI,
+                'payment_name'    => Appointment::PAYMENT_METHOD[5],
             ],
         ];
 

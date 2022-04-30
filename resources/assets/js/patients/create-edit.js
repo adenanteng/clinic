@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     // $('#countryId').val(countryId).trigger('change');
     $('#countryId').val(102).trigger('change');
-    console.log(countryId);
+    // console.log(countryId);
 
     setTimeout(function () {
         $('#stateId').val(stateId).trigger('change');
@@ -18,18 +18,18 @@ $(document).ready(function () {
         $('#cityId').val(cityId).trigger('change');
     }, 500);
 
-    $('input[type=radio][name=gender]').on('change', function () {
-        let file = $('#profilePicture').val();
-        if (isEmpty(file)) {
-            if (this.value == 1) {
-                $('.image-input-wrapper').
-                    attr('style', 'background-image:url(' + manAvatar + ')');
-            } else if (this.value == 2) {
-                $('.image-input-wrapper').
-                    attr('style', 'background-image:url(' + womanAvatar + ')');
-            }
-        }
-    });
+    // $('input[type=radio][name=gender]').on('change', function () {
+    //     let file = $('#profilePicture').val();
+    //     if (isEmpty(file)) {
+    //         if (this.value == 1) {
+    //             $('.image-input-wrapper').
+    //                 attr('style', 'background-image:url(' + manAvatar + ')');
+    //         } else if (this.value == 2) {
+    //             $('.image-input-wrapper').
+    //                 attr('style', 'background-image:url(' + womanAvatar + ')');
+    //         }
+    //     }
+    // });
 });
 
 $('#countryId').on('change', function () {

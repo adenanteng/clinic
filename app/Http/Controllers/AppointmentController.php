@@ -77,14 +77,20 @@ class AppointmentController extends AppBaseController
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(request $request)
     {
+        $input = $request->all();
+
+//        dd($input);
         $data = $this->appointmentRepository->getData();
         $data['status'] = Appointment::BOOKED_STATUS_ARRAY;
-        $patient = Patient::where('user_id', getLogInUserId())->first();
 
-//        dd($data, $patient);
+//        $patient = Patient::with('user')->wherePatientUniqueId($patient)->first();
+
+        $patient = $this->appointmentRepository->getPatient($input['patient']);
+
         return view('appointments.create', compact('data', 'patient'));
+
     }
 
     /**
@@ -100,62 +106,12 @@ class AppointmentController extends AppBaseController
 
         $appointment = $this->appointmentRepository->store($input);
 
-        if ($input['payment_type'] == Appointment::STRIPE) {
-            $result = $this->appointmentRepository->createSession($appointment);
-
-            return $this->sendResponse([
-                'appointmentId' => $appointment->id,
-                'payment_type'  => $input['payment_type'],
-                $result,
-            ], 'Stripe session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::PAYSTACK) {
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->sendResponse([
-                    'redirect_url'  => route('paystack.init', ['appointmentData' => $appointment]),
-                    'payment_type'  => $input['payment_type'],
-                    'appointmentId' => $appointment->id,
-                ], 'Paystck session created successfully.');
-            }
-
-            return redirect(route('paystack.init'));
-        }
-
-        if ($input['payment_type'] == Appointment::PAYPAL) {
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->sendResponse([
-                    'redirect_url' => route('paypal.index', ['appointmentData' => $appointment]),
-                    'payment_type' => $input['payment_type'],
-                    'appointmentId' => $appointment->id,
-                ], 'Paypal session created successfully.');
-            }
-
-            return redirect(route('paypal.init'));
-        }
-
-        if ($input['payment_type'] == Appointment::RAZORPAY) {
-                return $this->sendResponse([
-                    'payment_type' => $input['payment_type'],
-                    'appointmentId' => $appointment->id,
-                ], 'Razorpay session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::AUTHORIZE) {
-            return $this->sendResponse([
-                'payment_type' => $input['payment_type'],
-                'appointmentId' => $appointment->id,
-            ], 'Authorize session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::PAYTM) {
-            return $this->sendResponse([
-                'payment_type'  => $input['payment_type'],
-                'appointmentId' => $appointment->id,
-            ], 'Paytm session created successfully.');
-        }
+//        if ($input['payment_type'] == Appointment::MANUALLY) {
+//            return $this->sendResponse([
+//                'payment_type'  => $input['payment_type'],
+//                'appointmentId' => $appointment->id,
+//            ], 'Aww session created successfully.');
+//        }
 
         $url = route('appointments.index');
 
@@ -413,59 +369,6 @@ class AppointmentController extends AppBaseController
     {
         $input = $request->all();
         $appointment = $this->appointmentRepository->frontSideStore($input);
-
-        if ($input['payment_type'] == Appointment::STRIPE) {
-            $result = $this->appointmentRepository->createSession($appointment);
-
-            return $this->sendResponse([
-                'payment_type' => $input['payment_type'],
-                $result,
-            ], 'Stripe session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::PAYPAL) {
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->sendResponse([
-                    'redirect_url' => route('paypal.index', ['appointmentData' => $appointment]),
-                    'payment_type' => $input['payment_type'],
-                    'appointmentId' => $appointment->id,
-                ], 'Paypal session created successfully.');
-            }
-        }
-
-        if ($input['payment_type'] == Appointment::PAYSTACK) {
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->sendResponse([
-                    'redirect_url' => route('paystack.init', ['appointmentData' => $appointment]),
-                    'payment_type' => $input['payment_type'],
-                ], 'Paystck session created successfully.');
-            }
-
-            return redirect(route('paystack.init'));
-        }
-
-        if ($input['payment_type'] == Appointment::RAZORPAY) {
-            return $this->sendResponse([
-                'payment_type' => $input['payment_type'],
-                'appointmentId' => $appointment->id,
-            ], 'Razorpay session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::PAYTM) {
-            return $this->sendResponse([
-                'payment_type'  => $input['payment_type'],
-                'appointmentId' => $appointment->id,
-            ], 'Paytm session created successfully.');
-        }
-
-        if ($input['payment_type'] == Appointment::AUTHORIZE) {
-            return $this->sendResponse([
-                'payment_type' => $input['payment_type'],
-                'appointmentId' => $appointment->id,
-            ], 'Authorize session created successfully.');
-        }
 
         $data = $input['payment_type'];
 

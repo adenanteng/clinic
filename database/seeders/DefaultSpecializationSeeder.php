@@ -17,16 +17,16 @@ class DefaultSpecializationSeeder extends Seeder
     {
         $input = [
             [
-                'name' => 'Poli Umum',
+                'name' => 'Dokter Umum',
             ],
             [
-                'name' => 'Poli Gigi',
+                'name' => 'Spesialis Gigi',
             ],
             [
-                'name' => 'Poli Kebidanan',
+                'name' => 'Bidan',
             ],
             [
-                'name' => 'Poli KIA',
+                'name' => 'Spesialis KIA',
             ],
         ];
 

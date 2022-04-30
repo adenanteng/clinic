@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('transaction_id');
             $table->string('appointment_id');
-            $table->float('amount');
+            $table->integer('status');
             $table->integer('type');
             $table->text('meta');
             $table->timestamps();

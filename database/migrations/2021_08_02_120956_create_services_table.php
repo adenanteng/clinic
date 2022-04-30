@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->double('charges')->nullable();
+//            $table->double('charges')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
 

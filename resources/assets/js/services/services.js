@@ -28,24 +28,24 @@ $(document).ready(function () {
             },
             {
                 'targets': [2],
-                'width': '25%',
+                'width': '30%',
             },
             {
                 'targets': [3],
-                'width': '20%',
+                'width': '30%',
             },
+            // {
+            //     'targets': [4],
+            //     'width': '5%',
+            //     'className': 'text-center',
+            //     'orderable': false,
+            //     'searchable': false,
+            // },
             {
                 'targets': [4],
+                'orderable': false,
+                'className': 'text-center',
                 'width': '5%',
-                'className': 'text-center',
-                'orderable': false,
-                'searchable': false,
-            },
-            {
-                'targets': [5],
-                'orderable': false,
-                'className': 'text-center',
-                'width': '8%',
             },
         ],
         columns: [
@@ -68,12 +68,12 @@ $(document).ready(function () {
                 data: 'service_category.name',
                 name: 'service_category.name',
             },
-            {
-                data: function (row) {
-                    return currencyIcon + ' ' + getFormattedPrice(row.charges);
-                },
-                name: 'charges',
-            },
+            // {
+            //     data: function (row) {
+            //         return currencyIcon + ' ' + getFormattedPrice(row.id);
+            //     },
+            //     name: 'charges',
+            // },
             {
                 data: function (row) {
                     let data = [

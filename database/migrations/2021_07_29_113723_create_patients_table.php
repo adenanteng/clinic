@@ -15,13 +15,12 @@ class CreatePatientsTable extends Migration
     public function up()
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedBigInteger('id')->index()->unique()->autoIncrement();
             $table->string('patient_unique_id')->unique();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

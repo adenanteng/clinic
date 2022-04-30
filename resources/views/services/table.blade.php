@@ -5,7 +5,6 @@
         <th scope="col">{{__('messages.common.icon')}}</th>
         <th scope="col">{{__('messages.common.name')}}</th>
         <th scope="col">{{__('messages.service.category')}}</th>
-        <th scope="col">{{__('messages.appointment.service_charge')}}</th>
         <th scope="col">{{__('messages.doctor.status')}}</th>
         <th class="text-end min-w-100px">{{__('messages.common.action')}}</th>
     </tr>

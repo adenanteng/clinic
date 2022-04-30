@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTable\UserDataTable;
 use App\DataTables\PatientDataTable;
+use App\Http\Requests\CreatePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Appointment;
-use App\Models\Country;
-use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Transaction;
 use App\Models\Visit;
+use App\Repositories\PatientRepository;
 use Carbon\Carbon;
 use Exception;
+use Flash;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePatientRequest;
-use App\Http\Requests\UpdatePatientRequest;
-use App\Repositories\PatientRepository;
-use Flash;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -68,6 +65,25 @@ class PatientController extends AppBaseController
     }
 
     /**
+     * Show the form for editing the specified Patient.
+     *
+     * @param  Patient  $patient
+     * @return Application|Factory|View
+     */
+    public function edit(Patient $patient)
+    {
+        if (empty($patient)) {
+            Flash::error('Patient not found.');
+
+            return redirect(route('patients.index'));
+        }
+        $data = $this->patientRepository->getData();
+//        unset($data['patientUniqueId']);
+
+        return view('patients.edit', compact('data', 'patient'));
+    }
+
+    /**
      * Store a newly created Patient in storage.
      *
      * @param  CreatePatientRequest  $request
@@ -86,64 +102,9 @@ class PatientController extends AppBaseController
     }
 
     /**
-     * Display the specified Patient.
-     *
-     * @param  Patient  $patient
-     *
-     * @return Application|Factory|View|RedirectResponse
-     */
-    public function show(Patient $patient)
-    {
-
-        if (getLogInUser()->hasRole('doctor')) {
-            $doctor = Appointment::wherePatientId($patient->id)->whereDoctorId(getLogInUser()->doctor->id);
-            if (! $doctor->exists()) {
-                return redirect()->back();
-            }
-        }
-
-        if (empty($patient)) {
-            Flash::error('Patient not found.');
-
-            return redirect(route('patients.index'));
-        }
-
-        $patient = $this->patientRepository->getPatientData($patient);
-        $appointmentStatus = Appointment::ALL_STATUS;
-        $todayDate = Carbon::now()->format('Y-m-d');
-        $patient->user->age = Carbon::parse($patient->user->dob)->age;
-        $patient->user->gender = '';
-        $data['todayAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '=', $todayDate)->count();
-        $data['upcomingAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '>', $todayDate)->count();
-        $data['completedAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '<', $todayDate)->count();
-
-//        dd($patient, $data);
-        return view('patients.show', compact('patient', 'appointmentStatus', 'data'));
-    }
-
-    /**
-     * Show the form for editing the specified Patient.
-     *
-     * @param  Patient  $patient
-     * @return Application|Factory|View
-     */
-    public function edit(Patient $patient)
-    {
-        if (empty($patient)) {
-            Flash::error('Patient not found.');
-
-            return redirect(route('patients.index'));
-        }
-        $data = $this->patientRepository->getData();
-        unset($data['patientUniqueId']);
-
-        return view('patients.edit', compact('data', 'patient'));
-    }
-
-    /**
      * Update the specified Patient in storage.
      *
-     * @param  Patient  $patient
+     * @param  Patient $patient
      * @param  UpdatePatientRequest  $request
      *
      * @return Application|Redirector|RedirectResponse
@@ -163,6 +124,45 @@ class PatientController extends AppBaseController
         Flash::success('Patient updated successfully.');
 
         return redirect(route('patients.index'));
+    }
+
+
+    /**
+     * Display the specified Patient.
+     *
+     * @param $request
+     *
+     * @return Application|Factory|View
+     */
+    public function show($request)
+    {
+
+//        if (getLogInUser()->hasRole('doctor')) {
+//            $doctor = Appointment::wherePatientId($patient->id)->whereDoctorId(getLogInUser()->doctor->id);
+//            if (! $doctor->exists()) {
+//                return redirect()->back();
+//            }
+//        }
+//
+//        if (empty($patient)) {
+//            Flash::error('Patient not found.');
+//
+//            return redirect(route('patients.index'));
+//        }
+
+
+        $patient = $this->patientRepository->getPatientData($request);
+        $appointmentStatus = Appointment::ALL_STATUS;
+        $todayDate = Carbon::now()->format('Y-m-d');
+//        $patient->user->gender = User::GENDER[$patient->user->gender];
+
+        $data['todayAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '=', $todayDate)->count();
+        $data['upcomingAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '>', $todayDate)->count();
+        $data['completedAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '<', $todayDate)->count();
+
+//        dd(json_encode($data), $patient);
+
+        return view('patients.show', compact('patient', 'appointmentStatus', 'data'));
     }
 
     /**

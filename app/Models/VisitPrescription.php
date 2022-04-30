@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\VisitPrescription
@@ -38,10 +39,12 @@ class VisitPrescription extends Model
 
     public $fillable = [
         'visit_id',
-        'prescription_name',
+//        'group_id',
+        'drug_id',
         'frequency',
         'duration',
         'description',
+        'status',
     ];
 
     /**
@@ -50,8 +53,16 @@ class VisitPrescription extends Model
      * @var array
      */
     public static $rules = [
-        'prescription_name' => 'required|max:121',
+//        'prescription_name' => 'required|max:121',
         'frequency'         => 'required',
         'duration'          => 'required',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function pharmacys()
+    {
+        return $this->belongsTo(Pharmacy::class, 'drug_id');
+    }
 }

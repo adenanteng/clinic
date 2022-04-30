@@ -58,10 +58,12 @@ class SettingController extends AppBaseController
         $specialities = Specialization::orderBy('name', 'asc')->pluck('name', 'id');
         $currencies = Currency::toBase()->pluck('currency_name', 'id');
         $paymentGateways = Appointment::PAYMENT_METHOD;
-        $selectedPaymentGateways = PaymentGateway::pluck('payment_gateway')->toArray();
+        $paymentCategories = Appointment::PAYMENT_CATEGORY;
+        $selectedPaymentGateways = PaymentGateway::whereStatus(1)->pluck('payment_name')->toArray();
 
+//        dd($selectedPaymentGateways);
         return view("setting.$sectionName",
-            compact('sectionName', 'setting', 'countries', 'specialities', 'states', 'cities', 'currencies','paymentGateways','selectedPaymentGateways'));
+            compact('sectionName', 'setting', 'countries', 'specialities', 'states', 'cities', 'currencies','paymentGateways', 'paymentCategories','selectedPaymentGateways'));
     }
 
     /**
@@ -70,18 +72,17 @@ class SettingController extends AppBaseController
      */
     public function update(UpdateSettingRequest $request)
     {
+//        dd($request);
         $paymentGateways = $request->payment_gateway;
-        PaymentGateway::query()->delete();
+        PaymentGateway::query()->update(['status' => 0]);
 
         if (isset($paymentGateways)){
             foreach ($paymentGateways as $paymentGateway){
-                PaymentGateway::updateOrCreate(['payment_gateway_id' => $paymentGateway],
-                    [
-                        'payment_gateway' => Appointment::PAYMENT_METHOD[$paymentGateway],
-                    ]);
+//                dd($paymentGateway);
+                PaymentGateway::where('payment_gateway_id', $paymentGateway)->update(['status' => 1]);
             }
         }
-        
+
         $id = Auth::id();
         $this->settingRepository->update($request->all(), $id);
 

@@ -4,7 +4,6 @@ use App\Models\City;
 use App\Models\Currency;
 use App\Models\DoctorSession;
 use App\Models\Notification;
-use App\Models\PaymentGateway;
 use App\Models\Setting;
 use App\Models\State;
 use App\Models\User;
@@ -13,6 +12,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
 
 /**
@@ -121,9 +121,9 @@ function getDashboardURL()
 function getDoctorSessionURL()
 {
     if (Auth::user()->hasRole('clinic_admin')) {
-        return 'admin/doctor-sessions';
+        return 'doctor-sessions';
     } elseif (Auth::user()->hasRole('doctor')) {
-        return 'doctors/doctor-sessions';
+        return 'doctor-sessions';
     } elseif (Auth::user()->hasRole('patient')) {
         return 'patients/doctor-sessions';
     }
@@ -152,10 +152,10 @@ function getSlotByGap($startTime,$endTime)
 
 function getSchedulesTimingSlot()
 {
-    $period = new CarbonPeriod('00:00', "15 minutes", '24:00'); // for create use 24 hours format later change format
+    $period = new CarbonPeriod('00:00', "5 minutes", '24:00'); // for create use 24 hours format later change format
     $slots = [];
     foreach ($period as $item) {
-        $slots[$item->format("h:i A")] = $item->format("h:i A");
+        $slots[$item->format("H:i")] = $item->format("H:i");
     }
 
     return $slots;
@@ -392,11 +392,25 @@ function getMonth()
  *
  * @return string[]
  */
+function getPatientPayment($patient)
+{
+    $paymentGateway = \App\Models\Appointment::PAYMENT_METHOD;
+    $selectedPaymentGateway = \App\Models\PatientPayment::where('patient_id', $patient)->with('payment_gateways')
+        ->get()->pluck('payment_gateways.payment_name' , 'payment_gateway_id')->toArray();
+
+//        dd($paymentGateway, $selectedPaymentGateway);
+    return $selectedPaymentGateway;
+}
+
+/**
+ *
+ * @return string[]
+ */
 function getAllPaymentStatus()
 {
     $paymentGateway = \App\Models\Appointment::PAYMENT_METHOD;
-    $selectedPaymentGateway = $selectedPaymentGateways = PaymentGateway::pluck('payment_gateway')->toArray();
-
+    $selectedPaymentGateway = $selectedPaymentGateways = \App\Models\PaymentGateway::pluck('payment_name')->toArray();
+//    dd($paymentGateway, $selectedPaymentGateway);
     return array_intersect($paymentGateway, $selectedPaymentGateway);
 }
 
@@ -407,7 +421,7 @@ function getAllPaymentStatus()
 function getPaymentGateway()
 {
     $paymentGateway = \App\Models\Appointment::PAYMENT_GATEWAY;
-    $selectedPaymentGateway = $selectedPaymentGateways = PaymentGateway::pluck('payment_gateway')->toArray();
+    $selectedPaymentGateway = $selectedPaymentGateways = \App\Models\PaymentGateway::pluck('payment_name')->toArray();
 
     return array_intersect($paymentGateway, $selectedPaymentGateway);
 }
