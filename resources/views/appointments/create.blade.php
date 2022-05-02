@@ -69,13 +69,13 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <button class="nav-link bg-white text-active-primary" :class="menu===1 ? '' : 'disabled'" x-on:click="open = 2">
+                                        <button class="nav-link bg-white text-active-primary" :class="open===2 ? 'active' : ''" x-on:click="open = 2">
                                             Rawat Inap
                                         </button>
                                     </li>
 
                                     <li class="nav-item">
-                                        <button class="nav-link bg-white text-active-primary" :class="menu===1 ? '' : 'disabled'" x-on:click="open = 3">
+                                        <button class="nav-link bg-white text-active-primary" :class="open===3 ? 'active' : ''" x-on:click="open = 3">
                                             Promotif/Preventif
                                         </button>
                                     </li>

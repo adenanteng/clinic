@@ -25,16 +25,6 @@
     @endif
     <link href="{{ mix('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
     <script defer src="{{ asset('assets/js/alpine.js') }}"></script>
-
-    <style>
-        .icon{
-            width: 3rem;
-        }
-        .item{
-            width: 100%;
-        }
-    </style>
-{{--    <script defer src="https://unpkg.com/alpinejs@3.9.6/dist/cdn.min.js"></script>--}}
 </head>
 @php $styleCss = 'style'; @endphp
 <body id="kt_body"
@@ -140,8 +130,8 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="" >
         render: {
             option: function(item, escape) {
                 return `<a class="py-2 d-flex" href="/${ escape(item.role_name)}s/${ escape(item.role_name) === 'Patient' ? item.patient.patient_unique_id : item.id }">
-							<div class="icon me-3">
-								<img class="img-fluid" src="${item.profile_image}" />
+							<div class=" me-3">
+								<img class="img-fluid h-50px" src="${item.profile_image}" />
 							</div>
 							<div>
 								<div class="mb-1">
@@ -156,32 +146,6 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="" >
             },
         },
     });
-
-    // $(document).ready(function() {
-    //     $(".js-cmd").select2({
-    //         ajax: {
-    //             url: '/search',
-    //             dataType: 'json',
-    //             delay: 250,
-    //             processResults: function (data) {
-    //                 return {
-    //                     results:  $.map(data, function (item) {
-    //                         return {
-    //                             text: item.full_name,
-    //                             id: item.id
-    //                         }
-    //                     })
-    //                 };
-    //             },
-    //             cache: true
-    //         },
-    //         dropdownParent: $('#cmdModal'),
-    //         placeholder: 'Cari apapun disini',
-    //         minimumInputLength: 1,
-    //
-    //     });
-    // });
-
 
 </script>
 </body>
