@@ -138,8 +138,8 @@ class User extends Authenticatable implements HasMedia
     const STAFF = 4;
     const TYPE = [
         self::ADMIN   => 'Admin',
-        self::DOCTOR  => 'Doctor',
-        self::PATIENT => 'Patient',
+        self::DOCTOR  => 'Dokter',
+        self::PATIENT => 'Pasien',
         self::STAFF   => 'Staff',
     ];
     const ALL = 2;

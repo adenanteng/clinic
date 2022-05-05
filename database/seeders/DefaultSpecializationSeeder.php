@@ -23,7 +23,7 @@ class DefaultSpecializationSeeder extends Seeder
                 'name' => 'Spesialis Gigi',
             ],
             [
-                'name' => 'Bidan',
+                'name' => 'Kebidanan',
             ],
             [
                 'name' => 'Spesialis KIA',

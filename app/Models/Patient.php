@@ -99,14 +99,14 @@ class Patient extends Model implements HasMedia
         self::DIVORCES  => 'Cerai',
     ];
 
-    const MUSLIM = 1;
+    const ISLAM = 1;
     const KRISTEN = 2;
     const KATOLIK = 3;
     const BUDHA = 4;
     const HINDU = 5;
     const KONGHUCU = 6;
     const RELIGION_GROUP_ARRAY = [
-        self::MUSLIM  => 'Muslim',
+        self::ISLAM  => 'Islam',
         self::KRISTEN  => 'Kristen',
         self::KATOLIK  => 'Katolik',
         self::BUDHA => 'Budha',

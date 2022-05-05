@@ -22,43 +22,55 @@ class DefaultServicesSeeder extends Seeder
             [
                 'category_id'       => '1',
                 'name'              => 'Poli Umum',
-//                'charges'           => '50000',
                 'status'            => Service::ACTIVE,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
                 'icon'              => asset('assets/front/images/services_images/Diagnostics.png'),
             ],
             [
                 'category_id'       => '1',
-                'name'              => 'Poli Gigi',
-//                'charges'           => '50000',
-                'status'            => Service::ACTIVE,
-                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
-                'icon'              => asset('assets/front/images/services_images/Treatment.png'),
-            ],
-            [
-                'category_id'       => '1',
                 'name'              => 'Poli Mata',
-//                'charges'           => '50000',
                 'status'            => Service::ACTIVE,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
-                'icon'              => asset('assets/front/images/services_images/Surgery.png'),
+                'icon'              => asset('assets/front/images/services_images/Diagnostics.png'),
             ],
             [
                 'category_id'       => '1',
-                'name'              => 'KIA',
-//                'charges'           => '50000',
+                'name'              => 'IGD',
                 'status'            => Service::ACTIVE,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
                 'icon'              => asset('assets/front/images/services_images/Emergency.png'),
             ],
             [
-                'category_id'       => '4',
+                'category_id'       => '1',
+                'name'              => 'KIA',
+                'status'            => Service::ACTIVE,
+                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
+                'icon'              => asset('assets/front/images/services_images/Diagnostics.png'),
+            ],
+
+            [
+                'category_id'       => '2',
+                'name'              => 'Bed 1',
+                'status'            => Service::ACTIVE,
+                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
+                'icon'              => asset('assets/front/images/services_images/qualified_doctors.png'),
+            ],
+            [
+                'category_id'       => '2',
+                'name'              => 'Bed 2',
+                'status'            => Service::ACTIVE,
+                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
+                'icon'              => asset('assets/front/images/services_images/qualified_doctors.png'),
+            ],
+
+            [
+                'category_id'       => '3',
                 'name'              => 'Vaksin Covid-19',
-//                'charges'           => '50000',
                 'status'            => Service::ACTIVE,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
                 'icon'              => asset('assets/front/images/services_images/Vaccine.png'),
             ],
+
         ];
 
         $doctor = Doctor::firstOrfail();

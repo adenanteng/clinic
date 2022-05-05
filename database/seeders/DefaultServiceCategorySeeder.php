@@ -24,10 +24,7 @@ class DefaultServiceCategorySeeder extends Seeder
                 'name' => 'Rawat Inap',
             ],
             [
-                'name' => 'IGD',
-            ],
-            [
-                'name' => 'Medical Checkup',
+                'name' => 'Promotif/Preventif',
             ],
         ];
 

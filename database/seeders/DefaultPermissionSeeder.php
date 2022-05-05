@@ -18,71 +18,75 @@ class DefaultPermissionSeeder extends Seeder
         $permissions = [
             [
                 'name'         => 'manage_doctors',
-                'display_name' => 'Manage Doctors',
+                'display_name' => 'Mengelola Dokter',
             ],
             [
                 'name'         => 'manage_patients',
-                'display_name' => 'Manage Patients',
+                'display_name' => 'Mengelola Pasien',
             ],
             [
                 'name'         => 'manage_appointments',
-                'display_name' => 'Manage Appointments',
+                'display_name' => 'Mengelola Pendaftaran',
             ],
             [
                 'name'         => 'manage_patient_visits',
-                'display_name' => 'Manage Patient Visits',
+                'display_name' => 'Mengelola Kasus Pasien',
             ],
             [
                 'name'         => 'manage_staff',
-                'display_name' => 'Manage Staff',
+                'display_name' => 'Mengelola Staf',
             ],
             [
                 'name'         => 'manage_doctor_sessions',
-                'display_name' => 'Manage Doctor Sessions',
+                'display_name' => 'Mengelola Jadwal Dokter',
             ],
             [
                 'name'         => 'manage_settings',
-                'display_name' => 'Manage Settings',
+                'display_name' => 'Mengelola Pengaturan',
             ],
             [
                 'name'         => 'manage_services',
-                'display_name' => 'Manage Services',
+                'display_name' => 'Mengelola Pelayanan',
             ],
             [
                 'name'         => 'manage_specialities',
-                'display_name' => 'Manage Specialities',
+                'display_name' => 'Mengelola Spesialisasi',
             ],
             [
                 'name'         => 'manage_countries',
-                'display_name' => 'Manage Countries',
+                'display_name' => 'Mengelola Negara',
             ],
             [
                 'name'         => 'manage_states',
-                'display_name' => 'Manage States',
+                'display_name' => 'Mengelola Provinsi',
             ],
             [
                 'name'         => 'manage_cities',
-                'display_name' => 'Manage Cities',
+                'display_name' => 'Mengelola Kabupaten',
             ],
             [
                 'name'         => 'manage_roles',
-                'display_name' => 'Manage Roles',
+                'display_name' => 'Mengelola Peran',
             ],
             [
                 'name'         => 'manage_currencies',
-                'display_name' => 'Manage Currencies',
+                'display_name' => 'Mengelola Mata Uang',
             ],
             [
                 'name'         => 'manage_admin_dashboard',
-                'display_name' => 'Manage Admin Dashboard',
+                'display_name' => 'Mengelola Beranda',
             ],
             [
                 'name'         => 'manage_front_cms',
-                'display_name' => 'Manage Front CMS',
+                'display_name' => 'Mengelola CMS',
             ],
             [
                 'name'         => 'manage_transactions',
-                'display_name' => 'Manage Transactions',
+                'display_name' => 'Mengelola Transaksi',
+            ],
+            [
+                'name'         => 'manage_pharmacys',
+                'display_name' => 'Mengelola Apotek',
             ],
         ];
 

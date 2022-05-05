@@ -9,9 +9,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory as Faker;
 
 class DefaultUserSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -19,37 +21,77 @@ class DefaultUserSeeder extends Seeder
      */
     public function run()
     {
+        $this->faker = Faker::create();
+
         $users = [
             [
+                'nric_type'         => 1,
+                'nric_id'           => $this->faker->numerify('############'),
                 'first_name'        => 'Aden',
                 'last_name'         => 'Anteng',
+                'email'             => 'admin@clinically.com',
+                'region_code'       => 62,
                 'contact'           => '82280031916',
+                'dob'               => '1996-12-20',
                 'gender'            => User::MALE,
+                'marriage'          => Patient::SINGLE,
+                'religion'          => Patient::ISLAM,
+                'blood_group'       => Patient::A,
+                'profession'        => 'Developer',
                 'type'              => User::ADMIN,
-                'email'             => 'admin@clinic.com',
-                'email_verified_at' => Carbon::now(),
                 'password'          => Hash::make('123456'),
-                'region_code'       => '62',
+                'email_verified_at' => Carbon::now(),
             ],
             [
-                'first_name'        => 'Arliyans',
-                'last_name'         => 'Soebandono',
-                'contact'           => '1234567890',
-                'gender'            => User::MALE,
+                'nric_type'         => 1,
+                'nric_id'           => $this->faker->numerify('############'),
+                'first_name'        => $this->faker->firstName('female'),
+                'last_name'         => $this->faker->lastName(),
+                'email'             => 'dokter@clinically.com',
+                'region_code'       => 62,
+                'contact'           => $this->faker->phoneNumber(),
+                'dob'               => $this->faker->date('y-m-d'),
+                'gender'            => User::FEMALE,
+                'marriage'          => Patient::SINGLE,
+                'religion'          => Patient::ISLAM,
+                'blood_group'       => Patient::B,
                 'type'              => User::DOCTOR,
-                'email'             => 'doctor@clinic.com',
-                'email_verified_at' => Carbon::now(),
                 'password'          => Hash::make('123456'),
+                'email_verified_at' => Carbon::now(),
             ],
             [
-                'first_name'        => 'Handy',
-                'last_name'         => 'Wahyono',
-                'contact'           => '1234567890',
+                'nric_type'         => 1,
+                'nric_id'           => $this->faker->numerify('############'),
+                'first_name'        => $this->faker->firstName('male'),
+                'last_name'         => $this->faker->lastName(),
+                'email'             => 'dokter2@clinically.com',
+                'region_code'       => 62,
+                'contact'           => $this->faker->phoneNumber(),
+                'dob'               => $this->faker->date('y-m-d'),
                 'gender'            => User::MALE,
-                'type'              => User::PATIENT,
-                'email'             => 'patient@clinic.com',
-                'email_verified_at' => Carbon::now(),
+                'marriage'          => Patient::SINGLE,
+                'religion'          => Patient::ISLAM,
+                'blood_group'       => Patient::AB,
+                'type'              => User::DOCTOR,
                 'password'          => Hash::make('123456'),
+                'email_verified_at' => Carbon::now(),
+            ],
+            [
+                'nric_type'         => 1,
+                'nric_id'           => $this->faker->numerify('############'),
+                'first_name'        => $this->faker->firstName('male'),
+                'last_name'         => $this->faker->lastName(),
+                'email'             => 'pasien@clinically.com',
+                'region_code'       => 62,
+                'contact'           => $this->faker->phoneNumber(),
+                'dob'               => $this->faker->date('y-m-d'),
+                'gender'            => User::FEMALE,
+                'marriage'          => Patient::SINGLE,
+                'religion'          => Patient::ISLAM,
+                'blood_group'       => Patient::B,
+                'type'              => User::DOCTOR,
+                'password'          => Hash::make('123456'),
+                'email_verified_at' => Carbon::now(),
             ],
         ];
 
@@ -60,6 +102,10 @@ class DefaultUserSeeder extends Seeder
                 $user->address()->create(['owner_id' => $user->id]);
             }
             if ($key == 2) {
+                $doctor = Doctor::create(['user_id' => $user->id]);
+                $user->address()->create(['owner_id' => $user->id]);
+            }
+            if ($key == 3) {
                 $patient = Patient::create(['user_id' => $user->id, 'patient_unique_id' => '000001']);
                 $patient->address()->create(['owner_id' => $patient['user_id']]);
             }

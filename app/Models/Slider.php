@@ -85,6 +85,6 @@ class Slider extends Model implements HasMedia
             return $media->getFullUrl();
         }
 
-        return asset('web/media/avatars/male.png');
+        return asset('assets/front/images/home/home-page-image.png');
     }
 }

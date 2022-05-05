@@ -88,6 +88,6 @@ class FrontPatientTestimonial extends Model implements hasMedia
             return $media->getFullUrl();
         }
 
-        return asset('web/media/avatars/male.png');
+        return asset('assets/front/images/testimonials/8.jpg');
     }
 }

@@ -14,6 +14,6 @@ class AddEmailVerifiedFieldSettingTableSeeder extends Seeder
      */
     public function run()
     {
-        Setting::create(['key' => 'email_verified', 'value' => 1]);
+        Setting::create(['key' => 'email_verified', 'value' => 0]);
     }
 }

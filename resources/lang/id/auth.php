@@ -13,28 +13,28 @@ return [
     |
     */
 
-    'failed'           => 'These credentials do not match our records.',
-    'throttle'         => 'Too many login attempts. Please try again in :seconds seconds.',
-    'full_name'        => 'Full Name',
-    'email'            => 'Email',
-    'password'         => 'Password',
-    'confirm_password' => 'Confirm Password',
-    'remember_me'      => 'Remember Me',
-    'sign_in'          => 'Sign In',
-    'sign_out'         => 'Sign out',
-    'register'         => 'Register',
+    'failed'           => 'Kredensial ini tidak cocok dengan catatan kami.',
+    'throttle'         => 'Terlalu banyak upaya login. Silakan coba lagi setelah :seconds detik lagi.',
+    'full_name'        => 'Nama Lengkap',
+    'email'            => 'Surel',
+    'password'         => 'Sandi',
+    'confirm_password' => 'Konfirmasi Sandi',
+    'remember_me'      => 'Ingat saya',
+    'sign_in'          => 'Masuk',
+    'sign_out'         => 'Keluar',
+    'register'         => 'Daftar keanggotaan',
 
     'login' => [
-        'title'               => 'Sign in to start your session',
-        'forgot_password'     => 'I forgot my password',
-        'register_membership' => 'Register a new membership',
+        'title'               => 'Masuk untuk memulai sesi anda',
+        'forgot_password'     => 'Saya lupa kata sandi saya',
+        'register_membership' => 'Daftar keanggotaan baru',
     ],
 
     'registration' => [
-        'title'           => 'Register a new membership',
-        'i_agree'         => 'I agree to',
-        'terms'           => 'the terms',
-        'have_membership' => 'I already have a membership',
+        'title'           => 'Daftar keanggotaan baru',
+        'i_agree'         => 'Saya setuju untuk',
+        'terms'           => 'syarat',
+        'have_membership' => 'Saya sudah memiliki keanggotaan',
     ],
 
     'forgot_password' => [

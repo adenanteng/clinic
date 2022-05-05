@@ -17,8 +17,8 @@ class DefaultSliderSeeder extends Seeder
     {
         $inputs = [
             [
-                'title'             => 'We Provide All Health Care Solution',
-                'short_description' => 'Protect Your Health And Take Care To Of Your Health',
+                'title'             => 'Lindungi & jaga kesehatan anda',
+                'short_description' => 'Kami menyediakan solusi perawatan kesehatan untuk anda',
                 'image'             => asset('assets/front/images/home/home-page-image.png'),
                 'is_default'        => true,
             ],

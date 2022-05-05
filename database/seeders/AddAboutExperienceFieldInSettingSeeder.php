@@ -14,6 +14,6 @@ class AddAboutExperienceFieldInSettingSeeder extends Seeder
      */
     public function run()
     {
-        Setting::create(['key' => 'about_experience', 'value' => '20']);
+        Setting::create(['key' => 'about_experience', 'value' => '4']);
     }
 }

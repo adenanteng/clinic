@@ -26,12 +26,12 @@ class DefaultRoleSeeder extends Seeder
             ],
             [
                 'name' => 'doctor',
-                'display_name' => 'Doctor',
+                'display_name' => 'Dokter',
                 'is_default' => false,
             ],
             [
                 'name' => 'patient',
-                'display_name' => 'Patient',
+                'display_name' => 'Pasien',
                 'is_default' => false,
             ],
         ];
@@ -47,11 +47,11 @@ class DefaultRoleSeeder extends Seeder
         $patientRole = Role::whereName('patient')->first();
 
         /** @var User $user */
-        $user = User::whereEmail('admin@clinic.com')->first();
+        $user = User::whereEmail('admin@clinically.com')->first();
         /** @var Doctor $doctor */
-        $doctor = User::whereEmail('doctor@clinic.com')->first();
+        $doctor = User::whereEmail('dokter@clinically.com')->first();
         /** @var Patient $patient */
-        $patient = User::whereEmail('patient@clinic.com')->first();
+        $patient = User::whereEmail('pasien@clinically.com')->first();
 
         $allPermission = Permission::pluck('name', 'id');
 
