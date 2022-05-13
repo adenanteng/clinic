@@ -164,113 +164,113 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('submit', '#addAppointmentForm', function (e) {
-    e.preventDefault();
-    let data = new FormData($(this)[0]);
-    let btnSubmitEle = $(this).find('#submitBtn');
-    setAdminBtnLoader(btnSubmitEle);
-    $.ajax({
-        url: $(this).attr('action'),
-        type: 'POST',
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function (mainResult) {
-            if (mainResult.success) {
-                let appID = mainResult.data.appointmentId;
-                displaySuccessMessage(mainResult.message);
-
-                $('#addAppointmentForm')[0].reset();
-                $('#doctorId').val('').trigger('change');
-
-                if (mainResult.data.payment_type == paystack) {
-                    return location.href = mainResult.data.redirect_url;
-                }
-
-                if (mainResult.data.payment_type == paytmMethod) {
-                    window.location.replace(route('paytm.init', { 'appointmentId': appID }));
-                }
-
-                if (mainResult.data.payment_type == authorizeMethod) {
-                    return location.href = route('authorize.init',{'appointmentId': appID});
-                }
-
-                if (mainResult.data.payment_type == paypal) {
-                    $.ajax({
-                        type: 'GET',
-                        url: route('paypal.init'),
-                        data: { 'appointmentId': appID },
-                        success: function (result) {
-                            if (result.statusCode == 201) {
-                                let redirectTo = '';
-
-                                $.each(result.result.links,
-                                    function (key, val) {
-                                        if (val.rel == 'approve') {
-                                            redirectTo = val.href;
-                                        }
-                                    });
-                                location.href = redirectTo;
-                            }
-                        },
-                        error: function (result) {
-                        },
-                        complete: function () {
-                        },
-                    });
-                }
-
-                if (mainResult.data.payment_type == manually) {
-                    setTimeout(function () {
-                        location.href = mainResult.data.url;
-                    }, 1500);
-                }
-
-                if (mainResult.data.payment_type == stripeMethod) {
-                    let sessionId = mainResult.data[0].sessionId;
-                    stripe.redirectToCheckout({
-                        sessionId: sessionId,
-                    }).then(function (mainResult) {
-                        manageAjaxErrors(mainResult);
-                    });
-                }
-
-                if (mainResult.data.payment_type == razorpayMethod) {
-                    $.ajax({
-                        type: 'POST',
-                        url: route('razorpay.init'),
-                        data: { 'appointmentId': appID },
-                        success: function (result) {
-                            if (result.success) {
-                                let { id, amount, name, email, contact } = result.data
-                                options.amount = amount
-                                options.order_id = id
-                                options.prefill.name = name
-                                options.prefill.email = email
-                                options.prefill.contact = contact
-                                options.prefill.appointmentID = appID
-
-                                let razorPay = new Razorpay(options)
-                                razorPay.open()
-                                razorPay.on('payment.failed', storeFailedPayment)
-                            }
-                        },
-                        error: function (result) {
-                        },
-                        complete: function () {
-                        },
-                    })
-                }
-            }
-        },
-        error: function (result) {
-            displayErrorMessage(result.responseJSON.message);
-        },
-        complete: function () {
-            setAdminBtnLoader(btnSubmitEle);
-        },
-    });
-});
+// $(document).on('submit', '#addAppointmentForm', function (e) {
+//     e.preventDefault();
+//     let data = new FormData($(this)[0]);
+//     let btnSubmitEle = $(this).find('#submitBtn');
+//     setAdminBtnLoader(btnSubmitEle);
+//     $.ajax({
+//         url: $(this).attr('action'),
+//         type: 'POST',
+//         data: data,
+//         processData: false,
+//         contentType: false,
+//         success: function (mainResult) {
+//             if (mainResult.success) {
+//                 let appID = mainResult.data.appointmentId;
+//                 displaySuccessMessage(mainResult.message);
+//
+//                 $('#addAppointmentForm')[0].reset();
+//                 $('#doctorId').val('').trigger('change');
+//
+//                 if (mainResult.data.payment_type == paystack) {
+//                     return location.href = mainResult.data.redirect_url;
+//                 }
+//
+//                 if (mainResult.data.payment_type == paytmMethod) {
+//                     window.location.replace(route('paytm.init', { 'appointmentId': appID }));
+//                 }
+//
+//                 if (mainResult.data.payment_type == authorizeMethod) {
+//                     return location.href = route('authorize.init',{'appointmentId': appID});
+//                 }
+//
+//                 if (mainResult.data.payment_type == paypal) {
+//                     $.ajax({
+//                         type: 'GET',
+//                         url: route('paypal.init'),
+//                         data: { 'appointmentId': appID },
+//                         success: function (result) {
+//                             if (result.statusCode == 201) {
+//                                 let redirectTo = '';
+//
+//                                 $.each(result.result.links,
+//                                     function (key, val) {
+//                                         if (val.rel == 'approve') {
+//                                             redirectTo = val.href;
+//                                         }
+//                                     });
+//                                 location.href = redirectTo;
+//                             }
+//                         },
+//                         error: function (result) {
+//                         },
+//                         complete: function () {
+//                         },
+//                     });
+//                 }
+//
+//                 if (mainResult.data.payment_type == manually) {
+//                     setTimeout(function () {
+//                         location.href = mainResult.data.url;
+//                     }, 1500);
+//                 }
+//
+//                 if (mainResult.data.payment_type == stripeMethod) {
+//                     let sessionId = mainResult.data[0].sessionId;
+//                     stripe.redirectToCheckout({
+//                         sessionId: sessionId,
+//                     }).then(function (mainResult) {
+//                         manageAjaxErrors(mainResult);
+//                     });
+//                 }
+//
+//                 if (mainResult.data.payment_type == razorpayMethod) {
+//                     $.ajax({
+//                         type: 'POST',
+//                         url: route('razorpay.init'),
+//                         data: { 'appointmentId': appID },
+//                         success: function (result) {
+//                             if (result.success) {
+//                                 let { id, amount, name, email, contact } = result.data
+//                                 options.amount = amount
+//                                 options.order_id = id
+//                                 options.prefill.name = name
+//                                 options.prefill.email = email
+//                                 options.prefill.contact = contact
+//                                 options.prefill.appointmentID = appID
+//
+//                                 let razorPay = new Razorpay(options)
+//                                 razorPay.open()
+//                                 razorPay.on('payment.failed', storeFailedPayment)
+//                             }
+//                         },
+//                         error: function (result) {
+//                         },
+//                         complete: function () {
+//                         },
+//                     })
+//                 }
+//             }
+//         },
+//         error: function (result) {
+//             displayErrorMessage(result.responseJSON.message);
+//         },
+//         complete: function () {
+//             setAdminBtnLoader(btnSubmitEle);
+//         },
+//     });
+// });
 
 function storeFailedPayment (response) {
     $.ajax({

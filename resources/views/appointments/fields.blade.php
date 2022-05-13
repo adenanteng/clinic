@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="d-flex">
-        {{ Form::button(__('messages.common.save'),['type' => 'submit','class' => 'btn btn-primary me-2','id'=>'submitBtn']) }}
+        {{ Form::button(__('messages.common.save'),['type' => 'submit','class' => 'btn btn-primary me-2']) }}
         &nbsp;
         <a href="{{ url()->previous() }}" type="reset"
            class="btn btn-light btn-active-light-primary me-2">{{__('messages.common.discard')}}</a>

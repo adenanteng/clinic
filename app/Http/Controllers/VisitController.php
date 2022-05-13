@@ -8,10 +8,12 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\User;
 use App\Models\Visit;
+use App\Models\VisitBilling;
 use App\Models\VisitNote;
 use App\Models\VisitObservation;
 use App\Models\VisitPrescription;
 use App\Models\VisitProblem;
+use App\Repositories\VisitBillingRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -95,10 +97,12 @@ class VisitController extends AppBaseController
         if (empty(Visit::where('appointment_id', $id)->first())) {
             $appointment = Appointment::where('appointment_unique_id', $id)->first()->toArray();
             $appointment['appointment_id'] = $appointment['appointment_unique_id'];
-//            $appointment->date = Carbon::now();
-//            dd($appointment);
+//            $appointment['date'] = Carbon::now();
+//            dd($id);
             $this->visitRepository->create($appointment);
             $status = Appointment::where('appointment_unique_id', $id)->update(['status' => 2]);
+
+//            VisitBillingRepository::create($appointment);
             Flash::success('Visit created successfully.');
         }
 
@@ -224,8 +228,8 @@ class VisitController extends AppBaseController
         ]);
         $observationData = VisitObservation::whereVisitId($input['visit_id'])->get();
 
-//        return $this->sendResponse($observationData, 'Observation added successfully.');
-        return redirect()->back()->with('success', 'your message,here');
+        return $this->sendResponse($observationData, 'Observation added successfully.');
+//        return redirect()->route('visits.show');
     }
 
     /**

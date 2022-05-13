@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HigherOrderCollectionProxy;
 use Stripe\Exception\ApiErrorException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -62,9 +63,10 @@ class AppointmentController extends AppBaseController
     {
         if ($request->ajax()) {
             return Datatables::of((new AppointmentDataTable())->get($request->only([
-                'status', 'filter_date', 'payment_type',
+                'status', 'filter_date', 'payment_type', 'asu',
             ])))->make(true);
         }
+
         $appointmentStatus = Appointment::ALL_STATUS;
         $paymentStatus = getAllPaymentStatus();
         $paymentGateway = getPaymentGateway();
@@ -96,9 +98,9 @@ class AppointmentController extends AppBaseController
     /**
      * @param  CreateAppointmentRequest  $request
      *
+     * @return RedirectResponse
      * @throws ApiErrorException
      *
-     * @return JsonResponse
      */
     public function store(CreateAppointmentRequest $request)
     {
@@ -125,7 +127,9 @@ class AppointmentController extends AppBaseController
             'appointmentId' => $appointment->id,
         ];
 
-        return $this->sendResponse($data, 'Appointment created successfully.');
+//        return $this->sendResponse($data, 'Appointment created successfully.');
+        return redirect()->route('appointments.index');
+
     }
 
     /**

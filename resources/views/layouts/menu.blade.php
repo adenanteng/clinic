@@ -53,110 +53,6 @@
     </div>
     @endrole
 @endcan
-@can('manage_staff')
-    <div class="menu-item menu-search sidebar-dropdown">
-        <a class="menu-link {{ Request::is('staff*') ? 'active' : '' }}" href="{{ route('staff.index') }}">
-        <span class="menu-icon">
-            <i class="fas fa-users fs-3"></i>
-        </span>
-            <span class="menu-title">{{__('messages.staffs')}}</span>
-        </a>
-        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-            <li class="{{ Request::is('staff*') ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ route('staff.index') }}">
-                    <span class="menu-title {{ Request::is('staff*') ? 'text-primary' : '' }}">{{ __('messages.staffs') }}</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-@endcan
-
-@role('patient')
-<div class="menu-item menu-search">
-    <a class="menu-link {{ Request::is('patients/dashboard*') ? 'active' : '' }}"
-       href="{{ route('patients.dashboard') }}">
-        <span class="menu-icon">
-            <i class="fas fa fa-digital-tachograph fs-3"></i>
-        </span>
-        <span class="menu-title">{{ __('messages.dashboard') }}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ (Request::is('patients/appointments*') || Request::is('patients/patient-appointments-calendar*')||Request::is('patients/doctors*')) ? 'active' : '' }}"
-       href="{{ route('patients.appointments.index') }}">
-        <span class="menu-icon"><i class="fas fa-calendar-alt fs-3" aria-hidden="true"></i></span>
-        <span class="menu-title">{{__('messages.appointment.appointments')}}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ (Request::is('patients/transactions*')) ? 'active' : '' }}"
-       href="{{ route('patients.transactions') }}">
-        <span class="menu-icon">
-            <i class="fas fa-money-bill-wave"></i>
-        </span>
-        <span class="menu-title">{{ __('messages.transactions') }}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ (Request::is('patients/reviews*')) ? 'active' : '' }}"
-       href="{{ route('patients.reviews.index') }}">
-        <span class="menu-icon">
-            <i class="fas fa-star"></i>
-        </span>
-        <span class="menu-title">{{ __('messages.reviews') }}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ (Request::is('patients/patient-visits*')) ? 'active' : '' }}"
-       href="{{ route('patients.patient.visits.index') }}">
-        <span class="menu-icon"><i class="fas fa-procedures fs-3" aria-hidden="true"></i></span>
-        <span class="menu-title">{{__('messages.visits')}}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ Request::is('patients/live-consultation*') ? 'active' : '' }}"
-       href="{{ route('patients.live-consultation.index') }}">
-    <span class="menu-icon">
-        <i class="fas fa-video fs-3"></i>
-    </span>
-        <span class="menu-title">{{__('messages.live_consultations')}}</span>
-    </a>
-</div>
-<div class="menu-item menu-search">
-    <a class="menu-link {{ Request::is('patients/connect-google-calendar*') ? 'active' : '' }}"
-       href="{{ route('patients.googleCalendar.index') }}">
-    <span class="menu-icon">
-        <i class="fas fa-calendar-day fs-3"></i>
-    </span>
-        <span class="menu-title">{{__('messages.setting.connect_google_calendar')}}</span>
-    </a>
-</div>
-@endrole
-@can('manage_doctors')
-    <div class="menu-item menu-search sidebar-dropdown">
-        <a class="menu-link {{
-    (Request::is('doctors*')||Request::is('doctor-sessions*')||Request::is('doctor-sessions*')) ? 'active' : '' }}"
-           href="{{ route('doctors.index') }}">
-        <span class="menu-icon">
-            <i class="fas fa-user-md fs-3"></i>
-        </span>
-            <span class="menu-title">{{ __('messages.doctors') }}<span
-                        class="d-none">{{ __('messages.doctor_sessions') }}</span></span>
-        </a>
-        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-            <li class="{{ Request::is('doctors*') ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ route('doctors.index') }}">
-                    <span class="menu-title {{ Request::is('doctors*') ? 'text-primary' : '' }}">{{ __('messages.doctors') }}</span>
-                </a>
-            </li>
-            <li class="{{ Request::is('doctor-sessions*') ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ route('doctor-sessions.index') }}">
-                    <span class="menu-title {{ Request::is('doctor-sessions*') ? 'text-primary' : '' }}">{{ __('messages.doctor_sessions') }}</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-@endcan
 @can('manage_patients')
     <div class="menu-item menu-search sidebar-dropdown">
         <a class="menu-link {{ Request::is('patients*') ? 'active' : '' }}"
@@ -185,9 +81,59 @@
             <span class="menu-title">{{ __('messages.appointments') }}</span>
         </a>
         <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-            <li class="{{ (Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ route('appointments.index') }}">
-                    <span class="menu-title {{ (Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointments') }}</span>
+            @foreach(getAllDepartment() as $depart)
+            <li class="{{ (Request::is('appointments/'.$depart->slug.'*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ url('appointments/'.$depart->slug) }}">
+                    <span class="menu-title {{ (Request::is('appointments/'.$depart->slug.'*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.'.$depart->slug) }}</span>
+                </a>
+            </li>
+            @endforeach
+
+{{--            <li class="{{ (Request::is('appointments/opd*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">--}}
+{{--                <a class="menu-link py-3" href="{{ route('appointments.opd') }}">--}}
+{{--                    <span class="menu-title {{ (Request::is('appointments/opd*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.opd') }}</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="{{ (Request::is('appointments/ipd*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">--}}
+{{--                <a class="menu-link py-3" href="{{ route('appointments.ipd') }}">--}}
+{{--                    <span class="menu-title {{ (Request::is('appointments/ipd*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.ipd') }}</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+        </ul>
+
+    </div>
+@endcan
+@if(!getLogInUser()->hasRole('doctor'))
+    @can('manage_patient_visits')
+        <div class="menu-item menu-search sidebar-dropdown">
+            <a class="menu-link {{ Request::is('visits*') ? 'active' : '' }}" href="{{ route('visits.index') }}">
+                <span class="menu-icon">
+                    <i class="fas fa-procedures fs-3"></i>
+                </span>
+                <span class="menu-title">{{__('messages.visits')}}</span>
+            </a>
+            <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
+                <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
+                    <a class="menu-link py-3" href="{{ route('visits.index') }}">
+                        <span class="menu-title {{ Request::is('visits*') ? 'text-primary' : '' }}">{{ __('messages.visits') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    @endcan
+@endif
+@can('manage_pharmacys')
+    <div class="menu-item menu-search sidebar-dropdown">
+        <a class="menu-link {{ Request::is('pharmacys*') ? 'active' : '' }}" href="{{ route('pharmacys.index') }}">
+                <span class="menu-icon">
+                    <i class="fas fa-capsules fs-3"></i>
+                </span>
+            <span class="menu-title">{{__('messages.pharmacys')}}</span>
+        </a>
+        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
+            <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
+                    <span class="menu-title {{ Request::is('pharmacys*') ? 'text-primary' : '' }}">{{ __('messages.pharmacys') }}</span>
                 </a>
             </li>
         </ul>
@@ -211,41 +157,48 @@
         </ul>
     </div>
 @endcan
-@if(!getLogInUser()->hasRole('doctor'))
-    @can('manage_patient_visits')
-        <div class="menu-item menu-search sidebar-dropdown">
-            <a class="menu-link {{ Request::is('visits*') ? 'active' : '' }}" href="{{ route('visits.index') }}">
-                <span class="menu-icon">
-                    <i class="fas fa-procedures fs-3"></i>
-                </span>
-                <span class="menu-title">{{__('messages.visits')}}</span>
-            </a>
-            <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-                <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
-                    <a class="menu-link py-3" href="{{ route('visits.index') }}">
-                        <span class="menu-title {{ Request::is('visits*') ? 'text-primary' : '' }}">{{ __('messages.visits') }}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="menu-item menu-search sidebar-dropdown">
-            <a class="menu-link {{ Request::is('pharmacys*') ? 'active' : '' }}" href="{{ route('pharmacys.index') }}">
-                <span class="menu-icon">
-                    <i class="fas fa-capsules fs-3"></i>
-                </span>
-                <span class="menu-title">{{__('messages.pharmacys')}}</span>
-            </a>
-            <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-                <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
-                    <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
-                        <span class="menu-title {{ Request::is('pharmacys*') ? 'text-primary' : '' }}">{{ __('messages.pharmacys') }}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    @endcan
-@endif
+@can('manage_doctors')
+    <div class="menu-item menu-search sidebar-dropdown">
+        <a class="menu-link {{(Request::is('doctors*')||Request::is('doctor-sessions*')||Request::is('doctor-sessions*')) ? 'active' : '' }}"
+           href="{{ route('doctors.index') }}">
+        <span class="menu-icon">
+            <i class="fas fa-user-md fs-3"></i>
+        </span>
+        <span class="menu-title">{{ __('messages.doctors') }}
+            <span class="d-none">{{ __('messages.doctor_sessions') }}</span>
+        </span>
+        </a>
+        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
+            <li class="{{ Request::is('doctors*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('doctors.index') }}">
+                    <span class="menu-title {{ Request::is('doctors*') ? 'text-primary' : '' }}">{{ __('messages.doctors') }}</span>
+                </a>
+            </li>
+            <li class="{{ Request::is('doctor-sessions*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('doctor-sessions.index') }}">
+                    <span class="menu-title {{ Request::is('doctor-sessions*') ? 'text-primary' : '' }}">{{ __('messages.doctor_sessions') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endcan
+@can('manage_staff')
+    <div class="menu-item menu-search sidebar-dropdown">
+        <a class="menu-link {{ Request::is('staff*') ? 'active' : '' }}" href="{{ route('staff.index') }}">
+        <span class="menu-icon">
+            <i class="fas fa-users fs-3"></i>
+        </span>
+            <span class="menu-title">{{__('messages.staffs')}}</span>
+        </a>
+        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
+            <li class="{{ Request::is('staff*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('staff.index') }}">
+                    <span class="menu-title {{ Request::is('staff*') ? 'text-primary' : '' }}">{{ __('messages.staffs') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endcan
 @can('manage_services')
     <div class="menu-item menu-search sidebar-dropdown">
         <a class="menu-link {{ (Request::is('services*') || Request::is('service-categories*')) ? 'active' : '' }}"
@@ -404,3 +357,65 @@
         </ul>
     </div>
 @endcan
+
+@role('patient')
+<div class="menu-item menu-search">
+    <a class="menu-link {{ Request::is('patients/dashboard*') ? 'active' : '' }}"
+       href="{{ route('patients.dashboard') }}">
+        <span class="menu-icon">
+            <i class="fas fa fa-digital-tachograph fs-3"></i>
+        </span>
+        <span class="menu-title">{{ __('messages.dashboard') }}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ (Request::is('patients/appointments*') || Request::is('patients/patient-appointments-calendar*')||Request::is('patients/doctors*')) ? 'active' : '' }}"
+       href="{{ route('patients.appointments.index') }}">
+        <span class="menu-icon"><i class="fas fa-calendar-alt fs-3" aria-hidden="true"></i></span>
+        <span class="menu-title">{{__('messages.appointment.appointments')}}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ (Request::is('patients/transactions*')) ? 'active' : '' }}"
+       href="{{ route('patients.transactions') }}">
+        <span class="menu-icon">
+            <i class="fas fa-money-bill-wave"></i>
+        </span>
+        <span class="menu-title">{{ __('messages.transactions') }}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ (Request::is('patients/reviews*')) ? 'active' : '' }}"
+       href="{{ route('patients.reviews.index') }}">
+        <span class="menu-icon">
+            <i class="fas fa-star"></i>
+        </span>
+        <span class="menu-title">{{ __('messages.reviews') }}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ (Request::is('patients/patient-visits*')) ? 'active' : '' }}"
+       href="{{ route('patients.patient.visits.index') }}">
+        <span class="menu-icon"><i class="fas fa-procedures fs-3" aria-hidden="true"></i></span>
+        <span class="menu-title">{{__('messages.visits')}}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ Request::is('patients/live-consultation*') ? 'active' : '' }}"
+       href="{{ route('patients.live-consultation.index') }}">
+    <span class="menu-icon">
+        <i class="fas fa-video fs-3"></i>
+    </span>
+        <span class="menu-title">{{__('messages.live_consultations')}}</span>
+    </a>
+</div>
+<div class="menu-item menu-search">
+    <a class="menu-link {{ Request::is('patients/connect-google-calendar*') ? 'active' : '' }}"
+       href="{{ route('patients.googleCalendar.index') }}">
+    <span class="menu-icon">
+        <i class="fas fa-calendar-day fs-3"></i>
+    </span>
+        <span class="menu-title">{{__('messages.setting.connect_google_calendar')}}</span>
+    </a>
+</div>
+@endrole

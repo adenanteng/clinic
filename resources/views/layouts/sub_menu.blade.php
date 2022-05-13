@@ -18,60 +18,6 @@
     @endrole
 @endcan
 
-@role('patient')
-<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/dashboard*')) ? 'd-none' : '' }}">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/dashboard*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.dashboard') }}">
-            <span class="menu-title">{{ __('messages.dashboard') }}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
-{{ !(Request::is('patients/appointments*') || (Request::is('patients/patient-appointments-calendar*'))) ? 'd-none' : '' }}">
-    <div class="menu-item me-lg-1 {{ (Request::is('patients/appointments*') || Request::is('patients/patient-appointments-calendar*') || Request::is('admin-appointments-calendar*')) ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.appointments.index') }}">
-            <span class="menu-title">{{ __('messages.appointments') }}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/patient-visits*')) ? 'd-none' : '' }}">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/patient-visits*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.patient.visits.index') }}">
-            <span class="menu-title">{{ __('messages.visits') }}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/transactions*')) ? 'd-none' : '' }}"
-     data-kt-menu="true">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/transactions*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.transactions') }}">
-            <span class="menu-title">{{ __('messages.transactions') }}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/connect-google-calendar*')) ? 'd-none' : '' }}">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/connect-google-calendar*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.googleCalendar.index') }}">
-            <span class="menu-title">{{__('messages.setting.connect_google_calendar')}}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/reviews*')) ? 'd-none' : '' }}"
-     data-kt-menu="true">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/reviews*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.reviews.index') }}">
-            <span class="menu-title">{{ __('messages.reviews') }}</span>
-        </a>
-    </div>
-</div>
-<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/live-consultation*')) ? 'd-none' : '' }}">
-    <div class="menu-item me-lg-1 {{ Request::is('patients/live-consultation*') ? 'show' : ''  }}">
-        <a class="menu-link py-3" href="{{ route('patients.live-consultation.index') }}">
-            <span class="menu-title">{{__('messages.live_consultations')}}</span>
-        </a>
-    </div>
-</div>
-@endrole
 @can('manage_staff')
     <div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('staff*')) ? 'd-none' : '' }}"
          data-kt-menu="true">
@@ -84,7 +30,7 @@
 @endcan
 @can('manage_doctors')
     <div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
-{{ !(Request::is('doctors*') || Request::is('doctor-sessions*')) ? 'd-none' : '' }}">
+        {{ !(Request::is('doctors*') || Request::is('doctor-sessions*')) ? 'd-none' : '' }}">
         <div class="menu-item me-lg-1 {{ Request::is('doctors*') ? 'show' : ''  }}">
             <a class="menu-link py-3" href="{{ route('doctors.index') }}">
                 <span class="menu-title">{{ __('messages.doctors') }}</span>
@@ -190,14 +136,18 @@
         </div>
     </div>
 @endcan
-<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
+<div id="department" class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
 {{ !(Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'd-none' : '' }}">
     @can('manage_appointments')
-        <div class="menu-item me-lg-1 {{ Request::is('appointments*') ? 'show' : ''  }}">
-            <a class="menu-link py-3" href="{{ route('appointments.index') }}">
-                <span class="menu-title">{{ __('messages.appointments') }}</span>
+        @foreach(getAllDepartment() as $depa)
+        <div class="menu-item me-lg-1 {{ Request::is('appointments/'.$depa->slug.'*') ? 'show' : ''  }}">
+            <a class="menu-link py-3" href="{{ url('appointments/'.$depa->slug) }}">
+{{--                <span class="menu-title">{{ __('messages.appointment.'.$depa->slug) }}</span>--}}
+                <span class="menu-title">{{ $depa->name }}</span>
             </a>
+            <input class="{{ Request::is('appointments/'.$depa->slug.'*') ? 'asu' : ''  }}" hidden value="{{ $depa->slug }}" />
         </div>
+        @endforeach
     @endcan
 </div>
 @can('manage_patient_visits')
@@ -272,3 +222,58 @@
         </div>
     </div>
 @endcan
+
+@role('patient')
+<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/dashboard*')) ? 'd-none' : '' }}">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/dashboard*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.dashboard') }}">
+            <span class="menu-title">{{ __('messages.dashboard') }}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
+{{ !(Request::is('patients/appointments*') || (Request::is('patients/patient-appointments-calendar*'))) ? 'd-none' : '' }}">
+    <div class="menu-item me-lg-1 {{ (Request::is('patients/appointments*') || Request::is('patients/patient-appointments-calendar*') || Request::is('admin-appointments-calendar*')) ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.appointments.index') }}">
+            <span class="menu-title">{{ __('messages.appointments') }}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/patient-visits*')) ? 'd-none' : '' }}">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/patient-visits*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.patient.visits.index') }}">
+            <span class="menu-title">{{ __('messages.visits') }}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/transactions*')) ? 'd-none' : '' }}"
+     data-kt-menu="true">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/transactions*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.transactions') }}">
+            <span class="menu-title">{{ __('messages.transactions') }}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/connect-google-calendar*')) ? 'd-none' : '' }}">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/connect-google-calendar*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.googleCalendar.index') }}">
+            <span class="menu-title">{{__('messages.setting.connect_google_calendar')}}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/reviews*')) ? 'd-none' : '' }}"
+     data-kt-menu="true">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/reviews*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.reviews.index') }}">
+            <span class="menu-title">{{ __('messages.reviews') }}</span>
+        </a>
+    </div>
+</div>
+<div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('patients/live-consultation*')) ? 'd-none' : '' }}">
+    <div class="menu-item me-lg-1 {{ Request::is('patients/live-consultation*') ? 'show' : ''  }}">
+        <a class="menu-link py-3" href="{{ route('patients.live-consultation.index') }}">
+            <span class="menu-title">{{__('messages.live_consultations')}}</span>
+        </a>
+    </div>
+</div>
+@endrole

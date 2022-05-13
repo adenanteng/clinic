@@ -93,7 +93,7 @@ class VisitRepository extends BaseRepository
     {
         $soap['prognosis'] = Visit::PROGNOSIS;
         $soap['awareness'] = Visit::AWARENESS;
-        $soap['staff'] = User::where('type', User::DOCTOR)->orWhere('type', User::STAFF)->get()->pluck('full_name', 'id');
+        $soap['staff'] = User::where('type', User::DOCTOR)->orWhere('type', User::STAFF)->get()->pluck('full_name_role', 'id');
 
         return $soap;
     }

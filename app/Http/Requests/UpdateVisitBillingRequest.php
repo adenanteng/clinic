@@ -3,9 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\VisitBilling;
 
 class UpdateVisitBillingRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +15,7 @@ class UpdateVisitBillingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +25,8 @@ class UpdateVisitBillingRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $rules = VisitBilling::$rules;
+        
+        return $rules;
     }
 }

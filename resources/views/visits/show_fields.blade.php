@@ -60,9 +60,11 @@
         <div class="card card-flush mb-6 mb-xl-9" x-show="tab===1" x-data="{ create: false }">
                 <div class="card-header align-items-center">
                     <h3 class="align-left m-0">{{ __('messages.visit.observations') }}</h3>
-                    <button class="btn btn-primary float-end" @click="create=!create" x-show="!create">
-                        {{ __('messages.common.add') }}
-                    </button>
+                    <div class="ml-auto d-flex align-items-center">
+                        <button class="btn btn-primary" role="button" @click="create=!create" x-show="!create">
+                            <i class="fa fa-plus"></i>{{ __('messages.common.add') }}
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body p-9 pt-4">
                     @php $observationRoute = getLogInUser()->hasRole('doctor') ? 'doctors.visits.add.observation' : 'add.observation' @endphp
@@ -77,14 +79,12 @@
                                             <div class="d-inline">
                                                 <h3 class="card-title d-inline me-5">{{ $val->observation_name }}</h3>
                                                 <span class="text-muted d-inline me-3" >{{ $val->updated_at }}</span>
-                                                <span class="badge {{ (\App\Models\User::whereId($val->create_user_id)->get()->pluck('type')[0] === \App\Models\User::DOCTOR) ? 'badge-info' : 'badge-success' }}">
-                                                    {{ \App\Models\User::whereId($val->create_user_id)->get()->pluck('full_name')[0] }}
-                                                </span>
+                                                <span class="badge badge-success">{{ $val->create_user }}</span>
 
                                             </div>
                                             <span class="d-inline float-end">
-                                                <i class="fa-solid fa-angle-down" x-show="!collapse" ></i>
-                                                <i class="fa-solid fa-angle-up" x-show="collapse" ></i>
+                                                <i class="fas fa fa-angle-down" x-show="!collapse" ></i>
+                                                <i class="fas fa fa-angle-up" x-show="collapse" ></i>
                                             </span>
                                         </div>
                                         <div class="card-body border-1 border-top border-secondary" x-show="collapse" x-transition>
@@ -310,33 +310,30 @@
             </div>
 
         <!--begin::Card-->
-        <div class="card card-flush mb-6 mb-xl-9" x-show="tab===3">
+        <div class="card card-flush mb-6 mb-xl-9" x-show="tab===3" x-data="{create:false}">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h3 class="align-left m-0">{{ __('messages.visit.prescriptions') }}</h3>
                     <div class="ml-auto d-flex align-items-center">
-                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse"
-                             href="#addVisitPrescription"
-                             role="button" aria-expanded="false"
-                             aria-controls="addVisitPrescription">
-                            <a href="#" class="btn btn-primary text-right"><i class="fa fa-plus"></i>{{ __('messages.common.add') }}</a>
-                        </div>
+                        <button class="btn btn-primary" role="button" @click="create=!create" x-show="!create" >
+                            <i class="fa fa-plus"></i>{{ __('messages.common.add') }}
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="card-body p-9 pt-4">
                 @php $prescriptionRoute = getLogInUser()->hasRole('doctor') ? 'doctors.visits.add.prescription' : 'add.prescription' @endphp
                 {{ Form::open(['route' => $prescriptionRoute, 'id' => 'addPrescription']) }}
-                <div id="addVisitPrescription" class="collapse">
+                <div id="addVisitPrescription" class="" x-show="create" x-transition>
                     {{ Form::hidden('visit_id',$visit->id) }}
                     <div class="row">
                         {{ Form::hidden('prescription_id',null,['id' => 'prescriptionId']) }}
                         {{ Form::hidden('status',1,['id' => 'status']) }}
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-5 mb-5">
                             {{ Form::label('drug_id', 'Name:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
                             {{ Form::select('drug_id', $prescription['drug'],null,['class' => 'form-select form-select-solid form-select-lg mb-3 mb-lg-0', 'placeholder' => 'Name', 'required', 'id' => 'drugId','data-control'=>'select2']) }}
                         </div>
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-2 mb-5">
                             {{ Form::label('frequency', 'Frequency:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
                             <div class="input-group">
                                 {{ Form::text('frequency', null, ['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Frequency', 'required', 'id' => 'frequencyId']) }}
@@ -345,10 +342,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-5">
+                        <div class="col-md-2 mb-5">
                             {{ Form::label('duration', 'Duration:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
                             <div class="input-group">
-                            {{ Form::text('duration', 6, ['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Duration','onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")', 'required', 'id' => 'durationId']) }}
+                            {{ Form::text('duration', null, ['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Duration','onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")', 'required', 'id' => 'durationId']) }}
                             <div class="input-group-text">
                                     <a class="fw-bolder text-gray-500">Hari</a>
                                 </div>
@@ -363,7 +360,10 @@
                         <div class="col-md-12 mb-5 mt-5">
                             <div class="w-100 d-flex justify-content-end">
                                 {{ Form::submit(__('messages.common.save'),['class' => 'btn btn-primary me-3','id'=>'prescriptionSubmitBtn']) }}
-                                {{ Form::button(__('messages.common.discard'),['class' => 'btn btn-light btn-active-light-primary reset-form']) }}
+{{--                                {{ Form::button(__('messages.common.discard'),['class' => 'btn btn-light btn-active-light-primary reset-form']) }}--}}
+                                <button class="btn btn-secondary me-3" @click="create=!create" >
+                                    {{ __('messages.common.discard') }}
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -376,6 +376,7 @@
                             <th scope="col">{{ __('messages.prescription.name') }}</th>
                             <th scope="col">{{ __('messages.prescription.frequency') }}</th>
                             <th scope="col">{{ __('messages.prescription.duration') }}</th>
+                            <th scope="col">{{ __('messages.common.status') }}</th>
                             <th class="text-center" width="20%">{{ __('messages.common.action') }}</th>
                         </tr>
                         </thead>
@@ -384,17 +385,18 @@
                             @forelse($visit->prescriptions as $prescription)
                                 <tr id="prescriptionLists">
                                     <td class="text-break text-wrap">{{$prescription->pharmacys->name}}</td>
-                                    <td class="text-break text-wrap">{{$prescription->frequency}}</td>
-                                    <td class="text-break text-wrap">{{$prescription->duration}}</td>
+                                    <td class="text-break text-wrap">{{$prescription->frequency}} x 1</td>
+                                    <td class="text-break text-wrap">{{$prescription->duration}} Hari</td>
+                                    <td class="text-break text-wrap"><span class="badge badge-success">{{$prescription->status_name}}</span></td>
                                     <td class="text-center">
                                         <a href="#" data-id="{{$prescription->id}}"
                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 edit-prescription-btn"
                                            :class="{{$prescription->status}} !== 1 ? 'disabled' : ''"
-                                           title="Edit">
+                                           title="Edit" @click="create=true">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <a href="#" data-id="{{$prescription->id}}"
-                                           class="delete-prescription-btn btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                           class="delete-prescription-btn btn btn-icon btn-bg-light text-hover-danger btn-sm"
                                            :class="{{$prescription->status}} !== 1 ? 'disabled' : ''"
                                            title="Delete">
                                             <i class="fas fa-trash "></i>
@@ -412,9 +414,9 @@
                         </tbody>
                     </table>
                     <div>
-                        <a href="{{ url('send-prescription', $visit->id) }}" class="btn btn-primary btn-sm">
+                        <button role="button" data-id="{{$visit->id}}" class="btn btn-primary send-prescription-btn">
                             Kirim Permintaan
-                        </a>
+                        </button>
                     </div>
 
                 </div>
@@ -428,12 +430,6 @@
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h3 class="align-left m-0">{{ __('messages.visit.billing') }}</h3>
                     <div class="ml-auto d-flex align-items-center">
-{{--                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse"--}}
-{{--                             href="#addVisitPrescription"--}}
-{{--                             role="button" aria-expanded="false"--}}
-{{--                             aria-controls="addVisitPrescription">--}}
-{{--                            <a href="#" class="btn btn-primary text-right"><i class="fa fa-plus"></i>{{ __('messages.common.add') }}</a>--}}
-{{--                        </div>--}}
                     </div>
                 </div>
             </div>

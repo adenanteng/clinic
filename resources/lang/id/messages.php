@@ -12,7 +12,7 @@ return [
 
     'dashboard'                  => 'Beranda',
     'users'                      => 'Pengguna',
-    'patients'                   => 'Pasien',
+    'patients'                   => 'Administrasi',
     'settings'                   => 'Pengaturan',
     'clinic_schedules'           => 'Jadwal Klinik',
     'doctor_sessions'            => 'Jadwal Dokter',
@@ -23,10 +23,10 @@ return [
     'doctors'                    => 'Dokter',
     'service_categories'         => 'Kategori Pelayanan',
     'specializations'            => 'Spesialisasi',
-    'services'                   => 'Pelayanan',
+    'services'                   => 'Pengaturan Pelayanan',
     'roles'                      => 'Peran',
     'staffs'                     => 'Staf',
-    'appointments'               => 'Pendaftaran',
+    'appointments'               => 'Pelayanan',
     'doctor_appointments'        => 'Pendaftaran Dokter',
     'currencies'                 => 'Mata uang',
     'login'                      => 'Masuk',
@@ -173,7 +173,7 @@ return [
         'submit'            => 'Kirim',
         'status'            => 'Status',
         'cancel'            => 'Batal',
-        'discard'           => 'Buang',
+        'discard'           => 'Batal',
         'country'           => 'Negara',
         'state'             => 'Provinsi',
         'city'              => 'Kota',
@@ -457,6 +457,7 @@ return [
         'payment_method'        => 'Metode Pembayaran',
         'opd'                   => 'Rawat Jalan',
         'ipd'                   => 'Rawat Inap',
+        'preventif'             => 'Preventif'
     ],
 
     'doctor_appointment' => [

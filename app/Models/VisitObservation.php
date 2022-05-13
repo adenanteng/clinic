@@ -63,6 +63,16 @@ class VisitObservation extends Model
     ];
 
     /**
+     * @return string
+     */
+    public function getCreateUserAttribute()
+    {
+        $a = User::whereId($this->create_user_id)->pluck('first_name')[0];
+        $b = User::whereId($this->create_user_id)->pluck('last_name')[0];
+        return $a.' '.$b;
+    }
+
+    /**
      *
      * @return BelongsTo
      */

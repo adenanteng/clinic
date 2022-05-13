@@ -97,9 +97,9 @@ class PharmacyController extends AppBaseController
     {
         $prescription = VisitPrescription::where('visit_id', $id)->where('status', 1)->update(['status' => 2]);
 
-//        $prescription = VisitPrescription::findOrFail($id);
+        $visitPrescriptions = VisitPrescription::whereVisitId($id)->with('pharmacys')->get();
 
-        return $this->sendResponse($prescription, 'Prescription retrieved successfully.');
+        return $this->sendResponse($visitPrescriptions, 'Prescription retrieved successfully.');
     }
 
     /**

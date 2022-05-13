@@ -50,6 +50,8 @@ class DefaultRoleSeeder extends Seeder
         $user = User::whereEmail('admin@clinically.com')->first();
         /** @var Doctor $doctor */
         $doctor = User::whereEmail('dokter@clinically.com')->first();
+        /** @var Doctor $doctor */
+        $doctor2 = User::whereEmail('dokter2@clinically.com')->first();
         /** @var Patient $patient */
         $patient = User::whereEmail('pasien@clinically.com')->first();
 
@@ -64,6 +66,9 @@ class DefaultRoleSeeder extends Seeder
         }
         if ($doctor) {
             $doctor->assignRole($doctorRole);
+        }
+        if ($doctor2) {
+            $doctor2->assignRole($doctorRole);
         }
         if ($patient) {
             $patient->assignRole($patientRole);

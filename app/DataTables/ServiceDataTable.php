@@ -25,7 +25,7 @@ class ServiceDataTable
                     $q->where('status', $input['status']);
                 }
             });
-        
+
         return $query->get();
     }
 }

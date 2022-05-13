@@ -324,12 +324,11 @@ function getCurrencyCode()
 
 function version()
 {
-    $composerFile = file_get_contents('../composer.json');
-    $composerData = json_decode($composerFile, true);
-    $currentVersion = $composerData['version'];
-
-
-    return $currentVersion;
+//    $composerFile = file_get_contents('../composer.json');
+//    $composerData = json_decode($composerFile, true);
+//    $currentVersion = $composerData['version'];
+//    return $currentVersion;
+    return config('app.version');
 }
 
 if (! function_exists('getNotification')) {
@@ -424,4 +423,14 @@ function getPaymentGateway()
     $selectedPaymentGateway = $selectedPaymentGateways = \App\Models\PaymentGateway::pluck('payment_name')->toArray();
 
     return array_intersect($paymentGateway, $selectedPaymentGateway);
+}
+
+/**
+ *
+ * @return string[]
+ */
+function getAllDepartment()
+{
+    $department = \App\Models\ServiceCategory::select('id', 'slug', 'name')->get();
+    return $department;
 }

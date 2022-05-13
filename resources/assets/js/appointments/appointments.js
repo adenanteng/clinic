@@ -26,8 +26,7 @@ $(document).ready(function () {
 
     cb(start, end);
 
-    let url = !isEmpty(userRole) ? route('patients.appointments.index') : route(
-        'appointments.index');
+    let url = !isEmpty(userRole) ? route('patients.appointments.index') : route('appointments.index');
     let tbl = $(tableName).DataTable({
         deferRender: true,
         processing: true,
@@ -36,13 +35,14 @@ $(document).ready(function () {
         'language': {
             'lengthMenu': 'Show _MENU_',
         },
-        'order': [[2, 'desc']],
+        'order': [[2, 'asc']],
         ajax: {
             url: url,
             data: function (data) {
                 data.status = $('#appointmentStatus').find('option:selected').val();
                 data.payment_type = $('#paymentStatus').find('option:selected').val();
                 data.filter_date = filterDate.val();
+                data.asu = $('#department').find('input.asu').val();
             },
         },
         columnDefs: [

@@ -19,12 +19,15 @@ class DefaultServiceCategorySeeder extends Seeder
         $input = [
             [
                 'name' => 'Rawat Jalan',
+                'slug' => 'opd'
             ],
             [
                 'name' => 'Rawat Inap',
+                'slug' => 'ipd'
             ],
             [
-                'name' => 'Promotif/Preventif',
+                'name' => 'Promotif Preventif',
+                'slug' => 'preventif'
             ],
         ];
 

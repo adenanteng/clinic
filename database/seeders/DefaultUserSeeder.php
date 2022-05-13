@@ -89,7 +89,7 @@ class DefaultUserSeeder extends Seeder
                 'marriage'          => Patient::SINGLE,
                 'religion'          => Patient::ISLAM,
                 'blood_group'       => Patient::B,
-                'type'              => User::DOCTOR,
+                'type'              => User::PATIENT,
                 'password'          => Hash::make('123456'),
                 'email_verified_at' => Carbon::now(),
             ],

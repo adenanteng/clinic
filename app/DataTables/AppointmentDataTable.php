@@ -18,8 +18,13 @@ class AppointmentDataTable
     {
         /** @var Appointment $query */
         $query = Appointment::with([
-            'doctor.user', 'patient.user', 'services', 'transaction','doctor.reviews'
+            'doctor.user', 'patient.user', 'services','services.serviceCategory', 'transaction','doctor.reviews'
         ])->select('appointments.*');
+
+        $query->when(isset($input['asu']),
+            function (Builder $q) use ($input) {
+                    $q->whereRelation('services.serviceCategory', 'slug', $input['asu']);
+            });
 
         $query->when(isset($input['status']) && $input['status'] != Appointment::ALL_STATUS,
             function (Builder $q) use ($input) {

@@ -140,7 +140,7 @@ class User extends Authenticatable implements HasMedia
         self::ADMIN   => 'Admin',
         self::DOCTOR  => 'Dokter',
         self::PATIENT => 'Pasien',
-        self::STAFF   => 'Staff',
+        self::STAFF   => 'Staf',
     ];
     const ALL = 2;
     const ACTIVE = 1;
@@ -239,6 +239,14 @@ class User extends Authenticatable implements HasMedia
     public function getFullNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullNameRoleAttribute()
+    {
+        return $this->first_name.' '.$this->last_name. ' - '.$this->role_name;
     }
 
     /**

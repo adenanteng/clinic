@@ -37,6 +37,8 @@ class VisitPrescription extends Model
 
     protected $table = 'visit_prescriptions';
 
+    protected $appends = ['date', 'status_name'];
+
     public $fillable = [
         'visit_id',
 //        'group_id',
@@ -57,6 +59,28 @@ class VisitPrescription extends Model
         'frequency'         => 'required',
         'duration'          => 'required',
     ];
+
+    /**
+     * @return string
+     */
+    public function getDateAttribute()
+    {
+        $date = Carbon::parse($this->created_at)->locale('id');
+
+        $date->settings(['formatFunction' => 'translatedFormat']);
+
+        return $date->format('l, j F Y ; h:i a'); // Selasa, 16 Maret 2021 ; 08:27 pagi
+
+//        return date('d M', strtotime($this->created_at));
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusNameAttribute()
+    {
+        return Pharmacy::PRESCRIPTION_STATUS[$this->status];
+    }
 
     /**
      * @return BelongsTo

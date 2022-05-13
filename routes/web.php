@@ -244,13 +244,17 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
 
     // Appointment route
     Route::group(['middleware' => ['permission:manage_appointments']], function () {
+        Route::get('appointments/opd', [AppointmentController::class, 'index'])->name('appointments.opd');
+        Route::get('appointments/ipd', [AppointmentController::class, 'index'])->name('appointments.ipd');
+        Route::get('appointments/preventif', [AppointmentController::class, 'index'])->name('appointments.preventif');
+//        Route::get('appointments/{dept}', [AppointmentController::class, 'index']);
         Route::resource('appointments', AppointmentController::class)->except(['edit', 'update']);
         Route::post('appointments/{appointment}', [AppointmentController::class, 'changeStatus'])->name('change-status');
         Route::post('appointments-payment/{id}', [AppointmentController::class, 'changePaymentStatus'])->name('change-payment-status');
         Route::get('admin-appointments-calendar', [AppointmentController::class, 'appointmentCalendar'])->name('appointments.calendar');
         Route::get('transactions', [TransactionController::class, 'index'])->name('transactions');
         Route::get('transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
-        Route::get('appointments/create', [AppointmentController::class, 'create']);
+//        Route::get('appointments/create', [AppointmentController::class, 'create']);
 
     });
 

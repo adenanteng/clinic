@@ -224,17 +224,19 @@ $(document).on('submit', '#addPrescription', function (e) {
                 let data = [
                     {
                         'id': val.id,
+                        'date': val.date,
                         'name': val.pharmacys.name,
                         'frequency': val.frequency,
                         'duration': val.duration,
+                        'status': val.status_name,
                     }];
-
+                console.log(data)
                 const visitPrescriptionTblData = prepareTemplateRender(
                     '#visitsPrescriptionTblTemplate', data);
                 $('.visit-prescriptions').append(visitPrescriptionTblData);
             });
             console.log(result.data)
-            $('#addVisitPrescription').removeClass('show');
+            // $('#addVisitPrescription').removeClass('show');
             displaySuccessMessage(result.message);
         },
         error: function (result) {
@@ -257,19 +259,22 @@ function renderData (id) {
         success: function (result) {
             $('#addPrescription')[0].reset();
             $('#prescriptionId').val(result.data.id);
-            $('#prescriptionNameId').val(result.data.drug.name);
+            // $("#drugId").select2("val", "result.data.drug_id");
+            $("#drugId").val(result.data.drug_id).trigger('change');
             $('#frequencyId').val(result.data.frequency);
             $('#durationId').val(result.data.duration);
             $('#descriptionId').val(result.data.description);
+            // console.log(result)
         },
     });
 }
 
 $(document).on('click', '.edit-prescription-btn', function () {
     let id = $(this).attr('data-id');
-    if (!$('#addVisitPrescription').hasClass('show')) {
-        $('#addVisitPrescription').addClass('show');
-    }
+    // if (!$('#addVisitPrescription').hasClass('show')) {
+    //     $('#addVisitPrescription').addClass('show');
+    // }
+
     renderData(id);
 });
 
@@ -308,4 +313,45 @@ $(document).on('click', '.reset-form', function () {
     $('#addPrescription')[0].reset();
 });
 
+// Edit Visit Prescription Data
+function refreshlur (id) {
+    let prescriptionSendUrl = route('send.prescription', id);
+    $.ajax({
+        url: prescriptionSendUrl,
+        type: 'GET',
+        success: function (result) {
+            // $('#addPrescription')[0].reset();
+            $('.visit-prescriptions').empty();
+            $('#prescriptionId').val('');
+            $('#drugId').val('');
+            $('#frequencyId').val('');
+            $('#durationId').val('');
+            $('#descriptionId').val('');
+            $.each(result.data, function (i, val) {
+                let data = [
+                    {
+                        'id': val.id,
+                        'date': val.date,
+                        'name': val.pharmacys.name,
+                        'frequency': val.frequency,
+                        'duration': val.duration,
+                        'status': val.status_name,
+                    }];
+                console.log(data)
+                const visitPrescriptionTblData = prepareTemplateRender(
+                    '#visitsPrescriptionTblTemplate', data);
+                $('.visit-prescriptions').append(visitPrescriptionTblData);
+            });
+            console.log(result.data)
+            displaySuccessMessage(result.message);
+        },
+        error: function (result) {
+            displayErrorMessage(result.responseJSON.message);
+        },
+    });
+}
 
+$(document).on('click', '.send-prescription-btn', function () {
+    let id = $(this).attr('data-id');
+    refreshlur(id);
+});
