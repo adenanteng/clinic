@@ -501,7 +501,7 @@ return [
         'doctor'        => 'Dokter',
         'description'   => 'Deskripsi/Keluhan',
         'title'         => 'Judul',
-        'problems'      => 'Diagnosa/Tindakan',
+        'problems'      => 'Diagnosa',
         'observations'  => 'Assessment',
         'notes'         => 'Catatan',
         'visit_detail'  => 'Detail Kasus',

@@ -110,9 +110,10 @@ class VisitController extends AppBaseController
         $visit = $this->visitRepository->getShowData($id)->first();
         $observation = $this->visitRepository->getSoapData();
         $prescription = $this->visitRepository->getPrescriptionData();
+        $treatment = $this->visitRepository->getTreatmentData();
 
 //        dd($visit, $observation, $prescription);
-        return view('visits.show', compact('visit', 'observation', 'prescription'));
+        return view('visits.show', compact('visit', 'observation', 'prescription', 'treatment'));
     }
 
     /**
@@ -229,7 +230,6 @@ class VisitController extends AppBaseController
         $observationData = VisitObservation::whereVisitId($input['visit_id'])->get();
 
         return $this->sendResponse($observationData, 'Observation added successfully.');
-//        return redirect()->route('visits.show');
     }
 
     /**
@@ -323,5 +323,39 @@ class VisitController extends AppBaseController
         $prescriptionData = VisitPrescription::whereVisitId($visitId)->get();
 
         return $this->sendResponse($prescriptionData, 'Prescription deleted successfully.');
+    }
+
+    /**
+     * @param  Request  $request
+     *
+     * @return mixed
+     */
+    public function addBilling(Request $request)
+    {
+        $input = $request->all();
+
+        $billing = VisitBilling::create([
+            'visit_id'          => $input['visit_id'],
+            'observation_name'  => $input['observation_name'],
+            'symptoms'          => $input['symptoms'],
+            'anamnesis'         => $input['anamnesis'],
+            'prognosis'         => $input['prognosis'],
+            'temperature'       => $input['temperature'],
+            'awareness'         => $input['awareness'],
+            'height'            => $input['height'],
+            'weight'            => $input['weight'],
+            'systole'           => $input['systole'],
+            'diastole'          => $input['diastole'],
+            'respiratory_rate'  => $input['respiratory_rate'],
+            'heart_rate'        => $input['heart_rate'],
+            'plan'              => $input['plan'],
+            'assessment'        => $input['assessment'],
+            'create_user_id'    => $input['staff_id'],
+            'update_user_id'    => $input['staff_id'],
+
+        ]);
+        $observationData = VisitObservation::whereVisitId($input['visit_id'])->get();
+
+        return $this->sendResponse($observationData, 'Observation added successfully.');
     }
 }

@@ -273,7 +273,7 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
         Route::resource('currencies', CurrencyController::class);
     });
 
-    //Encounter route
+    //visit route
     Route::group(['middleware' => ['permission:manage_patient_visits']], function () {
         Route::resource('visits', VisitController::class);
         Route::post('add-problem', [VisitController::class, 'addProblem'])->name('add.problem');
@@ -285,7 +285,7 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
         Route::post('add-prescription', [VisitController::class, 'addPrescription'])->name('add.prescription');
         Route::post('delete-prescription/{prescription}', [VisitController::class, 'deletePrescription'])->name('delete.prescription');
         Route::get('edit-prescription/{prescription}', [VisitController::class, 'editPrescription'])->name('edit.prescription');
-
+        Route::post('add-billing', [VisitController::class, 'addBilling'])->name('add.billing');
     });
 
     // Slider route

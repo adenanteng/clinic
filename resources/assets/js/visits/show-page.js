@@ -259,7 +259,6 @@ function renderData (id) {
         success: function (result) {
             $('#addPrescription')[0].reset();
             $('#prescriptionId').val(result.data.id);
-            // $("#drugId").select2("val", "result.data.drug_id");
             $("#drugId").val(result.data.drug_id).trigger('change');
             $('#frequencyId').val(result.data.frequency);
             $('#durationId').val(result.data.duration);
@@ -271,10 +270,6 @@ function renderData (id) {
 
 $(document).on('click', '.edit-prescription-btn', function () {
     let id = $(this).attr('data-id');
-    // if (!$('#addVisitPrescription').hasClass('show')) {
-    //     $('#addVisitPrescription').addClass('show');
-    // }
-
     renderData(id);
 });
 
@@ -314,7 +309,7 @@ $(document).on('click', '.reset-form', function () {
 });
 
 // Edit Visit Prescription Data
-function refreshlur (id) {
+function renderPrescription (id) {
     let prescriptionSendUrl = route('send.prescription', id);
     $.ajax({
         url: prescriptionSendUrl,
@@ -353,5 +348,36 @@ function refreshlur (id) {
 
 $(document).on('click', '.send-prescription-btn', function () {
     let id = $(this).attr('data-id');
-    refreshlur(id);
+    renderPrescription(id);
+});
+
+$(document).on('change', '#treatmentName', function () {
+    // $('#treatmentCharges').val('');
+    // let url = route('get-charges');
+    //
+    // $.ajax({
+    //     url: url,
+    //     type: 'GET',
+    //     data: {
+    //         'treatmentName': $(this).val(),
+    //     },
+    //     success: function (result) {
+    //         if (result.success) {
+    //             $('#date').removeAttr('disabled');
+    //             $('#serviceId').empty();
+    //             $('#serviceId').
+    //             append($('<option value=""></option>').
+    //             text('Select Service'));
+    //             $.each(result.data, function (i, v) {
+    //                 $('#serviceId').
+    //                 append($('<option></option>').
+    //                 attr('value', v.id).
+    //                 text(v.name));
+    //             });
+    //         }
+    //     },
+    // });
+    let asu = $('#treatmentName').val();
+    $("#treatmentType").val(asu).trigger('change');
+    $("#treatmentCharges").val(asu).trigger('change');
 });

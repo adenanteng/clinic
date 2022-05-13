@@ -381,7 +381,7 @@
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold visit-prescriptions">
-                        @if(!empty($visit))
+                        @if(!empty($visit->prescriptions))
                             @forelse($visit->prescriptions as $prescription)
                                 <tr id="prescriptionLists">
                                     <td class="text-break text-wrap">{{$prescription->pharmacys->name}}</td>
@@ -425,15 +425,58 @@
         <!--end::Card-->
 
         <!--begin::Card-->
-        <div class="card card-flush mb-6 mb-xl-9" x-show="tab===4">
+        <div class="card card-flush mb-6 mb-xl-9" x-show="tab===4" x-data="{create:false}">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h3 class="align-left m-0">{{ __('messages.visit.billing') }}</h3>
                     <div class="ml-auto d-flex align-items-center">
+                        <button class="btn btn-primary" role="button" @click="create=!create" x-show="!create" >
+                            <i class="fa fa-plus"></i>{{ __('messages.common.add') }}
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="card-body p-9 pt-4">
+                {{ Form::open(['route' => 'add.billing', 'id' => 'addBilling']) }}
+                <div id="addVisitBilling" class="" x-show="create" x-transition>
+                    {{ Form::hidden('visit_id',$visit->id) }}
+                    <div class="row">
+                        {{ Form::hidden('billing_id',null,['id' => 'billingId']) }}
+                        {{ Form::hidden('status',1,['id' => 'status']) }}
+                        <div class="col-md-6 mb-5">
+                            {{ Form::label('treatment_name', 'Nama:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
+                            {{ Form::select('treatment_name', $treatment['name'],null,['class' => 'form-select form-select-solid form-select-lg mb-3 mb-lg-0', 'placeholder' => 'Name', 'required', 'id' => 'treatmentName','data-control'=>'select2']) }}
+                        </div>
+                        <div class="col-md-2 mb-5">
+                            {{ Form::label('treatment_unit', 'Jumlah:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
+                            {{ Form::text('treatment_unit', null,['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Name', 'required', 'id' => 'treatmentUnit']) }}
+                        </div>
+                        <div class="col-md-2 mb-5">
+                            {{ Form::label('treatment_type', 'Tipe:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
+                            {{ Form::select('treatment_type', $treatment['type'], null,['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Name', 'required', 'id' => 'treatmentType','data-control'=>'select2']) }}
+                        </div>
+                        <div class="col-md-2 mb-5">
+                            {{ Form::label('treatment_charges', 'Tarif:', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
+{{--                            <div class="input-group">--}}
+{{--                                <div class="input-group-text border-0">--}}
+{{--                                    <a class="fw-bolder text-gray-500">Rp</a>--}}
+{{--                                </div>--}}
+                                {{ Form::select('treatment_charges', $treatment['charges'], null,['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'haiii', 'required', 'id' => 'treatmentCharges','data-control'=>'select2']) }}
+                            </div>
+{{--                        </div>--}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-5 mt-5">
+                            <div class="w-100 d-flex justify-content-end">
+                                {{ Form::submit(__('messages.common.save'),['class' => 'btn btn-primary me-3','id'=>'prescriptionSubmitBtn']) }}
+                                <button class="btn btn-secondary me-3" @click="create=!create" >
+                                    {{ __('messages.common.discard') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ Form::close() }}
                 <div class="overflow-auto">
                     <table class="table align-middle overflow-auto table-row-dashed fs-6 gy-5 mt-5 whitespace-nowrap">
                         <thead>
@@ -441,26 +484,27 @@
                             <th scope="col">{{ __('messages.prescription.name') }}</th>
                             <th scope="col">{{ __('messages.prescription.frequency') }}</th>
                             <th scope="col">{{ __('messages.prescription.duration') }}</th>
+                            <th scope="col">{{ __('messages.common.status') }}</th>
                             <th class="text-center" width="20%">{{ __('messages.common.action') }}</th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold visit-prescriptions">
-                        @if(!empty($visit))
-                            @forelse($visit->prescriptions as $key => $prescription)
-
+                        @if(!empty($visit->prescriptions))
+                            @forelse($visit->prescriptions as $prescription)
                                 <tr id="prescriptionLists">
                                     <td class="text-break text-wrap">{{$prescription->pharmacys->name}}</td>
-                                    <td class="text-break text-wrap">{{$prescription->frequency * $prescription->duration}}</td>
-                                    <td class="text-break text-wrap">{{\App\Models\PharmacyProcurement::where('drug_id', $prescription->pharmacys->id)->where('remaining', '>=', $prescription->duration * $prescription->frequency)->get()->pluck('selling_price')[0] }}</td>
+                                    <td class="text-break text-wrap">{{$prescription->frequency}} x 1</td>
+                                    <td class="text-break text-wrap">{{$prescription->duration}} Hari</td>
+                                    <td class="text-break text-wrap"><span class="badge badge-success">{{$prescription->status_name}}</span></td>
                                     <td class="text-center">
                                         <a href="#" data-id="{{$prescription->id}}"
                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 edit-prescription-btn"
                                            :class="{{$prescription->status}} !== 1 ? 'disabled' : ''"
-                                           title="Edit">
+                                           title="Edit" @click="create=true">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <a href="#" data-id="{{$prescription->id}}"
-                                           class="delete-prescription-btn btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                           class="delete-prescription-btn btn btn-icon btn-bg-light text-hover-danger btn-sm"
                                            :class="{{$prescription->status}} !== 1 ? 'disabled' : ''"
                                            title="Delete">
                                             <i class="fas fa-trash "></i>
@@ -478,7 +522,9 @@
                         </tbody>
                     </table>
                     <div>
-
+                        <button role="button" data-id="{{$visit->id}}" class="btn btn-primary send-prescription-btn">
+                            Kirim Permintaan
+                        </button>
                     </div>
 
                 </div>

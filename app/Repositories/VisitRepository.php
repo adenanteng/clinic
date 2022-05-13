@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\Role;
+use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Visit;
 use App\Models\Patient;
@@ -106,6 +107,18 @@ class VisitRepository extends BaseRepository
         $prescription['drug'] = Pharmacy::all()->pluck('name', 'id');
 
         return $prescription;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTreatmentData()
+    {
+        $treatment['name'] = Treatment::all()->pluck('name', 'id');
+        $treatment['charges'] = Treatment::all()->pluck('charges', 'id');
+        $treatment['type'] = Treatment::with('treatmentCategory')->get()->pluck('treatmentCategory.name', 'id');
+
+        return $treatment;
     }
 }
 
