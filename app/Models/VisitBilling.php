@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VisitBilling extends Model
 {
@@ -11,14 +12,16 @@ class VisitBilling extends Model
 
     protected $table = 'visit_billings';
 
+    protected $appends = ['name_text', 'type_text'];
+
     public $fillable = [
         'visit_id',
         'type',
         'name',
+        'unit',
         'unit_price',
-        'duration',
-        'description',
         'status',
+        'subtotal',
     ];
 
     const ADMINISTRATION = 1;
@@ -49,11 +52,36 @@ class VisitBilling extends Model
         self::TINDAKAN  => 'Tindakan',
     ];
 
+//    /**
+//     * @return string
+//     */
+//    public function getSubtotalAttribute()
+//    {
+//        return $this->unit_price * $this->unit;
+//    }
+
     /**
      * @return string
      */
-    public function getSubtotalAttribute()
+    public function getTypeTextAttribute()
     {
-        return $this->unit_price * $this->unit;
+        return TreatmentCategory::whereId($this->type)->pluck('name')[0];
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameTextAttribute()
+    {
+        return Treatment::whereId($this->name)->pluck('name')[0];
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class, 'visit_id')[0];
     }
 }

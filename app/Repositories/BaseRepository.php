@@ -8,6 +8,7 @@ use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 abstract class BaseRepository
 {
@@ -136,9 +137,7 @@ abstract class BaseRepository
     public function create($input)
     {
         $model = $this->model->newInstance($input);
-
         $model->save();
-
         return $model;
     }
 

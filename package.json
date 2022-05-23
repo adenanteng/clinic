@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@alpinejs/persist": "^3.10.2",
+        "@hotwired/turbo": "^7.1.0",
         "alpinejs": "^3.10.2",
         "alpinejs-component": "^1.1.2",
         "apexcharts": "^3.29.0",
@@ -34,6 +35,6 @@
         "datatables": "^1.10.18",
         "intl-tel-input": "^17.0.13",
         "jquery": "^3.2.1",
-        "tom-select": "^2.0.1"
+        "tom-select": "^2.0.2"
     }
 }

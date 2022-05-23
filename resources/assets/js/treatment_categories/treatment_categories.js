@@ -1,6 +1,6 @@
 'use strict';
 
-let tableName = '#serviceCategoriesTable';
+let tableName = '#treatmentCategoriesTable';
 $(document).ready(function () {
     let tbl = $(tableName).DataTable({
         processing: true,
@@ -11,7 +11,7 @@ $(document).ready(function () {
         },
         'order': [[0, 'asc']],
         ajax: {
-            url: route('service-categories.index'),
+            url: route('treatment-categories.index'),
         },
         columnDefs: [
             {
@@ -36,9 +36,9 @@ $(document).ready(function () {
             },
             {
                 data: function (row) {
-                    return `<span class="badge badge-light-danger">${row.services_count}</span>`;
+                    return `<span class="badge badge-light-danger">${row.treatments_count}</span>`;
                 },
-                name: 'services_count',
+                name: 'treatments_count',
             },
             {
                 data: function (row) {
@@ -47,7 +47,7 @@ $(document).ready(function () {
                             'id': row.id,
                         },
                     ];
-                    return prepareTemplateRender('#serviceCategoriesTemplate',
+                    return prepareTemplateRender('#treatmentCategoriesTemplate',
                         data);
                 },
                 name: 'id',
@@ -57,18 +57,18 @@ $(document).ready(function () {
     handleSearchDatatable(tbl);
 });
 
-$(document).on('click', '#createServiceCategory', function () {
-    $('#createServiceCategoryModal').modal('show').appendTo('body');
+$(document).on('click', '#createTreatmentCategory', function () {
+    $('#createTreatmentCategoryModal').modal('show').appendTo('body');
 });
 
-$('#createServiceCategoryModal').on('hidden.bs.modal', function () {
-    resetModalForm('#createServiceCategoryForm',
-        '#createServiceCategoryValidationErrorsBox');
+$('#createTreatmentCategoryModal').on('hidden.bs.modal', function () {
+    resetModalForm('#createTreatmentCategoryForm',
+        '#createTreatmentCategoryValidationErrorsBox');
 });
 
-$('#editServiceCategoryModal').on('hidden.bs.modal', function () {
-    resetModalForm('#editServiceCategoryForm',
-        '#editServiceCategoryValidationErrorsBox');
+$('#editTreatmentCategoryModal').on('hidden.bs.modal', function () {
+    resetModalForm('#editTreatmentCategoryForm',
+        '#editTreatmentCategoryValidationErrorsBox');
 });
 
 $(document).on('click', '.edit-btn', function (event) {
@@ -78,26 +78,26 @@ $(document).on('click', '.edit-btn', function (event) {
 
 function renderData (id) {
     $.ajax({
-        url: route('service-categories.edit', id),
+        url: route('treatment-categories.edit', id),
         type: 'GET',
         success: function (result) {
-            $('#serviceCategoryID').val(result.data.id);
+            $('#treatmentCategoryID').val(result.data.id);
             $('#editName').val(result.data.name);
-            $('#editServiceCategoryModal').modal('show');
+            $('#editTreatmentCategoryModal').modal('show');
         },
     });
 }
 
-$(document).on('submit', '#createServiceCategoryForm', function (e) {
+$(document).on('submit', '#createTreatmentCategoryForm', function (e) {
     e.preventDefault();
     $.ajax({
-        url: route('service-categories.store'),
+        url: route('treatment-categories.store'),
         type: 'POST',
         data: $(this).serialize(),
         success: function (result) {
             if (result.success) {
                 displaySuccessMessage(result.message);
-                $('#createServiceCategoryModal').modal('hide');
+                $('#createTreatmentCategoryModal').modal('hide');
                 $(tableName).DataTable().ajax.reload(null, false);
             }
         },
@@ -107,16 +107,16 @@ $(document).on('submit', '#createServiceCategoryForm', function (e) {
     });
 });
 
-$(document).on('submit', '#editServiceCategoryForm', function (e) {
+$(document).on('submit', '#editTreatmentCategoryForm', function (e) {
     e.preventDefault();
     let formData = $(this).serialize();
-    let id = $('#serviceCategoryID').val();
+    let id = $('#treatmentCategoryID').val();
     $.ajax({
-        url: route('service-categories.update', id),
+        url: route('treatment-categories.update', id),
         type: 'PUT',
         data: formData,
         success: function (result) {
-            $('#editServiceCategoryModal').modal('hide');
+            $('#editTreatmentCategoryModal').modal('hide');
             displaySuccessMessage(result.message);
             $(tableName).DataTable().ajax.reload(null, false);
         },
@@ -128,6 +128,6 @@ $(document).on('submit', '#editServiceCategoryForm', function (e) {
 
 $(document).on('click', '.delete-btn', function (event) {
     let recordId = $(event.currentTarget).data('id');
-    deleteItem(route('service-categories.destroy', recordId), tableName,
-        'Service Category');
+    deleteItem(route('treatment-categories.destroy', recordId), tableName,
+        'Treatment Category');
 });

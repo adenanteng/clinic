@@ -37,7 +37,7 @@ class VisitPrescription extends Model
 
     protected $table = 'visit_prescriptions';
 
-    protected $appends = ['date', 'status_name'];
+    protected $appends = ['date', 'status_name', 'total_unit'];
 
     public $fillable = [
         'visit_id',
@@ -83,10 +83,27 @@ class VisitPrescription extends Model
     }
 
     /**
+     * @return int
+     */
+    public function getTotalUnitAttribute()
+    {
+        return $this->frequency * $this->duration;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function pharmacys()
     {
         return $this->belongsTo(Pharmacy::class, 'drug_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class, 'visit_id');
     }
 }

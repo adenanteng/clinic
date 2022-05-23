@@ -34,6 +34,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TreatmentCategoryController;
+use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use Illuminate\Support\Facades\Auth;
@@ -237,6 +239,13 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
         Route::resource('service-categories', ServiceCategoryController::class);
     });
 
+    // Treatments and Treatment Category route
+    Route::group(['middleware' => ['permission:manage_services']], function () {
+        Route::resource('treatments', TreatmentController::class);
+        Route::put('treatment-status', [TreatmentController::class, 'changeTreatmentStatus'])->name('treatment.status');
+        Route::resource('treatment-categories', TreatmentCategoryController::class);
+    });
+
     // Staff route
     Route::group(['middleware' => ['permission:manage_staff']], function () {
         Route::resource('staff', StaffController::class);
@@ -286,6 +295,7 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
         Route::post('delete-prescription/{prescription}', [VisitController::class, 'deletePrescription'])->name('delete.prescription');
         Route::get('edit-prescription/{prescription}', [VisitController::class, 'editPrescription'])->name('edit.prescription');
         Route::post('add-billing', [VisitController::class, 'addBilling'])->name('add.billing');
+        Route::post('delete-billing/{billing}', [VisitController::class, 'deleteBilling'])->name('delete.billing');
     });
 
     // Slider route

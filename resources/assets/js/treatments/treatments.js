@@ -1,6 +1,6 @@
 'use strict';
 
-let tableName = '#servicesTable';
+let tableName = '#treatmentsTable';
 $(document).ready(function () {
     let tbl = $(tableName).DataTable({
         deferRender: true,
@@ -12,9 +12,9 @@ $(document).ready(function () {
         },
         'order': [[1, 'asc']],
         ajax: {
-            url: route('services.index'),
+            url: route('treatments.index'),
             data: function (data) {
-                data.status = $('#servicesStatus').
+                data.status = $('#treatmentsStatus').
                     find('option:selected').
                     val();
             },
@@ -27,25 +27,25 @@ $(document).ready(function () {
                 'searchable': false,
             },
             {
+                'targets': [1],
+                'width': '50%',
+            },
+            {
                 'targets': [2],
-                'width': '30%',
+                'width': '22%',
             },
             {
                 'targets': [3],
-                'width': '30%',
+                'width': '10%',
+                'className': 'text-center',
+                'orderable': true,
+                'searchable': false,
             },
-            // {
-            //     'targets': [4],
-            //     'width': '5%',
-            //     'className': 'text-center',
-            //     'orderable': false,
-            //     'searchable': false,
-            // },
             {
                 'targets': [4],
                 'orderable': false,
                 'className': 'text-center',
-                'width': '5%',
+                'width': '10%',
             },
         ],
         columns: [
@@ -65,15 +65,19 @@ $(document).ready(function () {
                 name: 'name',
             },
             {
-                data: 'service_category.name',
-                name: 'service_category.name',
+                data: function (row) {
+                    return `<span class="badge badge-success">
+                                ${row.treatment_category.name}
+                            </span>`;
+                },
+                name: 'treatment_category.name',
             },
-            // {
-            //     data: function (row) {
-            //         return currencyIcon + ' ' + getFormattedPrice(row.id);
-            //     },
-            //     name: 'charges',
-            // },
+            {
+                data: function (row) {
+                    return currencyIcon + ' ' + getFormattedPrice(row.charges);
+                },
+                name: 'charges',
+            },
             {
                 data: function (row) {
                     let data = [
@@ -82,7 +86,7 @@ $(document).ready(function () {
                             'status': row.status,
                         },
                     ];
-                    return prepareTemplateRender('#servicesTemplate', data);
+                    return prepareTemplateRender('#treatmentsTemplate', data);
                 },
                 name: 'status',
             },
@@ -91,7 +95,8 @@ $(document).ready(function () {
                     let data = [
                         {
                             'id': row.id,
-                            'editUrl': route('services.edit', row.id),
+                            'editUrl': route('treatments.edit', row.id),
+                            'hideDelete': true,
                         },
                     ];
                     return prepareTemplateRender('#actionsTemplates',
@@ -101,10 +106,10 @@ $(document).ready(function () {
             },
         ],
         'fnInitComplete': function () {
-            $('#servicesStatus').change(function () {
+            $('#treatmentsStatus').change(function () {
                 $('#filter').removeClass('show');
                 $('#filterBtn').removeClass('show');
-                $('#servicesTable').DataTable().ajax.reload(null, true);
+                $('#treatmentsTable').DataTable().ajax.reload(null, true);
             });
         },
     });
@@ -112,20 +117,20 @@ $(document).ready(function () {
 });
 
 $(document).on('click', '#resetFilter', function () {
-    $('#servicesStatus').val(all).trigger('change');
+    $('#treatmentsStatus').val(all).trigger('change');
 });
 
 $(document).on('click', '.delete-btn', function (event) {
     let recordId = $(event.currentTarget).data('id');
-    deleteItem(route('services.destroy', recordId), tableName, 'Service');
+    deleteItem(route('treatments.destroy', recordId), tableName, 'Treatment');
 });
 
-$(document).on('click', '.service-statusbar', function (event) {
+$(document).on('click', '.treatment-statusbar', function (event) {
     let recordId = $(event.currentTarget).data('id');
 
     $.ajax({
         type: 'PUT',
-        url: route('service.status'),
+        url: route('treatment.status'),
         data: { id: recordId },
         success: function (result) {
             displaySuccessMessage(result.message);

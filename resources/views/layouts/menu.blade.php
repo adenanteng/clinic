@@ -60,7 +60,7 @@
         <span class="menu-icon">
             <i class="fas fa-hospital-user fs-3"></i>
         </span>
-            <span class="menu-title">{{ __('messages.patients') }}</span>
+            <span class="menu-title">{{ __('messages.administrations') }}</span>
         </a>
         <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
             <li class="{{ Request::is('patients*') ? 'menu-li-hover-color' : '' }}">
@@ -133,7 +133,7 @@
         <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
             <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
                 <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
-                    <span class="menu-title {{ Request::is('pharmacys*') ? 'text-primary' : '' }}">{{ __('messages.pharmacys') }}</span>
+                    <span class="menu-title {{ Request::is('pharmacys*') ? 'text-primary' : '' }}">{{ __('messages.transactions') }}</span>
                 </a>
             </li>
         </ul>
@@ -218,6 +218,30 @@
             <li class="{{ Request::is('service-categories*') ? 'menu-li-hover-color' : '' }}">
                 <a class="menu-link py-3" href="{{ route('service-categories.index') }}">
                     <span class="menu-title {{ Request::is('service-categories*') ? 'text-primary' : '' }}">{{ __('messages.service_categories') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+@endcan
+@can('manage_services')
+    <div class="menu-item menu-search sidebar-dropdown">
+        <a class="menu-link {{ (Request::is('treatments*') || Request::is('treatment-categories*')) ? 'active' : '' }}"
+           href="{{ route('treatments.index') }}">
+        <span class="menu-icon">
+            <i class="fas fa-user-cog fs-3"></i>
+        </span>
+            <span class="menu-title">{{__('messages.treatments')}}<span
+                    class="d-none">{{ __('messages.treatment_categories') }}</span></span>
+        </a>
+        <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
+            <li class="{{ Request::is('treatments*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('treatments.index') }}">
+                    <span class="menu-title {{ Request::is('treatments*') ? 'text-primary' : '' }}">{{ __('messages.treatments') }}</span>
+                </a>
+            </li>
+            <li class="{{ Request::is('treatment-categories*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('treatment-categories.index') }}">
+                    <span class="menu-title {{ Request::is('treatment-categories*') ? 'text-primary' : '' }}">{{ __('messages.treatment_categories') }}</span>
                 </a>
             </li>
         </ul>

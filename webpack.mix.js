@@ -112,6 +112,12 @@ mix.js('resources/assets/js/custom/custom.js',
         'public/assets/js/services/services.js').
     js('resources/assets/js/services/create-edit.js',
         'public/assets/js/services/create-edit.js').
+    js('resources/assets/js/treatments/treatments.js',
+        'public/assets/js/treatments/treatments.js').
+    js('resources/assets/js/treatments/create-edit.js',
+        'public/assets/js/treatments/create-edit.js').
+    js('resources/assets/js/treatment_categories/treatment_categories.js',
+        'public/assets/js/treatment_categories/treatment_categories.js').
     js('resources/assets/js/appointments/appointments.js',
         'public/assets/js/appointments/appointments.js').
     js('resources/assets/js/appointments/patient-appointments.js',
@@ -192,7 +198,9 @@ mix.js('resources/assets/js/custom/custom.js',
         'public/assets/js/pharmacys/pharmacys.js').
     js('resources/assets/js/pharmacys/show-page.js',
         'public/assets/js/pharmacys/show-page.js').
-    // js('resources/js/app.js',
-    //     'public/assets/js/app.js').
+    js('resources/js/alpine.js',
+        'public/assets/js/alpine.js').
+    js('resources/js/turbo.js',
+        'public/assets/js/turbo.js').
 
     version();

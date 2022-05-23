@@ -14,20 +14,20 @@ $(document).ready(function (){
     }
 });
 
-$(document).on('click', '#createServiceCategory', function () {
+$(document).on('click', '#createTreatmentCategory', function () {
     $('#createServiceCategoryModal').modal('show').appendTo('body');
 });
 
-$(document).on('submit', '#createServiceCategoryForm', function (e) {
+$(document).on('submit', '#createTreatmentCategoryForm', function (e) {
     e.preventDefault();
     $.ajax({
-        url: route('service-categories.store'),
+        url: route('treatment-categories.store'),
         type: 'POST',
         data: $(this).serialize(),
         success: function (result) {
             if (result.success) {
                 displaySuccessMessage(result.message);
-                $('#createServiceCategoryModal').modal('hide');
+                $('#createTreatmentCategoryModal').modal('hide');
                 let data = {
                     id: result.data.id,
                     name: result.data.name,
@@ -41,12 +41,12 @@ $(document).on('submit', '#createServiceCategoryForm', function (e) {
             displayErrorMessage(result.responseJSON.message);
         },
         complete: function () {
-            processingBtn('#createServiceCategoryForm', '#btnSave');
+            processingBtn('#createTreatmentCategoryForm', '#btnSave');
         },
     });
 });
 
-$('#createServiceCategoryModal').on('hidden.bs.modal', function () {
-    resetModalForm('#createServiceCategoryForm',
-        '#createServiceCategoryValidationErrorsBox');
+$('#createTreatmentCategoryModal').on('hidden.bs.modal', function () {
+    resetModalForm('#createTreatmentCategoryForm',
+        '#createTreatmentCategoryValidationErrorsBox');
 });

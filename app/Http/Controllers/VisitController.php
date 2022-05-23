@@ -6,6 +6,7 @@ use App\DataTables\VisitDataTable;
 use App\Http\Requests\CreateVisitPrescriptionRequest;
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Visit;
 use App\Models\VisitBilling;
@@ -334,28 +335,35 @@ class VisitController extends AppBaseController
     {
         $input = $request->all();
 
+        $treat = Treatment::whereId($input['treatment_name'])->first();
+
         $billing = VisitBilling::create([
             'visit_id'          => $input['visit_id'],
-            'observation_name'  => $input['observation_name'],
-            'symptoms'          => $input['symptoms'],
-            'anamnesis'         => $input['anamnesis'],
-            'prognosis'         => $input['prognosis'],
-            'temperature'       => $input['temperature'],
-            'awareness'         => $input['awareness'],
-            'height'            => $input['height'],
-            'weight'            => $input['weight'],
-            'systole'           => $input['systole'],
-            'diastole'          => $input['diastole'],
-            'respiratory_rate'  => $input['respiratory_rate'],
-            'heart_rate'        => $input['heart_rate'],
-            'plan'              => $input['plan'],
-            'assessment'        => $input['assessment'],
-            'create_user_id'    => $input['staff_id'],
-            'update_user_id'    => $input['staff_id'],
+            'type'              => $treat->category_id,
+            'name'              => $treat->id,
+            'unit_price'        => $treat->charges,
+            'unit'              => $input['treatment_unit'],
+            'subtotal'       => $treat->charges * $input['treatment_unit'],
+            'status'         => 1,
 
         ]);
-        $observationData = VisitObservation::whereVisitId($input['visit_id'])->get();
+        $billingData = VisitBilling::whereVisitId($input['visit_id'])->get();
 
-        return $this->sendResponse($observationData, 'Observation added successfully.');
+        return $this->sendResponse($billingData, 'Billing added successfully.');
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function deleteBilling($id)
+    {
+        $billing = VisitBilling::findOrFail($id);
+        $visitId = $billing->visit_id;
+        $billing->delete();
+        $billingData = VisitBilling::where('visit_id', $visitId)->get();
+
+        return $this->sendResponse($billingData, 'Billing deleted successfully.');
     }
 }

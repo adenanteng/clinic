@@ -83,7 +83,7 @@ class VisitRepository extends BaseRepository
     public function getShowData($id)
     {
         return Visit::with([
-            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'prescriptions.pharmacys.procurements',
+            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'billings', 'prescriptions.pharmacys.procurements',
         ])->where('appointment_id', $id);
     }
 

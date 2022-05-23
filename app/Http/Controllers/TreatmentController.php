@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ServiceDataTable;
+use App\DataTables\TreatmentDataTable;
 use App\Models\Appointment;
 use App\Models\Service;
+use App\Models\Treatment;
+use App\Repositories\TreatmentsRepository;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -13,8 +16,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateServicesRequest;
-use App\Http\Requests\UpdateServicesRequest;
+//use App\Http\Requests\CreateServicesRequest;
+//use App\Http\Requests\UpdateServicesRequest;
 use App\Repositories\ServicesRepository;
 use Laracasts\Flash\Flash;
 use Illuminate\Routing\Redirector;
@@ -23,12 +26,12 @@ use function Symfony\Component\String\s;
 
 class TreatmentController extends AppBaseController
 {
-    /** @var  ServicesRepository */
-    private $servicesRepository;
+    /** @var  TreatmentsRepository */
+    private $treatmentsRepository;
 
-    public function __construct(ServicesRepository $servicesRepo)
+    public function __construct(TreatmentsRepository $treatmentsRepo)
     {
-        $this->servicesRepository = $servicesRepo;
+        $this->treatmentsRepository = $treatmentsRepo;
     }
 
     /**
@@ -41,11 +44,11 @@ class TreatmentController extends AppBaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Datatables::of((new ServiceDataTable())->get($request->only('status')))->make(true);
+            return Datatables::of((new TreatmentDataTable())->get($request->only('status')))->make(true);
         }
         $status = Service::STATUS;
 
-        return view('services.index',compact('status'));
+        return view('treatments.index',compact('status'));
     }
 
     /**
@@ -55,72 +58,72 @@ class TreatmentController extends AppBaseController
      */
     public function create()
     {
-        $data = $this->servicesRepository->prepareData();
+        $data = $this->treatmentsRepository->prepareData();
 
-        return view('services.create', compact('data'));
+        return view('treatments.create', compact('data'));
     }
 
     /**
      * Store a newly created Services in storage.
      *
-     * @param  CreateServicesRequest  $request
+     * @param  Request  $request
      *
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(CreateServicesRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
-        $this->servicesRepository->store($input);
+        $this->treatmentsRepository->store($input);
 
-        Flash::success('Service created successfully.');
+        Flash::success('Treatment created successfully.');
 
-        return redirect(route('services.index'));
+        return redirect(route('treatments.index'));
     }
 
     /**
      * Show the form for editing the specified Services.
      *
-     * @param  Service  $service
+     * @param  Treatment $treatment
      * @return Application|Factory|View
      */
-    public function edit(Service $service)
+    public function edit(Treatment $treatment)
     {
-        $data = $this->servicesRepository->prepareData();
-        $selectedDoctor = $service->serviceDoctors()->pluck('doctor_id')->toArray();
+        $data = $this->treatmentsRepository->prepareData();
+//        $selectedDoctor = $treatment->serviceDoctors()->pluck('doctor_id')->toArray();
 
-        return view('services.edit', compact('service', 'data', 'selectedDoctor'));
+        return view('treatments.edit', compact('treatment', 'data'));
     }
 
     /**
      * Update the specified Services in storage.
      *
-     * @param  UpdateServicesRequest  $request
-     * @param  Service  $service
+     * @param  Request $request
+     * @param  Treatment $treatment
      * @return Application|Redirector|RedirectResponse
      */
-    public function update(UpdateServicesRequest $request, Service $service)
+    public function update(Request $request, Treatment $treatment)
     {
-        $this->servicesRepository->update($request->all(), $service);
+        $this->treatmentsRepository->update($request->all(), $treatment);
 
-        Flash::success('Service updated successfully.');
+        Flash::success('Treatment updated successfully.');
 
-        return redirect(route('services.index'));
+        return redirect(route('treatments.index'));
     }
 
     /**
      * Remove the specified Services from storage.
      *
-     * @param  Service  $service
+     * @param  Treatment  $treatment
      * @return JsonResponse
      */
-    public function destroy(Service $service): JsonResponse
+    public function destroy(Treatment $treatment): JsonResponse
     {
-        $checkRecord = Appointment::whereServiceId($service->id)->exists();
+        $checkRecord = Appointment::whereServiceId($treatment->id)->exists();
 
         if ($checkRecord) {
             return $this->sendError('Service used somewhere else.');
         }
-        $service->delete();
+        $treatment->delete();
 
         return $this->sendSuccess('Service deleted successfully.');
     }

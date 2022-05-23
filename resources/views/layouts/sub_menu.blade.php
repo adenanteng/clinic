@@ -136,6 +136,24 @@
         </div>
     </div>
 @endcan
+@can('manage_services')
+    <div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
+{{ !(Request::is('treatments*') || Request::is('treatment-categories*')) ? 'd-none' : '' }}">
+        <div class="menu-item me-lg-1 {{ (Request::is('treatments*')) ? 'show' : ''  }}">
+            <a class="menu-link py-3" href="{{ route('treatments.index') }}">
+                <span class="menu-title">{{ __('messages.treatments') }}</span>
+            </a>
+        </div>
+    </div>
+    <div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
+{{ !(Request::is('treatments*') || Request::is('treatment-categories*')) ? 'd-none' : '' }}">
+        <div class="menu-item me-lg-1 {{ Request::is('treatment-categories*') ? 'show' : ''  }}">
+            <a class="menu-link py-3" href="{{ route('treatment-categories.index') }}">
+                <span class="menu-title">{{ __('messages.treatment_categories') }}</span>
+            </a>
+        </div>
+    </div>
+@endcan
 <div id="department" class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold
 {{ !(Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'd-none' : '' }}">
     @can('manage_appointments')
@@ -162,7 +180,7 @@
     <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('pharmacys*')) ? 'd-none' : '' }}">
         <div class="menu-item me-lg-1 {{ Request::is('pharmacys*') ? 'show' : ''  }}">
             <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
-                <span class="menu-title">{{ __('messages.pharmacys') }}</span>
+                <span class="menu-title">{{ __('messages.transactions') }}</span>
             </a>
         </div>
     </div>

@@ -10,13 +10,13 @@
         <div class="mb-5">
             {{ Form::label('category_id',__('messages.service.category').':', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
             <div class="input-group flex-nowrap">
-                {{ Form::select('category_id',$data['serviceCategories'], null,['class' => 'form-control form-control-solid form-select w-100%',
-            'placeholder' => 'Select Category','data-control'=>'select2','id'=>'serviceCategory']) }}
+                {{ Form::select('category_id',$data['treatmentCategories'], null,['class' => 'form-control form-control-solid form-select w-100%',
+            'placeholder' => 'Select Category','data-control'=>'select2','id'=>'treatmentCategory']) }}
                 <div class="input-group-append plus-icon-height d-flex w-45px"
-                {{ $styleCss }}="height: 42px!important;margin-left: 3px;" id="createServiceCategory">
+                {{ $styleCss }}="height: 42px!important;margin-left: 3px;" id="createTreatmentCategory">
                 <div class="input-group-text form-control form-control-solid">
                     <a href="#" class="btn btn-icon" data-toggle="modal"
-                       data-target="#createServiceCategoryModal"><i class="fa fa-plus"></i></a>
+                       data-target="#createTreatmentCategoryModal"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -33,16 +33,12 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        {{ Form::label('doctors', __('messages.doctors').':', ['class' => 'form-label fs-6 required fw-bolder text-gray-700 mb-3']) }}
-        {{ Form::select('doctors[]',$data['doctors'],(isset($selectedDoctor)) ? $selectedDoctor : null,['class' => 'form-control form-control-solid form-select', 'data-placeholder' => 'Select Doctors', 'data-control'=>'select2','multiple']) }}
-    </div>
     <div class="col-lg-12">
         <div class="mb-5">
-            {{ Form::label('short_description', __('messages.service.short_description').':', ['class' => 'form-label required fs-6 fw-bolder text-gray-700 mb-3']) }}
+            {{ Form::label('short_description', __('messages.service.short_description').':', ['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3']) }}
             <i class="fa fa-question-circle ms-1 fs-7" data-bs-toggle="tooltip"
                title="Maximum 60 character allow"></i>
-            {{ Form::textarea('short_description', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'required', 'rows'=> 5,'maxlength'=> 60]) }}
+            {{ Form::textarea('short_description', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'rows'=> 5,'maxlength'=> 60]) }}
         </div>
     </div>
 
@@ -57,7 +53,7 @@
             @php $styleCss = 'style'; @endphp
             <div class="image-input image-input-outline" data-kt-image-input="true">
                 <div class="image-input-wrapper w-125px h-125px" id="bgImage"
-                {{ $styleCss }}="background-image: url({{ !empty($service->icon) ? $service->icon : asset('web/media/avatars/male.png') }})">
+                {{ $styleCss }}="background-image: url({{ !empty($treatment->icon) ? $treatment->icon : asset('web/media/avatars/male.png') }})">
             </div>
             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title=""
@@ -69,14 +65,14 @@
             </div>
         <div class="form-text">Allowed file types: svg, png, jpg, jpeg.</div>
     </div>
-    
+
     <div class="mb-5 col-lg-6">
         {{ Form::label('status', __('messages.doctor.status').':', ['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3']) }}
-        @if(!empty($service))
+        @if(!empty($treatment))
             <div class="col-lg-8 d-flex align-items-center">
                 <div class="form-check form-check-solid form-switch fv-row">
                     <input type="checkbox" name="status" value="1" class="form-check-input w-45px h-30px"
-                           id="allowmarketing" {{ $service->status == 1 ? 'checked' : '' }}>
+                           id="allowmarketing" {{ $treatment->status == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="allowmarketing"></label>
                 </div>
             </div>
@@ -92,7 +88,7 @@
     </div>
     <div>
         {{ Form::submit(__('messages.common.save'),['class' => 'btn btn-primary me-2 my-1']) }}
-        <a href="{{route('services.index')}}" type="reset"
+        <a href="{{route('treatments.index')}}" type="reset"
            class="btn btn-light btn-active-light-primary my-1">{{__('messages.common.discard')}}</a>
     </div>
 </div>

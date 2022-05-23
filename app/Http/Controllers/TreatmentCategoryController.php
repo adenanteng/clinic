@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\ServiceCategoryDataTable;
-use App\Models\Service;
-use App\Models\ServiceCategory;
+use App\DataTables\TreatmentCategoryDataTable;
+use App\Models\Treatment;
+use App\Models\TreatmentCategory;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateServiceCategoryRequest;
-use App\Http\Requests\UpdateServiceCategoryRequest;
-use App\Repositories\ServiceCategoryRepository;
+//use App\Http\Requests\CreateTreatmentCategoryRequest;
+//use App\Http\Requests\UpdateTreatmentCategoryRequest;
+use App\Repositories\TreatmentCategoryRepository;
+use Illuminate\Support\Str;
 use Response;
 use Yajra\DataTables\DataTables;
 
 class TreatmentCategoryController extends AppBaseController
 {
-    /** @var  ServiceCategoryRepository */
-    private $serviceCategoryRepository;
+    /** @var  TreatmentCategoryRepository */
+    private $treatmentCategoryRepository;
 
-    public function __construct(ServiceCategoryRepository $serviceCategoryRepo)
+    public function __construct(TreatmentCategoryRepository $treatmentCategoryRepo)
     {
-        $this->serviceCategoryRepository = $serviceCategoryRepo;
+        $this->treatmentCategoryRepository = $treatmentCategoryRepo;
     }
 
     /**
-     * Display a listing of the ServiceCategory.
+     * Display a listing of the TreatmentCategory.
      *
      * @param  Request  $request
      *
@@ -39,68 +40,71 @@ class TreatmentCategoryController extends AppBaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Datatables::of((new ServiceCategoryDataTable())->get())->make(true);
+            return Datatables::of((new TreatmentCategoryDataTable())->get())->make(true);
         }
 
-        return view('service_categories.index');
+        return view('treatment_categories.index');
     }
 
     /**
-     * Store a newly created ServiceCategory in storage.
+     * Store a newly created TreatmentCategory in storage.
      *
-     * @param  CreateServiceCategoryRequest  $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      */
-    public function store(CreateServiceCategoryRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $input = $request->all();
-        $serviceCategory = $this->serviceCategoryRepository->create($input);
-
-        return $this->sendResponse($serviceCategory, 'Service category created successfully.');
+        $input['slug'] = Str::slug($input['name']);
+        $input['status'] = 1;
+//        return response()->json($input);
+        $treatmentCategory = $this->treatmentCategoryRepository->create($input);
+        return $this->sendResponse($treatmentCategory, 'Treatment category created successfully.');
     }
 
     /**
-     * Show the form for editing the specified ServiceCategory.
+     * Show the form for editing the specified TreatmentCategory.
      *
-     * @param  ServiceCategory  $serviceCategory
+     * @param  TreatmentCategory  $treatmentCategory
      * @return JsonResponse
      */
-    public function edit(ServiceCategory $serviceCategory): JsonResponse
+    public function edit(TreatmentCategory $treatmentCategory): JsonResponse
     {
-        return $this->sendResponse($serviceCategory, 'Category retrieved successfully.');
+        return $this->sendResponse($treatmentCategory, 'Treatment category retrieved successfully.');
     }
 
     /**
-     * Update the specified ServiceCategory in storage.
+     * Update the specified TreatmentCategory in storage.
      *
-     * @param  UpdateServiceCategoryRequest  $request
-     * @param  ServiceCategory  $serviceCategory
+     * @param  Request  $request
+     * @param  TreatmentCategory  $treatmentCategory
      * @return JsonResponse
      */
-    public function update(UpdateServiceCategoryRequest $request, ServiceCategory $serviceCategory): JsonResponse
+    public function update(Request $request, TreatmentCategory $treatmentCategory): JsonResponse
     {
         $input = $request->all();
-        $this->serviceCategoryRepository->update($input, $serviceCategory->id);
+        $input['slug'] = Str::slug($input['name']);
+        $this->treatmentCategoryRepository->update($input, $treatmentCategory->id);
 
-        return $this->sendSuccess('Service category updated successfully.');
+        return $this->sendSuccess('Treatment category updated successfully.');
     }
 
     /**
-     * Remove the specified ServiceCategory from storage.
+     * Remove the specified TreatmentCategory from storage.
      *
-     * @param  ServiceCategory  $serviceCategory
+     * @param  TreatmentCategory  $treatmentCategory
      * @return JsonResponse
      */
-    public function destroy(ServiceCategory $serviceCategory): JsonResponse
+    public function destroy(TreatmentCategory $treatmentCategory): JsonResponse
     {
-        $checkRecord = Service::whereCategoryId($serviceCategory->id)->exists();
+        $checkRecord = Treatment::whereCategoryId($treatmentCategory->id)->exists();
 
         if($checkRecord){
-            return $this->sendError('Service category used somewhere else.');
+            return $this->sendError('Treatment category used somewhere else.');
         }
-        $serviceCategory->delete();
+        $treatmentCategory->delete();
 
-        return $this->sendSuccess('Service category deleted successfully.');
+        return $this->sendSuccess('Treatment category deleted successfully.');
     }
 }

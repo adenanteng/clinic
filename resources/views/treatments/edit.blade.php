@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.service.edit_service')}}
+    {{__('messages.treatment.edit')}}
 @endsection
 @section('header_toolbar')
     <div class="toolbar" id="kt_toolbar">
@@ -9,7 +9,7 @@
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">@yield('title')</h1>
             </div>
             <div class="d-flex align-items-center py-1 ms-auto">
-                <a href="{{ route('services.index') }}"
+                <a href="{{ route('treatments.index') }}"
                    class="btn btn-sm btn-primary">{{ __('messages.common.back') }}</a>
             </div>
         </div>
@@ -23,9 +23,9 @@
                     @include('layouts.errors')
                     <div class="card">
                         <div class="card-body p-12">
-                            {{ Form::model($service, ['route' => ['services.update', $service->id], 'method' => 'PUT', 'files' => true]) }}
+                            {{ Form::model($treatment, ['route' => ['treatments.update', $treatment->id], 'method' => 'PUT', 'files' => true]) }}
                             <div class="card-body p-9">
-                                @include('services.fields')
+                                @include('treatments.fields')
                                 {{ Form::close() }}
                             </div>
                         </div>
@@ -34,8 +34,8 @@
             </div>
         </div>
     </div>
-    @include('service_categories.create-modal')
+    @include('treatment_categories.create-modal')
 @endsection
 @section('page_js')
-    <script src="{{mix('assets/js/services/create-edit.js')}}"></script>
+    <script src="{{mix('assets/js/treatments/create-edit.js')}}"></script>
 @endsection

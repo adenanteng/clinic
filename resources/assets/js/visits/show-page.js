@@ -93,7 +93,53 @@ $(document).on('submit', '#addVisitObservation', function (e) {
         dataType: 'json',
 
         success: function (result) {
-
+            // $('#addPrescription')[0].reset();
+            $('.visit-observations').empty();
+            $('#symptoms').val('');
+            $('#anamnesis').val('');
+            $('#prognosis').val('');
+            $('#awareness').val('');
+            $('#temperature').val('');
+            $('#height').val('');
+            $('#weight').val('');
+            $('#belly').val('');
+            $('#systole').val('');
+            $('#diastole').val('');
+            $('#respiratory_rate').val('');
+            $('#heart_rate').val('');
+            $('#assessment').val('');
+            $('#plan').val('');
+            $.each(result.data, function (i, val) {
+                let data = [
+                    {
+                        'id': val.id,
+                        'date': val.updated_at,
+                        'name': val.observation_name,
+                        'user': val.create_user,
+                        'symptoms': val.symptoms,
+                        'anamnesis': val.anamnesis,
+                        'temperature': val.temperature,
+                        'awareness': val.awareness,
+                        'height': val.height,
+                        'weight': val.weight,
+                        'systole': val.systole,
+                        'diastole': val.diastole,
+                        'respiratory': val.respiratory_rate,
+                        'heart': val.heart_rate,
+                        'assessment': val.assessment,
+                        'plan': val.plan,
+                    }];
+                console.log(data)
+                const visitObservationTblData = prepareTemplateRender(
+                    '#visitsObservationTblTemplate', data);
+                $('.visit-observations').append(visitObservationTblData);
+            });
+            console.log(result.data)
+            // $('#addVisitPrescription').removeClass('show');
+            displaySuccessMessage(result.message);
+        },
+        error: function (result) {
+            displayErrorMessage(result.responseJSON.message);
         },
         complete: function () {
             $('#observationSubmitBtn').attr('disabled', false)
@@ -308,7 +354,7 @@ $(document).on('click', '.reset-form', function () {
     $('#addPrescription')[0].reset();
 });
 
-// Edit Visit Prescription Data
+// Send Visit Prescription Data
 function renderPrescription (id) {
     let prescriptionSendUrl = route('send.prescription', id);
     $.ajax({
@@ -352,32 +398,78 @@ $(document).on('click', '.send-prescription-btn', function () {
 });
 
 $(document).on('change', '#treatmentName', function () {
-    // $('#treatmentCharges').val('');
-    // let url = route('get-charges');
-    //
-    // $.ajax({
-    //     url: url,
-    //     type: 'GET',
-    //     data: {
-    //         'treatmentName': $(this).val(),
-    //     },
-    //     success: function (result) {
-    //         if (result.success) {
-    //             $('#date').removeAttr('disabled');
-    //             $('#serviceId').empty();
-    //             $('#serviceId').
-    //             append($('<option value=""></option>').
-    //             text('Select Service'));
-    //             $.each(result.data, function (i, v) {
-    //                 $('#serviceId').
-    //                 append($('<option></option>').
-    //                 attr('value', v.id).
-    //                 text(v.name));
-    //             });
-    //         }
-    //     },
-    // });
-    let asu = $('#treatmentName').val();
-    $("#treatmentType").val(asu).trigger('change');
-    $("#treatmentCharges").val(asu).trigger('change');
+    let halo = $('#treatmentName').val();
+    $("#treatmentType").val(halo).trigger('change');
+    $("#treatmentCharges").val(halo).trigger('change');
+});
+
+// Add visit Billing Data
+$(document).on('submit', '#addBilling', function (e) {
+    e.preventDefault();
+    let btnSubmitEle = $(this).find('#billingSubmitBtn');
+    setAdminBtnLoader(btnSubmitEle);
+    let addBillingUrl = route('add.billing');
+    $.ajax({
+        url: addBillingUrl,
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function (result) {
+            // $('#addBilling')[0].reset();
+            $('.visit-billings').empty();
+            $('#treatmentName').val('');
+            $('#treatmentUnit').val('1');
+            $('#treatmentType').val('');
+            $('#treatmentCharges').val('');
+            $.each(result.data, function (i, val) {
+                let data = [
+                    {
+                        'id': val.id,
+                        'date': val.created_at,
+                        'name': val.name_text,
+                        'unit': val.unit,
+                        'type': val.type_text,
+                        'unit_price': val.unit_price,
+                        'subtotal': val.subtotal,
+                    }];
+                const visitBillingTblData = prepareTemplateRender(
+                    '#visitsBillingTblTemplate', data);
+                $('.visit-billings').append(visitBillingTblData);
+            });
+            console.log(result.data)
+            displaySuccessMessage(result.message);
+        },
+        error: function (result) {
+            displayErrorMessage(result.responseJSON.message);
+        },
+        complete: function () {
+            $('#billingSubmitBtn').attr('disabled', false)
+        },
+    });
+});
+
+// Delete Visit Prescription Data
+$(document).on('click', '.delete-billing-btn', function (e) {
+    e.preventDefault();
+
+    let id = $(this).attr('data-id');
+    $(this).closest('tr').remove();
+    let billingDeleteUrl = route('delete.billing', id);
+    $.ajax({
+        url: billingDeleteUrl,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            // $('#addPrescription')[0].reset();
+            $('#billingId').val('');
+            if (result.data.length < 1) {
+                displaySuccessMessage(result.message);
+                $('.visit-billings').
+                append(
+                    `<tr><td colspan="4" class="text-center fw-bold  text-muted text-gray-600">No data available in table</td></tr>`);
+            } else {
+                displaySuccessMessage(result.message);
+            }
+        },
+    });
 });

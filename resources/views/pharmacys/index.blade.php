@@ -92,7 +92,7 @@
                                             <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
                                             <rect fill="#000000" opacity="0.5" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000)" x="4" y="11" width="16" height="2" rx="1"/>
                                         </svg>
-                                    </span>{{ __('messages.appointment.add_new_appointment') }}</a>
+                                    </span>{{ __('messages.pharmacy.add') }}</a>
                                 </div>
                         </div>
                     </div>

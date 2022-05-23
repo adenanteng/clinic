@@ -40,6 +40,38 @@
         let noRecordsFound = "{{ __('messages.common.no_records_found') }}";
         let doctorLogin = "{{ getLogInUser()->hasRole('doctor') }}";
     </script>
+    <script>
+        new TomSelect('#select-icd10',{
+            valueField: 'Name',
+            labelField: 'Name',
+            searchField: ['Name','Description'],
+
+            // fetch remote data
+            load: function(query, callback) {
+                let url = 'http://icd10api.com/?s=' + encodeURIComponent(query) + '&desc=short&r=json';
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        callback(json.Search);
+                        self.settings.load = null;
+                        console.log(url)
+                    }).catch(()=>{
+                    callback();
+
+                });
+            },
+            // custom rendering function for options
+            render: {
+                option: function(item, escape) {
+                    return `<div><span class="ml-5">${ escape(item.Name) } - </span><span>${ escape(item.Description) }</span></div>`;
+                },
+
+                item: function(item, escape) {
+                    return `<div><span class="ml-5">${ escape(item.Name) } - </span><span>${ escape(item.Description) }</span></div>`;
+                },
+            },
+        });
+    </script>
     <script src="{{ mix('assets/js/visits/show-page.js') }}"></script>
 @endsection
 

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateServiceCategoryRequest;
 use App\Http\Requests\UpdateServiceCategoryRequest;
 use App\Repositories\ServiceCategoryRepository;
+use Illuminate\Support\Str;
 use Response;
 use Yajra\DataTables\DataTables;
 
@@ -55,6 +56,7 @@ class ServiceCategoryController extends AppBaseController
     public function store(CreateServiceCategoryRequest $request): JsonResponse
     {
         $input = $request->all();
+        $input['slug'] = Str::slug($input['name']);
         $serviceCategory = $this->serviceCategoryRepository->create($input);
 
         return $this->sendResponse($serviceCategory, 'Service category created successfully.');
@@ -81,6 +83,7 @@ class ServiceCategoryController extends AppBaseController
     public function update(UpdateServiceCategoryRequest $request, ServiceCategory $serviceCategory): JsonResponse
     {
         $input = $request->all();
+        $input['slug'] = Str::slug($input['name']);
         $this->serviceCategoryRepository->update($input, $serviceCategory->id);
 
         return $this->sendSuccess('Service category updated successfully.');
@@ -95,7 +98,7 @@ class ServiceCategoryController extends AppBaseController
     public function destroy(ServiceCategory $serviceCategory): JsonResponse
     {
         $checkRecord = Service::whereCategoryId($serviceCategory->id)->exists();
-        
+
         if($checkRecord){
             return $this->sendError('Service category used somewhere else.');
         }

@@ -36,6 +36,8 @@ class ServiceCategory extends Model
 
     public $fillable = [
         'name',
+        'slug',
+        'status',
     ];
 
     /**
@@ -55,7 +57,7 @@ class ServiceCategory extends Model
     public static $rules = [
         'name' => 'required|unique:service_categories,name',
     ];
-    
+
     public function services(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Service::class,'category_id');
@@ -64,5 +66,5 @@ class ServiceCategory extends Model
     {
         return $this->hasMany(Service::class,'category_id')->where('status',Service::ACTIVE);
     }
-    
+
 }

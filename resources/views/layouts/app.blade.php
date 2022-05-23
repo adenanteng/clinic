@@ -25,6 +25,8 @@
     @endif
     <link href="{{ mix('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
     <script defer src="{{ asset('assets/js/alpine.js') }}"></script>
+{{--    <script defer src="{{ asset('assets/js/turbo.js') }}"></script>--}}
+{{--    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>--}}
 </head>
 @php $styleCss = 'style'; @endphp
 <body id="kt_body"
@@ -111,11 +113,6 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="" >
         searchField: ['first_name','last_name','full_name','dob','role_name'],
         // fetch remote data
         load: function(query, callback) {
-            let self = this;
-            if( self.loading > 1 ){
-                callback();
-                return;
-            }
             let url = '/search?q=';
             fetch(url)
                 .then(response => response.json())

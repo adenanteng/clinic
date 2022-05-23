@@ -16,16 +16,14 @@
     @stack('css')
 </head>
 @php $styleCss = 'style'; @endphp
-<body id="kt_body"
-      class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed"
 {{ $styleCss }}="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
-<div class="d-flex flex-column flex-root">
-    <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
-    {{ $styleCss }}="background-image: url({{ asset('web/media/illustrations/progress-hd.png') }})">
-    @yield('content')
-</div>
-</div>
-<footer>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed">
+        @yield('content')
+        </div>
+    </div>
+    <footer>
     <div class="container-fluid padding-0">
         <div class="row align-items-center justify-content-center">
             <div class="col-xl-6">

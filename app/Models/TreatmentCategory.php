@@ -36,6 +36,8 @@ class TreatmentCategory extends Model
 
     public $fillable = [
         'name',
+        'slug',
+        'status',
     ];
 
     /**

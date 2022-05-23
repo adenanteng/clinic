@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.services')}}
+    {{__('messages.treatments')}}
 @endsection
 @section('page_css')
     <link href="{{ mix('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
@@ -30,8 +30,7 @@
 												</g>
 											</svg>
 										</span>{{__('messages.common.filter')}}</a>
-                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
-                                 id="filter">
+                            <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true" id="filter">
                                 <div class="px-7 py-5">
                                     <div class="fs-5 text-dark fw-bolder">{{__('messages.common.filter_option')}}</div>
                                 </div>
@@ -40,7 +39,7 @@
                                     <div class="mb-10">
                                         <label class="form-label fw-bold">{{__('messages.service.status')}}</label>
                                         <div>
-                                            {{ Form::select('status', $status, \App\Models\Service::STATUS, ['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'servicesStatus']) }}
+                                            {{ Form::select('status', $status, \App\Models\Service::STATUS, ['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'treatmentsStatus']) }}
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end">
@@ -54,7 +53,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a type="button" class="btn btn-primary" href="{{ route('services.create')}}">
+                            <a type="button" class="btn btn-primary" href="{{ route('treatments.create')}}">
                                 <span class="svg-icon svg-icon-2">
 													<svg xmlns="http://www.w3.org/2000/svg"
                                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -65,14 +64,14 @@
                                                               x="4" y="11" width="16" height="2" rx="1"/>
 													</svg>
 												</span>
-                                {{__('messages.service.add_service')}}</a>
+                                {{__('messages.treatment.add')}}</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    @include('services.table')
+                    @include('treatments.table')
                     @include('layouts.templates.actions')
-                    @include('services.templates.templates')
+                    @include('treatments.templates.templates')
                 </div>
             </div>
         </div>
@@ -84,5 +83,5 @@
         let active = '{{ \App\Models\Service::ACTIVE }}';
     </script>
     <script src="{{ mix('assets/js/custom/custom-datatable.js') }}"></script>
-    <script src="{{mix('assets/js/services/services.js')}}"></script>
+    <script src="{{mix('assets/js/treatments/treatments.js')}}"></script>
 @endsection

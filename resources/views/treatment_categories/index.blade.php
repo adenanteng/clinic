@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.service_categories')}}
+    {{__('messages.treatment_categories')}}
 @endsection
 @section('page_css')
     <link href="{{ mix('assets/css/app.css') }}" rel="stylesheet" type="text/css"/>
@@ -16,7 +16,7 @@
                     @include('layouts.search-component')
                     <div class="card-toolbar ms-auto">
                         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                            <a type="button" class="btn btn-primary" id="createServiceCategory">
+                            <a type="button" class="btn btn-primary" id="createTreatmentCategory">
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -27,21 +27,21 @@
                                               x="4" y="11" width="16" height="2" rx="1"/>
                                     </svg>
                                 </span>
-                                {{__('messages.service_category.add_category')}}</a>
+                                {{__('messages.treatment_category.add')}}</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    @include('service_categories.table')
-                    @include('service_categories.templates.templates')
+                    @include('treatment_categories.table')
+                    @include('treatment_categories.templates.templates')
                 </div>
             </div>
         </div>
     </div>
-    @include('service_categories.create-modal')
-    @include('service_categories.edit-modal')
+    @include('treatment_categories.create-modal')
+    @include('treatment_categories.edit-modal')
 @endsection
 @section('page_js')
     <script src="{{ mix('assets/js/custom/custom-datatable.js') }}"></script>
-    <script src="{{mix('assets/js/service_categories/service_categories.js')}}"></script>
+    <script src="{{mix('assets/js/treatment_categories/treatment_categories.js')}}"></script>
 @endsection

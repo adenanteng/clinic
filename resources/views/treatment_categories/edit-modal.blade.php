@@ -1,8 +1,8 @@
-<div class="modal show fade" id="editServiceCategoryModal" tabindex="-1" aria-modal="true" role="dialog">
+<div class="modal show fade" id="editTreatmentCategoryModal" tabindex="-1" aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="fw-bolder">{{__('messages.service_category.edit_category')}}</h2>
+                <h2 class="fw-bolder">{{__('messages.treatment_category.edit')}}</h2>
                 <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                     <span class="svg-icon svg-icon-1">
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="modal-body scroll-y mx-5 mx-xl-15 mb-6">
-                {{ Form::open(['id' => 'editServiceCategoryForm']) }}
-                {{ Form::hidden('categoryId',null,['id' => 'serviceCategoryID']) }}
-                <div class="alert alert-danger d-none" id="editServiceCategoryValidationErrorsBox"></div>
+                {{ Form::open(['id' => 'editTreatmentCategoryForm']) }}
+                {{ Form::hidden('categoryId',null,['id' => 'treatmentCategoryID']) }}
+                <div class="alert alert-danger d-none" id="editTreatmentCategoryValidationErrorsBox"></div>
                 @php $styleCss = 'style'; @endphp
                 <div class="d-flex flex-column scroll-y me-n7 pe-7"
                      data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"

@@ -12,7 +12,8 @@ return [
 
     'dashboard'                  => 'Beranda',
     'users'                      => 'Pengguna',
-    'patients'                   => 'Administrasi',
+    'administrations'             => 'Administrasi',
+    'patients'                   => 'Pasien',
     'settings'                   => 'Pengaturan',
     'clinic_schedules'           => 'Jadwal Klinik',
     'doctor_sessions'            => 'Jadwal Dokter',
@@ -24,6 +25,8 @@ return [
     'service_categories'         => 'Kategori Pelayanan',
     'specializations'            => 'Spesialisasi',
     'services'                   => 'Pengaturan Pelayanan',
+    'treatments'                 => 'Pengaturan Jasa',
+    'treatment_categories'      => 'Kategori Jasa',
     'roles'                      => 'Peran',
     'staffs'                     => 'Staf',
     'appointments'               => 'Pelayanan',
@@ -198,7 +201,7 @@ return [
         'impersonate'       => 'Impersonate',
         'email_verified'    => 'Terverifikasi',
         'no_data_available_in_table'=> 'Tidak ada data tersedia',
-        'icon'=>'Icon',
+        'icon'              => 'Icon',
     ],
 
     'user' => [
@@ -345,6 +348,11 @@ return [
         'edit_category' => 'Edit Service Category',
     ],
 
+    'treatment_category' => [
+        'add'  => 'Tambah Kategori Jasa',
+        'edit' => 'Ubah Kategori Jasa',
+    ],
+
     'doctor' => [
         'add'                       => 'Tambah Dokter',
         'edit'                      => 'Ubah Dokter',
@@ -390,6 +398,12 @@ return [
         'charges'           => 'Charges',
         'status'            => 'Status',
         'short_description' => 'Short Description',
+    ],
+
+    'treatment' => [
+        'add'       => 'Tambah Jasa',
+        'edit'      => 'Ubah Jasa'
+
     ],
 
     'role' => [
@@ -535,7 +549,16 @@ return [
         'duration'  => 'Durasi',
     ],
 
+    'billing' => [
+        'name'      => 'Nama',
+        'type' => 'Jenis',
+        'unit'  => 'Jumlah',
+        'unit_price' => 'Satuan',
+        'subtotal' => 'Subtotal',
+    ],
+
     'pharmacy' => [
+        'add' => 'Tambah Resep',
         'frequency' => 'Frekuensi',
         'duration'  => 'Durasi',
     ],
