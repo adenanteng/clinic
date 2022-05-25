@@ -220,7 +220,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
-
+        Tremby\LaravelGitVersion\GitVersionServiceProvider::class,
     ],
 
     /*
