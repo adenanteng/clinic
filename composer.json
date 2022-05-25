@@ -40,6 +40,7 @@
         "srmklive/paypal": "~3.0",
         "stripe/stripe-php": "^7.98",
         "tightenco/ziggy": "^1.1",
+        "tremby/laravel-git-version": "^1.2",
         "unicodeveloper/laravel-paystack": "^1.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },

@@ -1,5 +1,7 @@
 <?php
 
+use Tremby\LaravelGitVersion\GitVersionHelper;
+
 return [
 
     /*
@@ -27,7 +29,7 @@ return [
     | or any other location as required by the application or its packages.
     */
 
-    'version' => '0.05.24-BETA',
+//    'version' => ,
 
     /*
     |--------------------------------------------------------------------------

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Stripe\Stripe;
+use Tremby\LaravelGitVersion\GitVersionHelper;
 
 /**
  *
@@ -328,7 +329,9 @@ function version()
 //    $composerData = json_decode($composerFile, true);
 //    $currentVersion = $composerData['version'];
 //    return $currentVersion;
-    return config('app.version');
+//    return config('app.version');
+
+return GitVersionHelper::getVersion();
 }
 
 if (! function_exists('getNotification')) {
