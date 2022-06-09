@@ -34,6 +34,24 @@ class VisitProblem extends Model
     public $fillable = [
         'problem_name',
         'visit_id',
+        'type',
+        'status',
+    ];
+
+    protected $appends = ['type_name'];
+
+    const PRIMARY = 1;
+    const SECONDARY = 0;
+    const STATUS_ICD = [
+        self::PRIMARY  => 'Utama',
+        self::SECONDARY  => 'Sekunder',
+    ];
+
+    const ICD9 = 9;
+    const ICD10 = 10;
+    const TYPE_ICD = [
+        self::ICD9  => 'ICD-9',
+        self::ICD10  => 'ICD-10',
     ];
 
     /**
@@ -45,6 +63,14 @@ class VisitProblem extends Model
         'problem_name' => 'string',
         'visit_id'     => 'integer',
     ];
+
+    /**
+     * @return string
+     */
+    public function getTypeNameAttribute()
+    {
+            return VisitProblem::TYPE_ICD[$this->type];
+    }
 
     /**
      *

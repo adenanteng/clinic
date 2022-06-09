@@ -63,12 +63,25 @@ class DefaultTreatmentsSeeder extends Seeder
                 'charges'           => 15000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
-
             [
                 'category_id'       => '3',
                 'name'              => 'Poli: Ganti Perban',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 18000,
+                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
+            ],
+            [
+                'category_id'       => '4',
+                'name'              => 'Lab: Darah Lengkap',
+                'status'            => Treatment::ACTIVE,
+                'charges'           => 1800000,
+                'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
+            ],
+            [
+                'category_id'       => '4',
+                'name'              => 'Lab: Gula Darah',
+                'status'            => Treatment::ACTIVE,
+                'charges'           => 300000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
 

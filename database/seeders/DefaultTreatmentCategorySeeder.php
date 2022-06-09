@@ -18,16 +18,24 @@ class DefaultTreatmentCategorySeeder extends Seeder
     {
         $input = [
             [
-                'name' => 'Administrasi',
+                'name' => 'ADMINISTRASI',
                 'slug' => 'administration'
             ],
             [
-                'name' => 'Jasa',
+                'name' => 'JASA',
                 'slug' => 'service'
             ],
             [
-                'name' => 'Tindakan',
+                'name' => 'TINDAKAN',
                 'slug' => 'treatment'
+            ],
+            [
+                'name' => 'LABORATORIUM',
+                'slug' => 'laboratorium'
+            ],
+            [
+                'name' => 'RADIOLOGI',
+                'slug' => 'radiology'
             ],
         ];
 

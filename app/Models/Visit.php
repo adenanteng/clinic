@@ -172,4 +172,13 @@ class Visit extends Model
     {
         return $this->hasMany(VisitBilling::class, 'visit_id');
     }
+
+    /**
+     *
+     * @return HasMany
+     */
+    public function labs()
+    {
+        return $this->hasMany(VisitLab::class, 'visit_id');
+    }
 }

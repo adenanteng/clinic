@@ -22,6 +22,12 @@ class DefaultSliderSeeder extends Seeder
                 'image'             => asset('assets/front/images/home/home-page-image.png'),
                 'is_default'        => true,
             ],
+//            [
+//                'title'             => 'Lorem ipsum dolor sit amet',
+//                'short_description' => 'Kami adalah kamu tapi kami bukanlah kami',
+//                'image'             => asset('assets/front/images/home/home-page-image.png'),
+//                'is_default'        => true,
+//            ],
         ];
 
         foreach ($inputs as $input) {

@@ -5,7 +5,7 @@
             <a href="#" class="text-gray-800 text-hover-primary">{{ getAppName() }}</a>
         </div>
         <div class="">
-            <span class="text-muted align-content-end">v{{ version() }}</span>
+            <span class="text-muted align-content-end">{{ version() }}</span>
         </div>
     </div>
 </div>

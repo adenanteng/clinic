@@ -83,7 +83,7 @@ class VisitRepository extends BaseRepository
     public function getShowData($id)
     {
         return Visit::with([
-            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'billings', 'prescriptions.pharmacys.procurements',
+            'visitDoctor.user', 'visitPatient.user', 'problems', 'observations', 'notes', 'billings', 'prescriptions.pharmacys.procurements', 'labs'
         ])->where('appointment_id', $id);
     }
 
@@ -119,6 +119,18 @@ class VisitRepository extends BaseRepository
         $treatment['type'] = Treatment::with('treatmentCategory')->get()->pluck('treatmentCategory.name', 'id');
 
         return $treatment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLabData()
+    {
+        $lab['name'] = Treatment::where('category_id', 4)->pluck('name', 'id');
+        $lab['charges'] = Treatment::where('category_id', 4)->pluck('charges', 'id');
+        $lab['type'] = Treatment::with('treatmentCategory')->get()->pluck('treatmentCategory.name', 'id');
+
+        return $lab;
     }
 }
 

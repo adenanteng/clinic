@@ -19,6 +19,7 @@ class CreatePharmaciesTable extends Migration
             $table->unsignedInteger('category')->nullable();
             $table->string('name');
             $table->string('brand')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedInteger('unit');
             $table->timestamps();
         });

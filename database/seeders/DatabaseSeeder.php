@@ -38,5 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PharmacyProcurementSeeder::class);
         $this->call(DefaultTreatmentCategorySeeder::class);
         $this->call(DefaultTreatmentsSeeder::class);
+        $this->call(ClinicSchedulesSeeder::class);
+        $this->call(PatientPaymentsSeeder::class);
     }
 }

@@ -507,6 +507,10 @@ return [
     ],
 
     'visit' => [
+        'dpjp' => 'DPJP',
+        'ppja' => 'PPJA',
+        'cppt'  => 'CCPT',
+
         'add_visit'     => 'Add Visit',
         'edit_visit'    => 'Edit Visit',
         'visit_date'    => 'Tanggal Kasus',
@@ -515,16 +519,30 @@ return [
         'doctor'        => 'Dokter',
         'description'   => 'Deskripsi/Keluhan',
         'title'         => 'Judul',
-        'problems'      => 'Diagnosa',
-        'observations'  => 'Assessment',
+        'problems'      => 'Diagnosa/Tindakan',
+        'diagnosis'     => 'Diagnosa',
+        'procedure'    => 'Prosedur',
+        'observations'  => 'Asesmen Awal',
         'notes'         => 'Catatan',
         'visit_detail'  => 'Detail Kasus',
         'prescriptions' => 'Resep',
-        'billing'       => 'Tagihan',
+        'billings'       => 'Tagihan',
         'history'       => 'Riwayat',
-        'Document'      => 'Dokumen Penunjang',
+        'documents'      => 'Penunjang',
+        'labs'          => 'Lab',
+        'radiology'     => 'Radiologi',
 
-        'observation_name' => 'Nama Assessment',
+        'date_visit' => 'Tanggal Masuk',
+        'date_service' => 'Tanggal Dilayani',
+        'complain_admission' => 'Keluhan Datang',
+        'anamnesa_method' => 'Metode Anamnesa',
+        'medical_history' => 'Riwayat Pengobatan Sebelumnya',
+        'family_history' => 'Riwayat Penyakit Keluarga',
+        'allergic_reaction' => 'Alergi Reaksi',
+
+//        'awareness' => 'Kesadaran',
+
+        'observation_name' => 'Jenis Asesmen',
         'symptoms' => 'Gejala',
         'anamnesis' => 'anamnesa',
         'prognosis' => 'prognosa',
@@ -561,6 +579,15 @@ return [
         'add' => 'Tambah Resep',
         'frequency' => 'Frekuensi',
         'duration'  => 'Durasi',
+    ],
+
+    'lab' => [
+        'add' => 'Tambah Lab',
+        'type'  => 'Jenis',
+        'date' => 'Tanggal',
+        'treatment' => 'Jasa',
+        'klinis'  => 'Klinis',
+        'desc' => 'Deskripsi',
     ],
 
     'slider' => [

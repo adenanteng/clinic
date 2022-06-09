@@ -16,7 +16,7 @@ yarn-error.log
 /.idea
 /.vscode
 .idea
-.version
+version
 /public/assets
 /public/uploads
 /public/js/app.js

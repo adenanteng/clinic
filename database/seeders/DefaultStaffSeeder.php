@@ -24,7 +24,7 @@ class DefaultStaffSeeder extends Seeder
             'contact'           => '1234567890',
             'gender'            => User::FEMALE,
             'type'              => User::STAFF,
-            'email'             => 'nurse@clinically.com',
+            'email'             => 'nurse@clinic.com',
             'email_verified_at' => Carbon::now(),
             'password'          => Hash::make('123456'),
             'region_code'       => '62',

@@ -62,6 +62,33 @@ class VisitObservation extends Model
         'visit_id'         => 'integer',
     ];
 
+    const DPJP = 1;
+    const PPJA = 2;
+    const CPPT = 3;
+    const OBSERVATION_TYPE = [
+        self::DPJP  => 'DPJP',
+        self::PPJA  => 'PPJA',
+        self::CPPT  => 'CCPT',
+    ];
+
+    const DPJP_RAPT = 1;
+    const DPJP_TYPE = [
+        self::DPJP_RAPT  => 'RAPT',
+    ];
+
+    const PPJA_IGD = 1;
+    const PPJA_RJALAN = 2;
+    const PPJA_ANAK = 3;
+    const PPJA_JIWA = 4;
+    const PPJA_MATERNITAS = 5;
+    const PPJA_TYPE = [
+        self::PPJA_IGD  => 'Pengkajian IGD',
+        self::PPJA_RJALAN  => 'Pengkajian Rawat Jalan',
+        self::PPJA_ANAK  => 'Keperawatan Anak',
+        self::PPJA_JIWA  => 'Keperawatan Jiwa',
+        self::PPJA_MATERNITAS  => 'Pengkajian Awal Maternitas',
+    ];
+
     /**
      * @return string
      */

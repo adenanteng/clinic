@@ -13,8 +13,7 @@
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">@yield('title')</h1>
             </div>
             <div class="d-flex align-items-center py-1 ms-auto">
-                <a href="{{ route('patients.index') }}"
-                   class="btn btn-sm btn-primary">{{ __('messages.common.back') }}</a>
+                <a href="{{ route('patients.index') }}" class="btn btn-sm btn-primary">{{ __('messages.common.back') }}</a>
             </div>
         </div>
     </div>

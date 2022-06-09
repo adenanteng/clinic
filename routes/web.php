@@ -146,6 +146,7 @@ Route::get('cancel-appointment/{patient_id}/{appointment_unique_id}',[Appointmen
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersonateUser', 'permission:manage_admin_dashboard',],],
     function () {
+        //admin dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     }
 );
@@ -296,6 +297,7 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
         Route::get('edit-prescription/{prescription}', [VisitController::class, 'editPrescription'])->name('edit.prescription');
         Route::post('add-billing', [VisitController::class, 'addBilling'])->name('add.billing');
         Route::post('delete-billing/{billing}', [VisitController::class, 'deleteBilling'])->name('delete.billing');
+        Route::post('add-lab', [VisitController::class, 'addLab'])->name('add.lab');
     });
 
     // Slider route

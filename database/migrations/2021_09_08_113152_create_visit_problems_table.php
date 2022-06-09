@@ -15,6 +15,8 @@ class CreateVisitProblemsTable extends Migration
     {
         Schema::create('visit_problems', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('type');
+            $table->unsignedInteger('status');
             $table->string('problem_name');
             $table->unsignedBigInteger('visit_id');
             $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');

@@ -271,7 +271,6 @@ body.dark-mode {
         fill: #ED5465 !important;
     }
 
-
     .aside-dark .menu .menu-item .menu-link.active .menu-title {
         color: #FFFFFF !important;
     }
@@ -451,6 +450,16 @@ body.dark-mode {
             color: #d9d9d9;
         }
     }
+
+
+    .aside.aside-light {
+        background-color: #1e1a27;
+    }
+
+    .aside.aside-light .aside-logo {
+        background-color: #1a1a27;
+    }
+
 }
 
 .select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--highlighted {
@@ -683,7 +692,7 @@ input::-webkit-inner-spin-button {
 
 @mixin sidebar-dropdown {
     position: fixed;
-    background-color: #fff;
+    background-color: #1e1e2d;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s ease;
@@ -698,7 +707,7 @@ input::-webkit-inner-spin-button {
     height: 0;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
-    border-left: 8px solid #fff;
+    border-left: 8px solid #1e1e2d;
     transform: rotate(180deg);
 }
 

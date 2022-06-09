@@ -14,7 +14,7 @@ $(document).ready(function () {
         ajax: {
             url: route('services.index'),
             data: function (data) {
-                data.status = $('#servicesStatus').
+                data.status = $('#filterStatus').
                     find('option:selected').
                     val();
             },
@@ -101,7 +101,7 @@ $(document).ready(function () {
             },
         ],
         'fnInitComplete': function () {
-            $('#servicesStatus').change(function () {
+            $('#filterStatus').change(function () {
                 $('#filter').removeClass('show');
                 $('#filterBtn').removeClass('show');
                 $('#servicesTable').DataTable().ajax.reload(null, true);
@@ -112,7 +112,7 @@ $(document).ready(function () {
 });
 
 $(document).on('click', '#resetFilter', function () {
-    $('#servicesStatus').val(all).trigger('change');
+    $('#filterStatus').val(all).trigger('change');
 });
 
 $(document).on('click', '.delete-btn', function (event) {

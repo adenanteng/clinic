@@ -14,7 +14,7 @@ $(document).ready(function () {
         ajax: {
             url: route('treatments.index'),
             data: function (data) {
-                data.status = $('#treatmentsStatus').
+                data.status = $('#filterStatus').
                     find('option:selected').
                     val();
             },
@@ -106,7 +106,7 @@ $(document).ready(function () {
             },
         ],
         'fnInitComplete': function () {
-            $('#treatmentsStatus').change(function () {
+            $('#filterStatus').change(function () {
                 $('#filter').removeClass('show');
                 $('#filterBtn').removeClass('show');
                 $('#treatmentsTable').DataTable().ajax.reload(null, true);
@@ -117,7 +117,7 @@ $(document).ready(function () {
 });
 
 $(document).on('click', '#resetFilter', function () {
-    $('#treatmentsStatus').val(all).trigger('change');
+    $('#filterStatus').val(all).trigger('change');
 });
 
 $(document).on('click', '.delete-btn', function (event) {

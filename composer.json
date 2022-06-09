@@ -22,7 +22,7 @@
         "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "^7.4",
         "infyomlabs/laravel-generator": "dev-infyom-dev",
-        "infyomlabs/stisla-templates": "^1.0",
+        "infyomlabs/stisla-templates": "^v1.1.0",
         "lab404/laravel-impersonate": "^1.7",
         "laracasts/flash": "^3.2",
         "laravel/framework": "^8.40",

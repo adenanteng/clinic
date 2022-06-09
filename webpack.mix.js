@@ -154,6 +154,18 @@ mix.js('resources/assets/js/custom/custom.js',
         'public/assets/js/clinic_schedule/create-edit.js').
     js('resources/assets/js/visits/show-page.js',
         'public/assets/js/visits/show-page.js').
+
+    js('resources/assets/js/visits/observation.js',
+        'public/assets/js/visits/observation.js').
+    js('resources/assets/js/visits/problem.js',
+        'public/assets/js/visits/problem.js').
+    js('resources/assets/js/visits/prescription.js',
+        'public/assets/js/visits/prescription.js').
+    js('resources/assets/js/visits/billing.js',
+        'public/assets/js/visits/billing.js').
+    js('resources/assets/js/visits/lab.js',
+        'public/assets/js/visits/lab.js').
+
     js('resources/assets/js/fronts/sliders/slider.js',
         'public/assets/js/fronts/sliders/slider.js').
     js('resources/assets/js/fronts/sliders/create-edit-slider.js',

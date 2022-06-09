@@ -10,6 +10,7 @@ use App\Models\Treatment;
 use App\Models\User;
 use App\Models\Visit;
 use App\Models\VisitBilling;
+use App\Models\VisitLab;
 use App\Models\VisitNote;
 use App\Models\VisitObservation;
 use App\Models\VisitPrescription;
@@ -112,9 +113,10 @@ class VisitController extends AppBaseController
         $observation = $this->visitRepository->getSoapData();
         $prescription = $this->visitRepository->getPrescriptionData();
         $treatment = $this->visitRepository->getTreatmentData();
+        $lab = $this->visitRepository->getLabData();
 
 //        dd($visit, $observation, $prescription);
-        return view('visits.show', compact('visit', 'observation', 'prescription', 'treatment'));
+        return view('visits.show', compact('visit', 'observation', 'prescription', 'treatment', 'lab'));
     }
 
     /**
@@ -176,7 +178,26 @@ class VisitController extends AppBaseController
     public function addProblem(Request $request)
     {
         $input = $request->all();
-        $problem = VisitProblem::create(['problem_name' => $input['problem_name'], 'visit_id' => $input['visit_id']]);
+
+        if (VisitProblem::where('visit_id', $input['visit_id'])->exists()) {
+            $input['status'] = VisitProblem::SECONDARY;
+        }else{
+            $input['status'] = VisitProblem::PRIMARY;
+        }
+
+        if ($input['type'] == VisitProblem::ICD10) {
+            $input['problem_name'] = $input['diagnosis_name'];
+        } else {
+            $input['problem_name'] = $input['procedure_name'];
+        }
+
+        $problem = VisitProblem::create(
+            [
+                'problem_name' => $input['problem_name'],
+                'visit_id' => $input['visit_id'],
+                'type' => $input['type'],
+                'status' => $input['status'],
+            ]);
         $problemData = VisitProblem::whereVisitId($input['visit_id'])->get();
 
         return $this->sendResponse($problemData, 'Problem added successfully.');
@@ -365,5 +386,29 @@ class VisitController extends AppBaseController
         $billingData = VisitBilling::where('visit_id', $visitId)->get();
 
         return $this->sendResponse($billingData, 'Billing deleted successfully.');
+    }
+
+    /**
+     * @param  Request  $request
+     *
+     * @return mixed
+     */
+    public function addLab(Request $request)
+    {
+        $input = $request->all();
+
+        $lab = VisitLab::create([
+            'visit_id'          => $input['visit_id'],
+            'type'  => $input['type'],
+            'date'          => $input['date'],
+            'treatment_id'         => $input['treatment_id'],
+            'klinis'         => $input['klinis'],
+            'description'       => $input['description'],
+            'status'    => VisitLab::DIMINTA,
+
+        ]);
+        $labData = VisitLab::whereVisitId($input['visit_id'])->get();
+
+        return $this->sendResponse($labData, 'Observation added successfully.');
     }
 }
