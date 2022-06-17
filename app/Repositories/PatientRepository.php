@@ -49,7 +49,7 @@ class PatientRepository extends BaseRepository
      */
     public function getData()
     {
-        $data['patientUniqueId'] = mb_strtoupper(Patient::generatePatientUniqueId());
+//        $data['patientUniqueId'] = mb_strtoupper(Patient::generatePatientUniqueId());
 
         $data['payment'] = Appointment::PAYMENT_GATEWAY;
 
@@ -205,7 +205,7 @@ class PatientRepository extends BaseRepository
      */
     public function getPatientData($input)
     {
-        $patient = Patient::where('patient_unique_id', '=', $input)->with(['user.address', 'appointments', 'address'])->first();
+        $patient = Patient::whereId($input)->with(['user.address', 'appointments', 'address', 'payment.gateway'])->first();
 //        dd(json_decode($patient));
 //        $patient = Patient::with(['user.address', 'appointments', 'address'])->whereId($input)->first();
 

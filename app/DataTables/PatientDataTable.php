@@ -18,7 +18,7 @@ class PatientDataTable
     public function get()
     {
         /** @var Patient $query */
-        $query = Patient::with(['user', 'appointments'])->withCount('appointments')->get();
+        $query = Patient::with(['user', 'appointments', 'payment.gateway'])->withCount('appointments')->get();
 
         return $query;
     }

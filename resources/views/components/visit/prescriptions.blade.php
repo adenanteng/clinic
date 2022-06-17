@@ -34,14 +34,14 @@
                 </div>
                 <div class="col-md-3 mb-5">
                     {{ Form::label('description', 'Description:', ['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3']) }}
-                    {{ Form::textarea('description', null, ['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Deskripsi','id' => 'descriptionId', 'rows'=> 5]) }}
+                    {{ Form::textarea('description', null, ['class' => 'form-control form-control-solid mb-3 mb-lg-0', 'placeholder' => 'Deskripsi','id' => 'descriptionId', 'rows'=> '1']) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 mb-5 mt-5">
                     <div class="w-100 d-flex justify-content-end">
                         {{ Form::submit(__('messages.common.save'),['class' => 'btn btn-primary me-3','id'=>'prescriptionSubmitBtn']) }}
-                        <button class="btn btn-secondary me-3 reset-form" @click="create=!create" >
+                        <button class="btn btn-secondary me-3 reset-form"  >
                             {{ __('messages.common.discard') }}
                         </button>
                     </div>

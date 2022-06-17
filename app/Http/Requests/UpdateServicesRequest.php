@@ -26,9 +26,9 @@ class UpdateServicesRequest extends FormRequest
     {
         $rules['name'] = 'required|unique:services,name,'.$this->route('service')->id;
         $rules['category_id'] = 'required';
-        $rules['charges'] = 'required|min:0|not_in:0';
+//        $rules['charges'] = 'required|min:0|not_in:0';
         $rules['doctors'] = 'required';
-        $rules['short_description'] = 'required|max:60';
+//        $rules['short_description'] = 'required|max:60';
         $rules['icon'] = 'nullable|mimes:svg,jpeg,png,jpg';
 
         return $rules;
@@ -42,7 +42,7 @@ class UpdateServicesRequest extends FormRequest
         return [
             'category_id.required' => 'The category field is required.',
             'doctors.required' => 'The doctor field is required.',
-            'short_description.required' => 'The short description field is required.',
+//            'short_description.required' => 'The short description field is required.',
         ];
     }
 }

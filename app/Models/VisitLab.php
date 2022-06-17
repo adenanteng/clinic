@@ -14,12 +14,12 @@ class VisitLab extends Model
 
     public $fillable = [
         'visit_id',
-        'type',
+        'type_id',
         'treatment_id',
-        'klinis',
-        'description',
+        'clinical',
         'date',
         'status',
+        'create_user_id',
     ];
 
     const DIBUAT = 1;
@@ -49,5 +49,23 @@ class VisitLab extends Model
     public function visit()
     {
         return $this->belongsTo(Visit::class, 'visit_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function treatment()
+    {
+        return $this->belongsTo(Treatment::class, 'treatment_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'create_user_id');
     }
 }

@@ -47,13 +47,13 @@ class DefaultRoleSeeder extends Seeder
         $patientRole = Role::whereName('patient')->first();
 
         /** @var User $user */
-        $user = User::whereEmail('admin@clinic.com')->first();
+        $user = User::whereEmail('admin@enola.com')->first();
         /** @var Doctor $doctor */
-        $doctor = User::whereEmail('dokter@clinic.com')->first();
+        $doctor = User::whereEmail('dokter@enola.com')->first();
         /** @var Doctor $doctor */
-        $doctor2 = User::whereEmail('dokter2@clinic.com')->first();
+        $doctor2 = User::whereEmail('dokter2@enola.com')->first();
         /** @var Patient $patient */
-        $patient = User::whereEmail('pasien@clinic.com')->first();
+        $patient = User::whereEmail('pasien@enola.com')->first();
 
         $allPermission = Permission::pluck('name', 'id');
 

@@ -24,7 +24,7 @@ class CreateAddressesTable extends Migration
             $table->unsignedBigInteger('city_id')->nullable();
             $table->string('postal_code')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('country_id')->on('countries')->references('id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('state_id')->on('states')->references('id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('city_id')->on('cities')->references('id')->onDelete('cascade')->onUpdate('cascade');

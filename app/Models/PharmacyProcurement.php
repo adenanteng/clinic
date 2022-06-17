@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Stephenjude\Wallet\Traits\HasWallet;
 
 class PharmacyProcurement extends Model
 {
@@ -23,13 +24,14 @@ class PharmacyProcurement extends Model
         'lifetime',
         'invoice_no',
         'purchase_price',
-        'selling_price,'
+        'selling_price',
+        'selling_price_bpjs',
     ];
 
     /**
      * @return BelongsTo
      */
-    public function pharmacys()
+    public function pharmacy()
     {
         return $this->belongsTo(Pharmacy::class, 'drug_id');
     }

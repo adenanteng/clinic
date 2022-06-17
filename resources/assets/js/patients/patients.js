@@ -16,20 +16,21 @@ $(document).ready(function () {
         columnDefs: [
             {
                 'targets': [5],
-                'orderable': false,
-                'searchable': false,
+                'orderable': true,
+                'searchable': true,
                 'className': 'text-center',
                 'width': '8%',
             },
             {
                 'targets': [2],
-                'orderable': false,
-                'searchable': false,
+                'orderable': true,
+                'searchable': true,
                 'className': 'text-center',
             },
             {
                 'targets': [3],
-                'orderable': false,
+                'orderable': true,
+                'searchable': true,
                 'className': 'text-center',
             },
             {
@@ -52,22 +53,29 @@ $(document).ready(function () {
                         </div>
                     </div>
                     <div class="d-inline-block align-top">
-                        <a href="${route('patients.show', row.patient_unique_id)}"
+                        <a href="${route('patients.show', row.id)}"
                            class="text-primary-800 mb-1 d-inline-block">${row.user.full_name}</a>
                         <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-default"
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Patient Unique ID">${row.patient_unique_id}</a>
+                            title="No Rekam Medis">${row.patient_unique_id}</a>
                         <span class="d-block text-muted fw-bold">${row.address.address1}</span>
                     </div>`;
                 },
-                name: 'user.first_name',
+                name: 'user.full_name',
+            },
+            {
+                data: function (row) {
+                    return `<span class="badge badge-light-info">+62 ${row.user.contact}</span>
+                            <span class="badge badge-light-success">${row.user.email}</span>`;
+                },
+                name: 'user.contact',
             },
             {
                 data: function (row) {
                     console.log(row)
                     return `<span class="badge badge-light-danger">${row.appointments_count}</span>`;
                 },
-                name: 'appointments_count',
+                name: 'patient_unique_id',
             },
             {
                 data: function (row) {
@@ -75,16 +83,6 @@ $(document).ready(function () {
                             <input class="form-check-input h-20px w-30px email-verified" data-id="${row.user.id}" type="checkbox" value=""
                                ${row.user.email_verified_at ? 'checked' : ''} />
                             </div>`;
-                },
-                name: 'user.id',
-            },
-            {
-                data: function (row) {
-                    return `<td class=" text-center action-table-btn">
-                        <a title="Impersonate ${row.user.full_name}" class="btn btn-sm btn-primary" href="${ route('impersonate', row.user.id) }">
-                            Impersonate
-                        </a>
-                        </td>`;
                 },
                 name: 'user.id',
             },
@@ -100,14 +98,13 @@ $(document).ready(function () {
                     let data = [
                         {
                             'id': row.id,
-                            'editUrl': route('patients.edit', row.patient_unique_id),
+                            'editUrl': route('patients.edit', row.id),
                             'userId': row.user_id,
                             'emailVerified': isEmpty(row.user.email_verified_at),
                         },
                     ];
 
-                    return prepareTemplateRender('#actionsTemplates',
-                        data);
+                    return prepareTemplateRender('#actionsTemplates', data);
                 },
                 name: 'id',
             },
@@ -118,8 +115,7 @@ $(document).ready(function () {
 
 $(document).on('click', '.delete-btn', function () {
     let patientId = $(this).attr('data-id');
-    deleteItem(route('patients.destroy', patientId), tableName,
-        'Patient');
+    deleteItem(route('patients.destroy', patientId), tableName, 'Patient');
 });
 
 $(document).on('change','.email-verified',function(e){

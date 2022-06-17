@@ -15,7 +15,6 @@ class Pharmacy extends Model
     public $table = 'pharmacies';
 
     public $fillable = [
-        'drug_unique_id',
         'category',
         'name',
         'brand',
@@ -32,10 +31,12 @@ class Pharmacy extends Model
     const TABLET = 1;
     const KAPSUL = 2;
     const PIL = 3;
+    const VIAL = 4;
     const UNIT_TYPE =  [
         self::TABLET => 'Tablet',
         self::KAPSUL    => 'Kapsul',
         self::PIL => 'Pil',
+        self::VIAL => 'Vial',
     ];
 
     const ALKES = 1;
@@ -71,6 +72,10 @@ class Pharmacy extends Model
         self::DITERIMA => 'Telah diterima pasien',
     ];
 
+    const ICON = 'icon';
+
+    protected $appends = ['icon'];
+
     /**
      *
      * @return HasMany
@@ -78,5 +83,19 @@ class Pharmacy extends Model
     public function procurements()
     {
         return $this->hasMany(PharmacyProcurement::class, 'drug_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconAttribute(): string
+    {
+        /** @var Media $media */
+        $media = $this->getMedia(self::ICON)->first();
+        if (! empty($media)) {
+            return $media->getFullUrl();
+        }
+
+        return asset('web/media/hospital/pharmacy.png');
     }
 }

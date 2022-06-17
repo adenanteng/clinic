@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body p-9 pt-4">
+    <div class="card-body border-1 border-top border-secondary pb-9 ">
         {{ $content }}
     </div>
 </div>

@@ -40,8 +40,16 @@ class PatientPayment extends Model
     /**
      * @return BelongsTo
      */
-    public function payment_gateways()
+    public function gateway()
     {
         return $this->belongsTo(PaymentGateway::class, 'payment_gateway_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
     }
 }

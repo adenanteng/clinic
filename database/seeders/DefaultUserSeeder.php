@@ -29,11 +29,11 @@ class DefaultUserSeeder extends Seeder
                 'nric_id'           => $this->faker->numerify('############'),
                 'first_name'        => 'Aden',
                 'last_name'         => 'Anteng',
-                'email'             => 'admin@clinic.com',
+                'email'             => 'admin@enola.com',
                 'region_code'       => 62,
                 'contact'           => '82280031916',
                 'dob'               => '1996-12-20',
-                'gender'            => User::MALE,
+                'gender'            => Patient::MALE,
                 'marriage'          => Patient::SINGLE,
                 'religion'          => Patient::ISLAM,
                 'blood_group'       => Patient::A,
@@ -47,11 +47,11 @@ class DefaultUserSeeder extends Seeder
                 'nric_id'           => $this->faker->numerify('############'),
                 'first_name'        => $this->faker->firstName('female'),
                 'last_name'         => $this->faker->lastName(),
-                'email'             => 'dokter@clinic.com',
+                'email'             => 'dokter@enola.com',
                 'region_code'       => 62,
                 'contact'           => $this->faker->phoneNumber(),
                 'dob'               => $this->faker->date('y-m-d'),
-                'gender'            => User::FEMALE,
+                'gender'            => Patient::FEMALE,
                 'marriage'          => Patient::SINGLE,
                 'religion'          => Patient::ISLAM,
                 'blood_group'       => Patient::B,
@@ -64,11 +64,11 @@ class DefaultUserSeeder extends Seeder
                 'nric_id'           => $this->faker->numerify('############'),
                 'first_name'        => $this->faker->firstName('male'),
                 'last_name'         => $this->faker->lastName(),
-                'email'             => 'dokter2@clinic.com',
+                'email'             => 'dokter2@enola.com',
                 'region_code'       => 62,
                 'contact'           => $this->faker->phoneNumber(),
                 'dob'               => $this->faker->date('y-m-d'),
-                'gender'            => User::MALE,
+                'gender'            => Patient::MALE,
                 'marriage'          => Patient::SINGLE,
                 'religion'          => Patient::ISLAM,
                 'blood_group'       => Patient::AB,
@@ -81,11 +81,11 @@ class DefaultUserSeeder extends Seeder
                 'nric_id'           => $this->faker->numerify('############'),
                 'first_name'        => $this->faker->firstName('male'),
                 'last_name'         => $this->faker->lastName(),
-                'email'             => 'pasien@clinic.com',
+                'email'             => 'pasien@enola.com',
                 'region_code'       => 62,
                 'contact'           => $this->faker->phoneNumber(),
                 'dob'               => $this->faker->date('y-m-d'),
-                'gender'            => User::FEMALE,
+                'gender'            => Patient::FEMALE,
                 'marriage'          => Patient::SINGLE,
                 'religion'          => Patient::ISLAM,
                 'blood_group'       => Patient::B,
@@ -106,7 +106,7 @@ class DefaultUserSeeder extends Seeder
                 $user->address()->create(['owner_id' => $user->id]);
             }
             if ($key == 3) {
-                $patient = Patient::create(['user_id' => $user->id, 'patient_unique_id' => '000001']);
+                $patient = Patient::create(['user_id' => $user->id]);
                 $patient->address()->create(['owner_id' => $patient['user_id']]);
             }
         }

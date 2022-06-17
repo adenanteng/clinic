@@ -16,19 +16,25 @@
             <div id="kt_user_view_details" class="collapse show">
                 <div class="pb-5 fs-6">
                     <div class="fw-bolder mt-5">{{__('messages.visit.visit_date')}}</div>
-                    <div class="text-gray-600">{{\Carbon\Carbon::parse($visit->visit_date)->format('jS M Y')}}</div>
+                    <div class="text-gray-600">{{\Carbon\Carbon::parse($visit->visit_date)->format('d M Y')}}</div>
                     @if(!getLogInUser()->hasRole('doctor'))
                         <div class="fw-bolder mt-5">{{__('messages.visit.doctor')}}</div>
                         <div class="text-gray-600">{{$visit->visitDoctor->user->full_name }}</div>
                     @endif
                     <div class="fw-bolder mt-5">{{__('messages.visit.description')}}</div>
-                    <div class="text-gray-600 mh-150px overflow-auto">{{!empty($visit->description) ? $visit->description : 'N/A'}}</div>
+                    <div class="text-gray-600 mh-150px overflow-auto">
+                        {{!empty($visit->description) ? $visit->description : 'N/A'}}
+                    </div>
+
                     <div class="fw-bolder mt-5">{{__('messages.doctor.created_at')}}</div>
-                    <span class="text-gray-600" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="{{\Carbon\Carbon::parse($visit->created_at)->format('jS M Y')}}">{{$visit->created_at->diffForHumans()}}</span>
+                    <span class="text-gray-600" data-bs-toggle="tooltip" data-bs-placement="right" title="{{\Carbon\Carbon::parse($visit->created_at)->format('jS M Y')}}">
+                        {{$visit->created_at->diffForHumans()}}
+                    </span>
+
                     <div class="fw-bolder mt-5">{{__('messages.doctor.created_at')}}</div>
-                    <span class="text-gray-600" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="{{\Carbon\Carbon::parse($visit->updated_at)->format('jS M Y')}}">{{$visit->updated_at->diffForHumans()}}</span>
+                    <span class="text-gray-600" data-bs-toggle="tooltip" data-bs-placement="right" title="{{\Carbon\Carbon::parse($visit->updated_at)->format('jS M Y')}}">
+                        {{$visit->updated_at->diffForHumans()}}
+                    </span>
                 </div>
             </div>
         </div>

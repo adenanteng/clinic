@@ -123,6 +123,7 @@ Route::post('/subscribe', [SubscribeController::class, 'store'])->name('subscrib
 
 Route::get('doctor-session-time', [DoctorSessionController::class, 'getDoctorSession'])->name('doctor-session-time');
 Route::get('get-service', [ServiceController::class, 'getService'])->name('get-service');
+Route::get('get-doctor', [ServiceController::class, 'getDoctor'])->name('get-doctor');
 Route::get('get-charge', [ServiceController::class, 'getCharge'])->name('get-charge');
 Route::post('front-appointment-book', [AppointmentController::class, 'frontAppointmentBook'])->name('front.appointment.book');
 Route::post('medical-appointment', [AppointmentController::class, 'frontHomeAppointmentBook'])->name('front.home.appointment.book');

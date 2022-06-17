@@ -17,7 +17,7 @@ class CreatePharmacyProcurementsTable extends Migration
             $table->id();
             $table->unsignedInteger('dept_id');
             $table->unsignedInteger('drug_id');
-            $table->unsignedInteger('supplier_id');
+            $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedBigInteger('amount');
             $table->bigInteger('remaining');
             $table->boolean('lifetime');
@@ -25,6 +25,7 @@ class CreatePharmacyProcurementsTable extends Migration
             $table->string('invoice_no')->unique();
             $table->unsignedInteger('purchase_price')->nullable();
             $table->unsignedInteger('selling_price')->nullable();
+            $table->unsignedInteger('selling_price_bpjs')->nullable();
             $table->timestamps();
         });
     }

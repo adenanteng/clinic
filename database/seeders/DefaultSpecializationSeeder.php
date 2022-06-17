@@ -20,13 +20,13 @@ class DefaultSpecializationSeeder extends Seeder
                 'name' => 'Dokter Umum',
             ],
             [
-                'name' => 'Spesialis Gigi',
+                'name' => 'Dr. gigi',
             ],
             [
-                'name' => 'Kebidanan',
+                'name' => 'Dr. mata',
             ],
             [
-                'name' => 'Spesialis KIA',
+                'name' => 'Bidan',
             ],
         ];
 

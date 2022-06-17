@@ -225,8 +225,7 @@ class UserRepository extends BaseRepository
     public function doctorDetail($input)
     {
         $todayDate = Carbon::now()->format('Y-m-d');
-        $doctor['data'] = Doctor::with([
-            'user.address', 'specializations', 'appointments.patient.user',
+        $doctor['data'] = Doctor::with(['user.address', 'specializations', 'appointments.patient.user',
         ])->whereId($input->id)->first();
         $doctor['doctorSession'] = DoctorSession::whereDoctorId($input->id)->get();
         $doctor['appointments'] = DataTables::of((new UserDataTable())->getAppointment($input->id))->make(true);

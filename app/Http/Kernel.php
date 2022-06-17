@@ -30,6 +30,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Spatie\Permission\Middlewares\RoleMiddleware;
+use Tonysm\TurboLaravel\Http\Middleware\TurboMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            TurboMiddleware::class,
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
@@ -67,6 +69,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+//            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             SubstituteBindings::class,
         ],

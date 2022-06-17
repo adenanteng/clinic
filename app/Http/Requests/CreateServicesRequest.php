@@ -36,7 +36,7 @@ class CreateServicesRequest extends FormRequest
         return [
             'category_id.required' => 'The category field is required.',
             'doctors.required' => 'The doctor field is required.',
-            'short_description.required' => 'The short description field is required.',
+//            'short_description.required' => 'The short description field is required.',
         ];
     }
 }

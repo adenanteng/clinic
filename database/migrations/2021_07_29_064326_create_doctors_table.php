@@ -18,7 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->double('experience')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')
                 ->onUpdate('cascade');
         });

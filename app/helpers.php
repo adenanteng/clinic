@@ -397,8 +397,8 @@ function getMonth()
 function getPatientPayment($patient)
 {
     $paymentGateway = \App\Models\Appointment::PAYMENT_METHOD;
-    $selectedPaymentGateway = \App\Models\PatientPayment::where('patient_id', $patient)->with('payment_gateways')
-        ->get()->pluck('payment_gateways.payment_name' , 'payment_gateway_id')->toArray();
+    $selectedPaymentGateway = \App\Models\PatientPayment::where('patient_id', $patient)->with('gateway')
+        ->get()->pluck('gateway.payment_name' , 'payment_gateway_id')->toArray();
 
 //        dd($paymentGateway, $selectedPaymentGateway);
     return $selectedPaymentGateway;

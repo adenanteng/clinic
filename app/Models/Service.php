@@ -54,7 +54,7 @@ class Service extends Model implements HasMedia
     public $fillable = [
         'category_id',
         'name',
-        'charges',
+//        'charges',
         'status',
         'short_description',
     ];
@@ -121,6 +121,6 @@ class Service extends Model implements HasMedia
             return $media->getFullUrl();
         }
 
-        return asset('web/media/avatars/male.png');
+        return asset('web/media/hospital/hospital.png');
     }
 }

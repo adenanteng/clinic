@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ServiceDataTable;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Models\Service;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -133,6 +134,20 @@ class ServiceController extends AppBaseController
         })->get();
 
         return $this->sendResponse($service, 'Retrieved successfully.');
+    }
+
+    public function getDoctor(Request $request)
+    {
+        $service_id = $request->serviceId;
+        $doctor = Doctor::with('user')->whereHas('serviceDoctors', function ($q) use ($service_id) {
+            $q->where('service_id', $service_id);
+        })->select('id', 'user_id')->get();
+
+//        $doctor = Doctor::with('serviceDoctors')->whereHas('serviceDoctors', function ($q) use ($service_id) {
+//            $q->where('service_id', $service_id);
+//        })->get();
+
+        return $this->sendResponse($doctor, 'Retrieved successfully.');
     }
 
     /**

@@ -18,7 +18,7 @@ class AppointmentDataTable
     {
         /** @var Appointment $query */
         $query = Appointment::with([
-            'doctor.user', 'patient.user', 'services','services.serviceCategory', 'transaction','doctor.reviews'
+            'doctor.user', 'patient.user', 'services','services.serviceCategory', 'transaction','doctor'
         ])->select('appointments.*');
 
         $query->when(isset($input['asu']),

@@ -150,11 +150,9 @@ class PatientController extends AppBaseController
 //            return redirect(route('patients.index'));
 //        }
 
-
         $patient = $this->patientRepository->getPatientData($request);
         $appointmentStatus = Appointment::ALL_STATUS;
         $todayDate = Carbon::now()->format('Y-m-d');
-//        $patient->user->gender = User::GENDER[$patient->user->gender];
 
         $data['todayAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '=', $todayDate)->count();
         $data['upcomingAppointmentCount'] = Appointment::wherePatientId($patient['id'])->where('date', '>', $todayDate)->count();

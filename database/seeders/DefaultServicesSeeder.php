@@ -42,7 +42,7 @@ class DefaultServicesSeeder extends Seeder
             ],
             [
                 'category_id'       => '1',
-                'name'              => 'KIA',
+                'name'              => 'Poli Anak',
                 'status'            => Service::ACTIVE,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
                 'icon'              => asset('assets/front/images/services_images/Diagnostics.png'),

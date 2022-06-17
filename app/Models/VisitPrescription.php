@@ -43,6 +43,7 @@ class VisitPrescription extends Model
         'visit_id',
 //        'group_id',
         'drug_id',
+        'procurement_id',
         'frequency',
         'duration',
         'description',
@@ -96,6 +97,15 @@ class VisitPrescription extends Model
     public function pharmacys()
     {
         return $this->belongsTo(Pharmacy::class, 'drug_id');
+    }
+
+    /**
+     *
+     * @return BelongsTo
+     */
+    public function procurement()
+    {
+        return $this->belongsTo(PharmacyProcurement::class, 'procurement_id');
     }
 
     /**

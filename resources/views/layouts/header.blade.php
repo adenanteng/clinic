@@ -34,19 +34,19 @@
             <!--end::Navbar-->
             <!--begin::Topbar-->
             <div class="d-flex align-items-stretch flex-shrink-0">
-                <div class="topbar-item position-relative p-8 d-flex align-items-center hoverable">
+                <div class="topbar-item position-relative d-flex align-items-center hoverable">
                     @if(Auth::user()->dark_mode)
-                        <a href="javascript:void(0)" title="Switch to Light mode"><i
-                                    class="far fa-moon fs-3 apply-dark-mode"></i></a>
+                        <a href="javascript:void(0)" title="Switch to Light mode" class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"><i
+                                    class="fad fa-moon fs-3 apply-dark-mode"></i></a>
                     @else
-                        <a href="javascript:void(0)" title="Switch to Dark mode"><i
-                                    class="fas fa-sun fs-3 apply-dark-mode"></i></a>
+                        <a href="javascript:void(0)" title="Switch to Dark mode" class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"><i
+                                    class="fad fa-sun fs-3 apply-dark-mode"></i></a>
                     @endif
                 </div>
                 <!--begin::Toolbar wrapper-->
                 <div class="d-flex align-items-stretch flex-shrink-0">
 
-                @if(getLogInUser()->hasRole('doctor') || getLogInUser()->hasRole('patient'))
+                @if(getLogInUser()->hasRole('doctor') || getLogInUser()->hasRole('patient') || getLogInUser()->hasRole('clinic_admin'))
                     <!--begin::Notifications-->
                         @php
                             $notifications = getNotification();
@@ -54,7 +54,7 @@
                         <div class="d-flex align-items-center ms-1 me-lg-3 notification-dropdown">
                             <!--begin::Menu wrapper-->
                         <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px notification-icon position-relative" title="Notifications" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                            <i class="far fa-bell"></i>
+                            <i class="fad fs-3 fa-bell"></i>
                             @if(count($notifications) != 0)
                                 <span class="badge navbar-badge bg-primary notification-count notification-message-counter rounded-circle position-absolute translate-middle d-flex justify-content-center align-items-center"
                                       id="counter">{{ count($notifications) }}</span>
@@ -64,7 +64,7 @@
                         <div class="menu menu-sub menu-sub-dropdown menu-column w-250px  h-375px w-lg-350px" data-kt-menu="true" style="">
                             <div class="dropdown-header rounded-top">
                                 <div class="row justify-content-between">
-                                    <h3 class="px-3 col-5 notification-header">Notifications</h3>
+                                    <h5 class="px-3 col-5 notification-header">Notifikasi</h5>
                                     <div class="px-3 col-7 text-end {{ count($notifications) > 0 ? '' : 'd-none' }} align-self-center" id="readAllNotification">
                                         <a href="" class="text-decoration-none">Mark All As Read</a>
                                     </div>
@@ -94,12 +94,11 @@
                                         </a>
                                     @endforeach
                                 @else
-                                    <div class="empty-state fs-6 text-gray-800 fw-bold text-center mt-5"
-                                         data-height="400">
+                                    <div class="empty-state text-gray-600 fw-bold text-center mt-5" data-height="400">
                                         <p>{{ __('messages.notification.you_don`t_have_any_new_notification') }}</p>
                                     </div>
                                 @endif
-                                    <div class="empty-state fs-6 text-gray-800 fw-bold text-center mt-5 d-none" data-height="400">
+                                    <div class="empty-state text-gray-600 fw-bold text-center mt-5 d-none" data-height="400">
                                         <p>{{ __('messages.notification.you_don`t_have_any_new_notification') }}</p>
                                     </div>
                             </div>

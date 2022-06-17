@@ -18,6 +18,7 @@ class CreateVisitPrescriptionsTable extends Migration
             $table->unsignedBigInteger('visit_id');
 //            $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('drug_id');
+            $table->unsignedBigInteger('procurement_id');
             $table->unsignedInteger('frequency');
             $table->unsignedInteger('duration');
             $table->text('description')->nullable();
@@ -26,6 +27,7 @@ class CreateVisitPrescriptionsTable extends Migration
 
             $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('drug_id')->references('id')->on('pharmacies')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('procurement_id')->references('id')->on('pharmacy_procurements')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

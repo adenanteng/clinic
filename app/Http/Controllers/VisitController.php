@@ -299,14 +299,14 @@ class VisitController extends AppBaseController
     }
 
     /**
-     * @param  CreateVisitPrescriptionRequest  $request
+     * @param  Request  $request
      *
      * @return mixed
      */
-    public function addPrescription(CreateVisitPrescriptionRequest $request)
+    public function addPrescription(Request $request)
     {
         $input = $request->all();
-        if (! empty($input['prescription_id'])) {
+        if (!empty($input['prescription_id'])) {
             $prescription = VisitPrescription::findOrFail($input['prescription_id']);
             $prescription->update($input);
             $message = 'Visit Prescription updated successfully.';
@@ -397,16 +397,18 @@ class VisitController extends AppBaseController
     {
         $input = $request->all();
 
-        $lab = VisitLab::create([
-            'visit_id'          => $input['visit_id'],
-            'type'  => $input['type'],
-            'date'          => $input['date'],
-            'treatment_id'         => $input['treatment_id'],
-            'klinis'         => $input['klinis'],
-            'description'       => $input['description'],
-            'status'    => VisitLab::DIMINTA,
+        foreach ($input['treatment_id'] as $treat) {
+            VisitLab::create([
+                'visit_id' => $input['visit_id'],
+                'type_id' => $input['type_id'],
+                'date' => $input['date'],
+                'treatment_id' => $treat,
+                'create_user_id' => $input['create_user_id'],
+                'clinical' => $input['clinical'],
+                'status' => VisitLab::DIMINTA,
 
-        ]);
+            ]);
+        }
         $labData = VisitLab::whereVisitId($input['visit_id'])->get();
 
         return $this->sendResponse($labData, 'Observation added successfully.');

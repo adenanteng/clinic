@@ -159,7 +159,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $with = ['media'];
 
-    protected $appends = ['full_name', 'profile_image', 'role_name'];
+    protected $appends = ['full_name', 'profile_image', 'role_name', 'gender_text','blood_text', 'marriage_text', 'age'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -169,13 +169,6 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    const MALE = 1;
-    const FEMALE = 2;
-    const GENDER = [
-        self::MALE   => 'Laki-laki',
-        self::FEMALE => 'Perempuan',
     ];
 
     public static $rules = [
@@ -213,12 +206,12 @@ class User extends Authenticatable implements HasMedia
             return $media->getFullUrl();
         }
         $gender = $this->gender;
-        if ($gender == self::FEMALE){
+        if ($gender == Patient::FEMALE){
 
-            return asset('web/media/avatars/female.png');
+            return asset('web/media/avatars/woman_young.png');
         }
 
-        return asset('web/media/avatars/male.png');
+        return asset('web/media/avatars/man_young.png');
     }
 
     /**
@@ -230,6 +223,8 @@ class User extends Authenticatable implements HasMedia
 
         if (! empty($role)) {
             return $role->display_name;
+        } else {
+            return __('messages.common.n/a');
         }
     }
 
@@ -254,7 +249,47 @@ class User extends Authenticatable implements HasMedia
      */
     public function getAgeAttribute()
     {
-        return Carbon::parse($this->dob)->age;
+        if (!empty($this->dob)) {
+            return Carbon::parse($this->dob)->age;
+        } else {
+            return __('messages.common.n/a');
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getGenderTextAttribute()
+    {
+        if (!empty($this->gender)) {
+            return Patient::GENDER_GROUP_ARRAY[$this->gender];
+        } else {
+            return __('messages.common.n/a');
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMarriageTextAttribute()
+    {
+        if (!empty($this->marriage)) {
+            return Patient::MARRIED_GROUP_ARRAY[$this->marriage];
+        } else {
+            return __('messages.common.n/a');
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getBloodTextAttribute()
+    {
+        if (!empty($this->blood_group)) {
+            return Patient::BLOOD_GROUP_ARRAY[$this->blood_group];
+        } else {
+            return __('messages.common.n/a');
+        }
     }
 
     /**

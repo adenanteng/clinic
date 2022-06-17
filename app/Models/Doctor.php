@@ -79,6 +79,14 @@ class Doctor extends Model
     ];
 
     /**
+     * @return BelongsToMany
+     */
+    public function serviceDoctors()
+    {
+        return $this->belongsToMany(Doctor::class, 'service_doctor', 'doctor_id');
+    }
+
+    /**
      * @return BelongsTo
      */
     public function user()

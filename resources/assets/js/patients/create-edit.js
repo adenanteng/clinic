@@ -92,3 +92,15 @@ $(document).on('click', '.removeAvatarIcon', function () {
     $('#tooltip287851').addClass('hide');
 });
 
+// $("#addRow").click(function () {
+//     let inputField = $('.payment_primary').clone();
+//     inputField.find("span").remove();
+//     inputField.find("select").select2();
+//     $('.payment_secondary').html(inputField);
+//     // $( ".payment_primary" ).clone().appendTo( ".payment_secondary" );
+// });
+//
+// // remove row
+// $(document).on('click', '#removeRow', function () {
+//     $(this).closest('.payment_secondary').remove();
+// });

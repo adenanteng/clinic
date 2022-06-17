@@ -202,6 +202,7 @@ return [
         'email_verified'    => 'Terverifikasi',
         'no_data_available_in_table'=> 'Tidak ada data tersedia',
         'icon'              => 'Icon',
+        'coming_soon'       => 'Coming Soon',
     ],
 
     'user' => [
@@ -210,7 +211,7 @@ return [
         'avatar'           => 'Avatar',
         'full_name'        => 'Nama Lengkap',
         'email'            => 'Surel',
-        'contact_number'   => 'Kontak',
+        'contact_number'   => 'No Telepon',
         'save_changes'     => 'Simpan Perubahan',
         'setting'          => 'Pengaturan',
         'account_setting'  => 'Pengaturan Akun',
@@ -483,8 +484,8 @@ return [
     ],
 
     'doctor_dashboard' => [
-        'total_appointments'  => 'Total Appointments',
-        'recent_appointments' => 'Recent Appointments',
+        'total_appointments'  => 'Total Pelayanan',
+        'recent_appointments' => 'Pelayanan Terbaru',
     ],
 
     'patient_dashboard' => [
@@ -585,7 +586,7 @@ return [
         'add' => 'Tambah Lab',
         'type'  => 'Jenis',
         'date' => 'Tanggal',
-        'treatment' => 'Jasa',
+        'treatment' => 'Permintaan Pemeriksaan',
         'klinis'  => 'Klinis',
         'desc' => 'Deskripsi',
     ],

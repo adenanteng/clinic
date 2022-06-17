@@ -19,6 +19,7 @@ class CreateTreatmentsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->double('charges');
+            $table->double('charges_bpjs');
             $table->boolean('status')->default(1);
             $table->string('short_description')->nullable();
             $table->timestamps();

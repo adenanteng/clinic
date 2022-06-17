@@ -12,7 +12,7 @@
                 <div class="col-xl-3 col-md-6">
                     <a href="{{ route('doctors.index') }}" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
                         <div class="card-body">
-                            <span><i class="fas fa-user-md display-4 card-icon text-white"></i></span>
+                            <span><i class="fad fa-user-md display-4 card-icon text-white"></i></span>
                             <div class="text-inverse-primary fw-bolder card-count fs-2 mb-2 mt-5">{{$data['totalDoctorCount']}}</div>
                             <div class="fw-bold text-inverse-primary fs-7">{{__('messages.admin_dashboard.total_doctor')}}</div>
                         </div>
@@ -21,7 +21,7 @@
                 <div class="col-xl-3 col-md-6">
                     <a href="{{ route('patients.index') }}" class="card bg-dark hoverable card-xl-stretch mb-xl-8">
                         <div class="card-body">
-                            <span><i class="fas fa-hospital-user display-4 card-icon text-white hospital-user-dark-mode"></i></span>
+                            <span><i class="fad fa-hospital-user display-4 card-icon text-white hospital-user-dark-mode"></i></span>
                             <div class="text-inverse-dark fw-bolder fs-2 card-count mb-2 mt-5">{{$data['totalPatientCount']}}</div>
                             <div
                                     class="fw-bold text-inverse-dark fs-7">{{__('messages.admin_dashboard.total_patients')}}</div>
@@ -32,7 +32,7 @@
                     <a href="{{ route('appointments.index') }}"
                        class="card bg-warning hoverable card-xl-stretch mb-xl-8">
                         <div class="card-body">
-                            <span><i class="fas fa-calendar-alt display-4 card-icon text-white"></i></span>
+                            <span><i class="fad fa-calendar-alt display-4 card-icon text-white"></i></span>
                             <div class="text-inverse-warning fw-bolder fs-2 card-count mb-2 mt-5">{{$data['todayAppointmentCount']}}</div>
                             <div
                                     class="fw-bold text-inverse-warning fs-7">{{__('messages.admin_dashboard.today_appointments')}}</div>
@@ -42,7 +42,7 @@
                 <div class="col-xl-3 col-md-6">
                     <a href="{{ route('patients.index') }}" class="card bg-info hoverable card-xl-stretch mb-5 mb-xl-8">
                         <div class="card-body">
-                            <span><i class="fas fa-user-injured display-4 card-icon text-white"></i></span>
+                            <span><i class="fad fa-user-injured display-4 card-icon text-white"></i></span>
                             <div class="text-inverse-info fw-bolder fs-2 mb-2 card-count mt-5">{{$data['totalRegisteredPatientCount']}}</div>
                             <div
                                     class="fw-bold text-inverse-info fs-7">{{__('messages.admin_dashboard.today_registered_patients')}}</div>
@@ -171,19 +171,19 @@
                         <!--begin::Header-->
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.admin_dashboard.earnings_from_appointments') }} 
+                                <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.admin_dashboard.earnings_from_appointments') }}
                                     ({{ getCurrencyIcon() }} <span class="card-label fw-bolder fs-3 mb-1 me-0 totalEarning"></span>)
                                 </span>
                             </h3>
                             <!--begin::Toolbar-->
                             <div class="card-toolbar">
-                                
+
                                 <a href="javascript:void(0)" class="btn btn-light fw-bolder me-5 ps-3 pe-2" title="Switch Chart">
                                     <span class="svg-icon svg-icon-1 m-0 text-center" id="changeChart">
-                                        <i class="fas fa-chart-area fs-1 fw-boldest chart"></i>
+                                        <i class="fad fa-chart-area fs-1 fw-boldest chart"></i>
                                     </span>
                                 </a>
-                                
+
                                 <!--begin::Svg Icon | path: icons/duotone/Layout/Layout-4-blocks-2.svg-->
                                 <a href="javascript:void(0)" class="btn btn-flex btn-light fw-bolder" id="filterBtn"
                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"

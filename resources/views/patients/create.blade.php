@@ -19,28 +19,11 @@
     </div>
 @endsection
 @section('content')
-    <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container">
-            <div class="d-flex flex-column flex-lg-row">
-                <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
-                    <div class="row">
-                        <div class="col-12">
-                            @include('layouts.errors')
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body p-12">
-                            {{ Form::open(['route' => 'patients.store','files' => 'true','id' => 'createPatientForm']) }}
-                            <div class="card-body p-9">
-                                @include('patients.fields')
-                                {{ Form::close() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-layout.create-edit>
+    {{ Form::open(['route' => 'patients.store','files' => 'true','id' => 'createPatientForm']) }}
+        @include('patients.fields')
+    {{ Form::close() }}
+    </x-layout.create-edit>
 @endsection
 @section('page_js')
     <script src="{{ asset('assets/js/intl/js/intlTelInput.min.js') }}"></script>

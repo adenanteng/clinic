@@ -26,16 +26,14 @@ class CreateAppointmentsTable extends Migration
             $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->unsignedBigInteger('service_id');
-            $table->integer('payable_amount');
+//            $table->integer('payable_amount');
             $table->integer('payment_type');
             $table->integer('payment_method');
             $table->string('appointment_unique_id')->unique();
             $table->timestamps();
 
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
-
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade')->onUpdate('cascade');
-
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -14,15 +14,19 @@ class CreateVisitLabsTable extends Migration
     public function up()
     {
         Schema::create('visit_labs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->unsignedBigInteger('visit_id');
-            $table->unsignedInteger('type');
-            $table->unsignedInteger('treatment_id');
-            $table->text('klinis');
-            $table->text('description');
+            $table->unsignedInteger('type_id');
+            $table->unsignedBigInteger('treatment_id');
+            $table->text('clinical');
             $table->text('date');
-            $table->unsignedInteger('status');
+            $table->unsignedBigInteger('create_user_id');
+            $table->unsignedInteger('status')->default(1);
             $table->timestamps();
+
+            $table->foreign('visit_id')->references('id')->on('visits')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('treatment_id')->references('id')->on('treatments')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('create_user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

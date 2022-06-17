@@ -25,6 +25,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Administrasi Pasien Rawat Jalan',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 30000,
+                'charges_bpjs'      => 28000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -32,6 +33,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Administrasi Pasien Rawat Inap',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 50000,
+                'charges_bpjs'      => 45000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -39,6 +41,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Poli: Jasa Dokter Umum',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 80000,
+                'charges_bpjs'      => 75000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -46,6 +49,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Poli: Jasa Dokter Mata',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 90000,
+                'charges_bpjs'      => 85000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
 
@@ -54,6 +58,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Poli: Jasa Paramedis',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 5000,
+                'charges_bpjs'      => 3500,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -61,6 +66,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Poli: Aspirasi',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 15000,
+                'charges_bpjs'      => 13000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -68,6 +74,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Poli: Ganti Perban',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 18000,
+                'charges_bpjs'      => 15000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -75,6 +82,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Lab: Darah Lengkap',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 1800000,
+                'charges_bpjs'      => 1580000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
             [
@@ -82,6 +90,7 @@ class DefaultTreatmentsSeeder extends Seeder
                 'name'              => 'Lab: Gula Darah',
                 'status'            => Treatment::ACTIVE,
                 'charges'           => 300000,
+                'charges_bpjs'      => 280000,
                 'short_description' => 'Phasellus venenatis porta rhoncus. Integer et viverra felis.',
             ],
 

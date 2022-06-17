@@ -28,6 +28,7 @@ class PharmacyProcurementSeeder extends Seeder
                 'invoice_no' => '4DEN94NT3N9',
                 'purchase_price' => 20000,
                 'selling_price' => 25000,
+                'selling_price_bpjs' => 23000,
             ],
             [
                 'dept_id' => Pharmacy::PHARMACY,
@@ -40,6 +41,7 @@ class PharmacyProcurementSeeder extends Seeder
                 'invoice_no' => '4DENHUDGHB8UH4',
                 'purchase_price' => 20000,
                 'selling_price' => 25000,
+                'selling_price_bpjs' => 23000,
             ],
             [
                 'dept_id' => Pharmacy::PHARMACY,
@@ -52,6 +54,7 @@ class PharmacyProcurementSeeder extends Seeder
                 'invoice_no' => '4DEN967GBVH7',
                 'purchase_price' => 20000,
                 'selling_price' => 25000,
+                'selling_price_bpjs' => 23000,
             ],
             [
                 'dept_id' => Pharmacy::GENERAL,
@@ -64,6 +67,7 @@ class PharmacyProcurementSeeder extends Seeder
                 'invoice_no' => '4DEN9KJNU7676',
                 'purchase_price' => 20000,
                 'selling_price' => 25000,
+                'selling_price_bpjs' => 23000,
             ],
             [
                 'dept_id' => Pharmacy::PHARMACY,
@@ -76,6 +80,7 @@ class PharmacyProcurementSeeder extends Seeder
                 'invoice_no' => 'HYG7FTT6FG6778',
                 'purchase_price' => 30000,
                 'selling_price' => 50000,
+                'selling_price_bpjs' => 23000,
             ],
         ];
 

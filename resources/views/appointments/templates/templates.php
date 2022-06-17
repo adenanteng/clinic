@@ -4,17 +4,17 @@
 
     <a href="javascript:void(0)" data-id="{{:id}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 edit-btn cancel-appointment"
      data-bs-custom-class="tooltip-dark" data-bs-placement="bottom" title="Cancel Appointment">
-        <i class="fas fa-calendar-times text-danger fs-4"></i>
+        <i class="fad fa-calendar-times text-danger fs-4"></i>
     </a>
 
     {{/if}}
     {{/if}}
     <a href="{{:visitUrl}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="Layani">
-        <i class="fas fa-stethoscope fs-4"></i>
+        <i class="fad fa-stethoscope fs-4"></i>
     </a>
 
     <a href="{{:showUrl}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="Show">
-        <i class="fas fa-eye fs-4"></i>
+        <i class="fad fa-eye fs-4"></i>
     </a>
 
 <!--    <a href="#" data-id="{{:id}}" class="delete-btn btn btn-icon btn-bg-light text-hover-primary btn-sm" data-bs-toggle="tooltip" title="Delete">-->

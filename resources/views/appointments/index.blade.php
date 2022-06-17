@@ -32,7 +32,7 @@
         <x-slot name="filter">
             <a href="{{ route('appointments.calendar') }}"
                class="btn btn-icon btn-light me-2">
-                <i class="fas fa-calendar-alt fs-3"></i>
+                <i class="fad fa-calendar-alt fs-3"></i>
             </a>
             <x-layout.index-filter-appointment :appointmentStatus="$appointmentStatus" />
         </x-slot>

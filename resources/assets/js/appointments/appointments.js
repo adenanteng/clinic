@@ -97,9 +97,7 @@ $(document).ready(function () {
             },
             {
                 data: function (row) {
-                    let url = !isEmpty(userRole) ? route(
-                        'patients.appointments.show', row.id) : route(
-                        'appointments.show', row.id);
+                    let url = !isEmpty(userRole) ? route('patients.appointments.show', row.id) : route('appointments.show', row.id);
                     return `<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                         <a href="javascript:void(0)">
                             <div class="symbol-label">
@@ -109,9 +107,12 @@ $(document).ready(function () {
                         </a>
                     </div>
                     <div class="d-inline-block align-top">
-                        <a href="${(adminRole == true) ? route('patients.show', row.patient.id) : url}"
-                           class="text-primary-800 mb-1 d-block">${row.patient.user.full_name}</a>
-                           <span class="d-block text-muted fw-bold">${row.patient.patient_unique_id}</span>
+                        <a href="${route('patients.show', row.patient.id)}"
+                           class="text-primary-800 mb-1 d-inline-block">${row.patient.user.full_name}</a>
+                        <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3 cursor-default"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="No Rekam Medis">${row.patient.patient_unique_id}</a>
+                        <span class="d-block text-muted fw-bold">${row.patient.patient_unique_id}</span>
                     </div>`;
                 },
 
@@ -120,9 +121,8 @@ $(document).ready(function () {
             {
                 data: function (row) {
                     return `<div class="badge badge-light-info">
-                                <div class="mb-2">${row.from_time} ${row.from_time_type} - ${row.to_time} ${row.to_time_type}</div>
-                                <div class="">${moment(row.date).
-                        format('Do MMM, Y ')}</div>
+                                <div class="mb-2">${row.from_time} - ${row.to_time}</div>
+                                <div class="">${moment(row.date).format('DD MMM Y ')}</div>
                             </div>`;
                 },
                 name: 'date',

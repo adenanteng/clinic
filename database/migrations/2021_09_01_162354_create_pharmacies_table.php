@@ -15,8 +15,7 @@ class CreatePharmaciesTable extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->string('drug_unique_id')->unique();
-            $table->unsignedInteger('category')->nullable();
+            $table->unsignedInteger('category');
             $table->string('name');
             $table->string('brand')->nullable();
             $table->text('description')->nullable();

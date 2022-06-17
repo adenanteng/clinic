@@ -100,55 +100,9 @@
         </div>
 
         @section('front-js')
-            <script src="//js.stripe.com/v3/"></script>
-            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
             <script>
-                let appointmentStripePaymentUrl = '{{ url('appointment-stripe-charge') }}';
-                let stripe = Stripe('{{ config('services.stripe.key') }}');
                 let manually = "{{\App\Models\Appointment::MANUALLY}}";
-                let paystack = "{{ \App\Models\Appointment::PAYSTACK }}";
-                let paypal = "{{ \App\Models\Appointment::PAYPAL }}";
-                let stripeMethod = "{{ \App\Models\Appointment::STRIPE }}";
-                let razorpayMethod = "{{ \App\Models\Appointment::RAZORPAY }}";
-                let authorizeMethod = "{{ \App\Models\Appointment::AUTHORIZE }}";
-                let paytmMethod = "{{ \App\Models\Appointment::PAYTM }}";
-                let options = {
-                    'key': "{{ config('payments.razorpay.key') }}",
-                    'amount': 0, //  100 refers to 1 
-                    'currency': 'INR',
-                    'name': "{{getAppName()}}",
-                    'order_id': '',
-                    'description': '',
-                    'image': '{{ asset(getAppLogo()) }}', // logo here
-                    'callback_url': "{{ route('razorpay.success') }}",
-                    'prefill': {
-                        'email': '', // recipient email here
-                        'name': '', // recipient name here
-                        'contact': '', // recipient phone here
-                        'appointmentID': '', // appointmentID here
-                    },
-                    'readonly': {
-                        'name': 'true',
-                        'email': 'true',
-                        'contact': 'true',
-                    },
-                    'theme': {
-                        'color': '#4FB281',
-                    },
-                    'modal': {
-                        'ondismiss': function () {
-                            $('.book-appointment-message').css('display', 'block');
-                            let response = '<div class="gen alert alert-danger">Appointment created successfully and payment not completed.</div>';
-                            $('.book-appointment-message').
-                                html(response).
-                                delay(5000).
-                                hide('slow');
-                            setTimeout(function () {
-                                location.reload();
-                            }, 1500);
-                        },
-                    },
-                }
+
             </script>
             <script src="{{ asset('assets/js/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
             <script src="{{ mix('assets/js/custom/input_price_format.js') }}"></script>

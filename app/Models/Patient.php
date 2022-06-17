@@ -115,9 +115,8 @@ class Patient extends Model implements HasMedia
     ];
 
     public $fillable = [
-        'patient_unique_id',
+//        'patient_unique_id',
         'user_id',
-
     ];
 
     /**
@@ -126,7 +125,7 @@ class Patient extends Model implements HasMedia
      * @var array
      */
     public static $rules = [
-        'patient_unique_id' => 'required|unique:patients,patient_unique_id|regex:/^\S*$/u',
+//        'patient_unique_id' => 'required|unique:patients,patient_unique_id|regex:/^\S*$/u',
         'first_name'        => 'nullable',
         'last_name'         => 'nullable',
         'email'             => 'nullable|email|unique:users,email',
@@ -148,9 +147,26 @@ class Patient extends Model implements HasMedia
         'email'      => 'nullable|email|unique:users,email',
     ];
 
-    protected $appends = ['profile'];
+    protected $appends = ['profile', 'patient_unique_id', 'payment_name'];
 
     protected $with = ['media', 'address'];
+
+    /**
+     * @return string
+     */
+    public function getPatientUniqueIdAttribute()
+    {
+        return str_pad($this->id, 6, "0", STR_PAD_LEFT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentNameAttribute()
+    {
+        return PatientPayment::with('gateway')->where('patient_id', $this->id)->get()->pluck('gateway.payment_name');
+//        return 'BPJS';
+    }
 
     /**
      * @return string
@@ -165,7 +181,6 @@ class Patient extends Model implements HasMedia
                 return $patientUniqueId;
             }
         }
-
 //        while (true) {
 //            $isExist = self::wherePatientUniqueId($patientUniqueId)->exists();
 //            if ($isExist) {
@@ -173,7 +188,6 @@ class Patient extends Model implements HasMedia
 //            }
 //            break;
 //        }
-
         return $patientUniqueId;
     }
 
@@ -188,13 +202,12 @@ class Patient extends Model implements HasMedia
             return $media->getFullUrl();
         }
         $gender = $this->user->gender;
-//        $gender = self::MALE;
         if ($gender == self::FEMALE){
 
-            return asset('web/media/avatars/female.png');
+            return asset('web/media/avatars/woman_child.png');
         }
 
-        return asset('web/media/avatars/male.png');
+        return asset('web/media/avatars/man_child.png');
     }
 
     /**
@@ -236,5 +249,4 @@ class Patient extends Model implements HasMedia
     {
         return $this->hasMany(Review::class);
     }
-
 }

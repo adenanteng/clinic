@@ -23,7 +23,7 @@
         <a class="menu-link {{ Request::is('admin/dashboard*') ? 'active' : '' }}"
            href="{{ route('admin.dashboard') }}">
         <span class="menu-icon">
-            <i class="fas fa fa-digital-tachograph fs-3"></i>
+            <i class="fad mx-auto fa fa-digital-tachograph fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.dashboard') }}</span>
         </a>
@@ -40,7 +40,7 @@
         <a class="menu-link {{ Request::is('doctors/dashboard*') ? 'active' : '' }}"
            href="{{ route('doctors.dashboard') }}">
         <span class="menu-icon">
-            <i class="fas fa fa-digital-tachograph fs-3"></i>
+            <i class="fad mx-auto fa fa-digital-tachograph fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.dashboard') }}</span>
         </a>
@@ -59,7 +59,7 @@
         <a class="menu-link {{ Request::is('patients*') ? 'active' : '' }}"
            href="{{ route('patients.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-hospital-user fs-3"></i>
+            <i class="fad mx-auto fa-hospital-user fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.administrations') }}</span>
         </a>
@@ -77,7 +77,7 @@
         <a class="menu-link {{ (Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'active' : '' }}"
            href="{{ route('appointments.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-calendar-alt fs-3"></i>
+            <i class="fad mx-auto fa-calendar-alt fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.appointments') }}</span>
         </a>
@@ -109,7 +109,7 @@
         <div class="menu-item menu-search sidebar-dropdown">
             <a class="menu-link {{ Request::is('visits*') ? 'active' : '' }}" href="{{ route('visits.index') }}">
                 <span class="menu-icon">
-                    <i class="fas fa-procedures fs-3"></i>
+                    <i class="fad mx-auto fa-book-medical fs-3"></i>
                 </span>
                 <span class="menu-title">{{__('messages.visits')}}</span>
             </a>
@@ -127,7 +127,7 @@
     <div class="menu-item menu-search sidebar-dropdown">
         <a class="menu-link {{ Request::is('pharmacys*') ? 'active' : '' }}" href="{{ route('pharmacys.index') }}">
                 <span class="menu-icon">
-                    <i class="fas fa-capsules fs-3"></i>
+                    <i class="fad mx-auto fa-capsules fs-3"></i>
                 </span>
             <span class="menu-title">{{__('messages.pharmacys')}}</span>
         </a>
@@ -145,7 +145,7 @@
         <a class="menu-link {{ (Request::is('transactions*')) ? 'active' : '' }}"
            href="{{ route('transactions') }}">
         <span class="menu-icon">
-            <i class="fas fa-money-bill-wave"></i>
+            <i class="fad mx-auto fa-money-bill-wave"></i>
         </span>
             <span class="menu-title">{{ __('messages.transactions') }}</span>
         </a>
@@ -163,7 +163,7 @@
         <a class="menu-link {{(Request::is('doctors*')||Request::is('doctor-sessions*')||Request::is('doctor-sessions*')) ? 'active' : '' }}"
            href="{{ route('doctors.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-user-md fs-3"></i>
+            <i class="fad mx-auto fa-user-md fs-3"></i>
         </span>
         <span class="menu-title">{{ __('messages.doctors') }}
             <span class="d-none">{{ __('messages.doctor_sessions') }}</span>
@@ -187,7 +187,7 @@
     <div class="menu-item menu-search sidebar-dropdown">
         <a class="menu-link {{ Request::is('staff*') ? 'active' : '' }}" href="{{ route('staff.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-users fs-3"></i>
+            <i class="fad mx-auto fa-users fs-3"></i>
         </span>
             <span class="menu-title">{{__('messages.staffs')}}</span>
         </a>
@@ -205,7 +205,7 @@
         <a class="menu-link {{ (Request::is('services*') || Request::is('service-categories*')) ? 'active' : '' }}"
            href="{{ route('services.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-user-cog fs-3"></i>
+            <i class="fad mx-auto fa-user-cog fs-3"></i>
         </span>
             <span class="menu-title">{{__('messages.services')}}<span
                         class="d-none">{{ __('messages.service_categories') }}</span></span>
@@ -229,7 +229,7 @@
         <a class="menu-link {{ (Request::is('treatments*') || Request::is('treatment-categories*')) ? 'active' : '' }}"
            href="{{ route('treatments.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-user-cog fs-3"></i>
+            <i class="fad mx-auto fa-user-cog fs-3"></i>
         </span>
             <span class="menu-title">{{__('messages.treatments')}}<span
                     class="d-none">{{ __('messages.treatment_categories') }}</span></span>
@@ -253,7 +253,7 @@
         <a class="menu-link {{ Request::is('specializations*') ? 'active' : '' }}"
            href="{{ route('specializations.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-user-shield fs-3"></i>
+            <i class="fad mx-auto fa-user-shield fs-3"></i>
         </span>
             <span class="menu-title">{{__('messages.specializations')}}</span>
         </a>
@@ -271,7 +271,7 @@
         <a class="menu-link {{ (Request::is('enquiries*') ? 'active' : '') }}"
            href="{{ route('enquiries.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-question-circle fs-3"></i>
+            <i class="fad mx-auto fa-question-circle fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.enquiries') }}</span>
         </a>
@@ -287,7 +287,7 @@
         <a class="menu-link {{ (Request::is('subscribers*') ? 'active' : '') }}"
            href="{{ route('subscribers.index') }}">
         <span class="menu-icon">
-            <i class="fab fa-stripe-s fs-3"></i>
+            <i class="fad mx-auto fa-mailbox fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.subscribers') }}</span>
         </a>
@@ -303,7 +303,7 @@
         <a class="menu-link {{ (Request::is('sliders*') || Request::is('faqs*') || Request::is('front-medical-services*') || Request::is('front-patient-testimonials*') || Request::is('cms*') ? 'active' : '') }}"
            href="{{ route('cms.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-tasks fs-3"></i>
+            <i class="fad mx-auto fa-browser fs-3"></i>
         </span>
             <span class="menu-title">{{ __('messages.front_cms') }}
                 <span class="d-none">{{ __('messages.sliders') }} {{ __('messages.faqs') }} {{ __('messages.front_patient_testimonials') }}</span>
@@ -338,7 +338,7 @@
         <a class="menu-link {{ (Request::is('settings*') || Request::is('roles*') || Request::is('currencies*') || Request::is('clinic-schedules*') || Request::is('countries*') || Request::is('states*') ||Request::is('cities*')) ? 'active' : '' }}"
            href="{{ route('setting.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-cogs fs-3"></i>
+            <i class="fad mx-auto fa-cogs fs-3"></i>
         </span>
             <span class="menu-title">{{__('messages.settings')}}<span
                         class="d-none">{{ __('messages.roles') }} {{ __('messages.countries') }} {{ __('messages.clinic_schedules') }} {{ __('messages.currencies') }} {{ __('messages.states') }} {{ __('messages.cities') }}</span></span>
@@ -388,7 +388,7 @@
     <a class="menu-link {{ Request::is('patients/dashboard*') ? 'active' : '' }}"
        href="{{ route('patients.dashboard') }}">
         <span class="menu-icon">
-            <i class="fas fa fa-digital-tachograph fs-3"></i>
+            <i class="fad mx-auto fa fa-digital-tachograph fs-3"></i>
         </span>
         <span class="menu-title">{{ __('messages.dashboard') }}</span>
     </a>
@@ -396,7 +396,7 @@
 <div class="menu-item menu-search">
     <a class="menu-link {{ (Request::is('patients/appointments*') || Request::is('patients/patient-appointments-calendar*')||Request::is('patients/doctors*')) ? 'active' : '' }}"
        href="{{ route('patients.appointments.index') }}">
-        <span class="menu-icon"><i class="fas fa-calendar-alt fs-3" aria-hidden="true"></i></span>
+        <span class="menu-icon"><i class="fad mx-auto fa-calendar-alt fs-3" aria-hidden="true"></i></span>
         <span class="menu-title">{{__('messages.appointment.appointments')}}</span>
     </a>
 </div>
@@ -404,7 +404,7 @@
     <a class="menu-link {{ (Request::is('patients/transactions*')) ? 'active' : '' }}"
        href="{{ route('patients.transactions') }}">
         <span class="menu-icon">
-            <i class="fas fa-money-bill-wave"></i>
+            <i class="fad mx-auto fa-money-bill-wave"></i>
         </span>
         <span class="menu-title">{{ __('messages.transactions') }}</span>
     </a>
@@ -413,7 +413,7 @@
     <a class="menu-link {{ (Request::is('patients/reviews*')) ? 'active' : '' }}"
        href="{{ route('patients.reviews.index') }}">
         <span class="menu-icon">
-            <i class="fas fa-star"></i>
+            <i class="fad mx-auto fa-star"></i>
         </span>
         <span class="menu-title">{{ __('messages.reviews') }}</span>
     </a>
@@ -421,7 +421,7 @@
 <div class="menu-item menu-search">
     <a class="menu-link {{ (Request::is('patients/patient-visits*')) ? 'active' : '' }}"
        href="{{ route('patients.patient.visits.index') }}">
-        <span class="menu-icon"><i class="fas fa-procedures fs-3" aria-hidden="true"></i></span>
+        <span class="menu-icon"><i class="fad mx-auto fa-procedures fs-3" aria-hidden="true"></i></span>
         <span class="menu-title">{{__('messages.visits')}}</span>
     </a>
 </div>
@@ -429,7 +429,7 @@
     <a class="menu-link {{ Request::is('patients/live-consultation*') ? 'active' : '' }}"
        href="{{ route('patients.live-consultation.index') }}">
     <span class="menu-icon">
-        <i class="fas fa-video fs-3"></i>
+        <i class="fad mx-auto fa-video fs-3"></i>
     </span>
         <span class="menu-title">{{__('messages.live_consultations')}}</span>
     </a>
@@ -438,7 +438,7 @@
     <a class="menu-link {{ Request::is('patients/connect-google-calendar*') ? 'active' : '' }}"
        href="{{ route('patients.googleCalendar.index') }}">
     <span class="menu-icon">
-        <i class="fas fa-calendar-day fs-3"></i>
+        <i class="fad mx-auto fa-calendar-day fs-3"></i>
     </span>
         <span class="menu-title">{{__('messages.setting.connect_google_calendar')}}</span>
     </a>

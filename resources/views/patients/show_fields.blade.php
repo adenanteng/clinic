@@ -14,16 +14,15 @@
                                 <span class="text-gray-800 text-hover-primary fs-2 fw-bolder me-4">{{ $patient->user->full_name }}</span>
                                 <a href="javascript:void(0)" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3"
                                    data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark"
-                                   data-bs-placement="bottom"
-                                   title="Patient Unique ID">{{ $patient->patient_unique_id }}
+                                   data-bs-placement="bottom" title="Patient Unique ID">{{ $patient->patient_unique_id }}
                                 </a>
                             </div>
                             <div class="flex-wrap fw-bold fs-6 pe-2">
                                 <span class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 me-2">
-                                     {{ !empty($patient->user->age) ? $patient->user->age . ' tahun' : __('messages.common.n/a') }}
+                                     {{ $patient->user->age . ' tahun' }}
                                 </span>
                                 <span class="d-flex align-items-center text-gray-400 text-hover-primary me-2">
-                                    {{ !empty($patient->user->gender) ? $patient->user->gender  : __('messages.common.n/a') }}
+                                    {{ $patient->user->gender_text }}
                                 </span>
                             </div>
                         </div>
@@ -35,8 +34,7 @@
                                     <div class="d-flex align-items-center">
                                         <i class="fas fa-book-medical fa-2x me-2 text-primary"></i>
                                         <div class="fs-2 fw-bolder text-gray-800" data-kt-countup="true"
-                                             data-kt-countup-value="{{$data['todayAppointmentCount']}}">
-                                            0
+                                             data-kt-countup-value="{{$data['todayAppointmentCount']}}">0
                                         </div>
                                     </div>
                                     <div class="fw-bold fs-6 text-gray-400">{{__('messages.patient_dashboard.today_appointments')}}</div>
@@ -64,7 +62,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a class="btn btn-primary btn-active-primary my-1 " href="{{ url('appointments/create?patient='.$patient->patient_unique_id) }}">
+                    <a class="btn btn-primary btn-active-primary my-1 " href="{{ url('appointments/create?patient='.$patient->id) }}">
                         Daftarkan Kunjungan
                     </a>
                 </div>
@@ -94,21 +92,33 @@
                 <div>
                     <div class="card-body border-top p-9">
                         <div class="row mb-7">
-                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.blood_group') }}</label>
-                            <div class="col-lg-8 fv-row">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ !empty($patient->user->blood_group) ? \App\Models\Patient::BLOOD_GROUP_ARRAY[$patient->user->blood_group] : __('messages.common.n/a') }}</span>
-                            </div>
-                        </div>
-                        <div class="row mb-7">
-                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.user.gender') }}</label>
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.nric_id') }}</label>
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ !empty($patient->user->gender) ? \App\Models\Patient::GENDER_GROUP_ARRAY[$patient->user->gender] : __('messages.common.n/a')  }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{\App\Models\Patient::NRIC_GROUP_ARRAY[$patient->user->nric_type]}} {{$patient->user->nric_id}}</span>
                             </div>
                         </div>
                         <div class="row mb-7">
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.doctor.dob') }}</label>
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ !empty($patient->user->dob) ? \Carbon\Carbon::parse($patient->user->dob)->format('jS M, Y') : __('messages.common.n/a') }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ !empty($patient->user->dob) ? \Carbon\Carbon::parse($patient->user->dob)->format('d M Y') : __('messages.common.n/a') }}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.gender') }}</label>
+                            <div class="col-lg-8 fv-row">
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{$patient->user->gender_text}}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.marriage') }}</label>
+                            <div class="col-lg-8 fv-row">
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{$patient->user->marriage_text}}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-7">
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.patient.blood_group') }}</label>
+                            <div class="col-lg-8 fv-row">
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{$patient->user->blood_text}}</span>
                             </div>
                         </div>
                         <div class="row mb-7">
@@ -132,6 +142,25 @@
                                       data-bs-placement="right"
                                       title="{{\Carbon\Carbon::parse($patient->user->updated_at)->format('jS M Y')}}">{{$patient->user->updated_at->diffForHumans()}}</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-5 mb-xl-10">
+                <div class="card-header border-0 cursor-pointer" role="button">
+                    <div class="card-title m-0">
+                        <h3 class="fw-bolder m-0">{{ __('messages.patient.payment_information')  }}</h3>
+                    </div>
+                </div>
+                <div>
+                    <div class="card-body border-top p-9">
+                        <div class="d-inline-flex mb-7">
+                            @foreach($patient->payment as $key => $pay)
+                            <div class="fv-row">
+                                <span class="fw-bolder fs-6 text-white me-2 badge {{ $key !== 0 ? 'badge-success' : 'badge-primary' }}" >{{$pay->gateway->payment_name}} {{ !empty($pay->payment_card) ? ' : '.$pay->payment_card : '' }}</>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -204,7 +233,7 @@
                                                 <div class="mb-10">
                                                     <label class="form-label fw-bold">{{__('messages.doctor.status')}}</label>
                                                     <div>
-                                                        {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::BOOKED,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'appointmentStatus']) }}
+                                                        {{ Form::select('status', $appointmentStatus, \App\Models\Appointment::ALL,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id' => 'appointmentStatus']) }}
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-end">

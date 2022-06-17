@@ -4,18 +4,18 @@
 
     <a href="javascript:void(0)" data-id="{{:id}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 edit-btn cancel-appointment"
      data-bs-custom-class="tooltip-dark" data-bs-placement="bottom" title="Cancel Appointment">
-        <i class="fas fa-calendar-times text-danger fs-4"></i>
+        <i class="fad fa-calendar-times text-danger fs-4"></i>
     </a>
 
     {{/if}}
     {{/if}}
 
     <a href="{{:showUrl}}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="Lihat Resep">
-        <i class="fas fa-clipboard-list fs-4"></i>
+        <i class="fad fa-pills fs-4"></i>
     </a>
 
-    <a href="{{:visitUrl}}" target='__blank' class="btn btn-icon btn-bg-light btn-active-color-secondary btn-sm me-1" data-bs-toggle="tooltip" title="Lihat Kasus">
-        <i class="fas fa-file fs-4"></i>
+    <a href="{{:visitUrl}}" target='__blank' class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="tooltip" title="Lihat Kasus">
+        <i class="fad fa-file fs-4"></i>
     </a>
 
 <!--    <a href="#" data-id="{{:id}}" class="delete-btn btn btn-icon btn-bg-light text-hover-primary btn-sm" data-bs-toggle="tooltip" title="Delete">-->

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Patient;
 use App\Models\Permission;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,9 +23,9 @@ class DefaultStaffSeeder extends Seeder
             'first_name'        => 'Chintia',
             'last_name'         => 'Dewi',
             'contact'           => '1234567890',
-            'gender'            => User::FEMALE,
+            'gender'            => Patient::FEMALE,
             'type'              => User::STAFF,
-            'email'             => 'nurse@clinic.com',
+            'email'             => 'nurse@enola.com',
             'email_verified_at' => Carbon::now(),
             'password'          => Hash::make('123456'),
             'region_code'       => '62',

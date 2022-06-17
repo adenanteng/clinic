@@ -14,6 +14,7 @@
     <link href="{{ asset('backend/css/vendor.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('backend/css/datatables.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('backend/css/fonts.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('backend/css/all.min.css') }}" rel="stylesheet" type="text/css"/>
     @yield('page_css')
     <link href="{{ asset('backend/css/3rd-party.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('backend/css/3rd-party-custom.css') }}" rel="stylesheet" type="text/css"/>
@@ -25,6 +26,7 @@
     @endif
     <link href="{{ mix('assets/css/style.css') }}" rel="stylesheet" type="text/css"/>
     <script defer src="{{ asset('assets/js/alpine.js') }}"></script>
+{{--    <script defer src="{{asset('assets/front/vendor/font-awesome/js/all.min.js')}}"></script>--}}
 {{--    <script defer src="{{ asset('assets/js/turbo.js') }}"></script>--}}
 {{--    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false" data-turbo-eval="false"></script>--}}
 </head>
@@ -88,6 +90,7 @@ data-new-gr-c-s-check-loaded="14.1025.0" data-gr-ext-installed="" >
 @yield('scripts')
 <script>
     $(document).ready(function () {
+        // $('.aww').delay(10000).addClass('show');
         $('.alert').delay(5000).slideUp(300);
     });
     let changePasswordUrl = "{{ route('user.changePassword') }}";

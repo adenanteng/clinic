@@ -1,10 +1,9 @@
 'use strict';
 
-$(document).ready(function () {
+let ready = $(document).ready(function () {
     let timezone_offset_minutes = new Date().getTimezoneOffset();
     timezone_offset_minutes = timezone_offset_minutes === 0
-        ? 0
-        : -timezone_offset_minutes;
+        ? 0 : -timezone_offset_minutes;
 
     $('#date').flatpickr({
         minDate: new Date(),
@@ -15,14 +14,16 @@ $(document).ready(function () {
         if (isEdit) {
             $('#date').val(date).trigger('change');
             $('#serviceId').trigger('change');
+            $('#doctorId').trigger('change');
         }
     }, 1000);
 
     let selectedDate;
     let selectedSlotTime;
     $('.no-time-slot').removeClass('d-none');
-    $(document).on('change', '#date', function () {
-        selectedDate = $(this).val();
+
+    function renderSlot () {
+        selectedDate = $('#date').val();
         $('#slotData').html('');
         let url = !isEmpty(userRole)
             ? route('patients.doctor-session-time')
@@ -73,7 +74,47 @@ $(document).ready(function () {
                 displayErrorMessage(result.responseJSON.message);
             },
         });
+    }
+
+    $(document).on('change', '#date', function () {
+            // let data = $(this).val();
+            isEmpty($('#doctorId').val()) ? $('#slotData').html('') : renderSlot();
+
+        });
+
+    $(document).on('change', '#doctorId', function () {
+        isEmpty($('#date').val()) ? $('.no-time-slot').removeClass('d-none') : renderSlot();
     });
+
+    $(document).on('change', '#serviceId', function () {
+        // $('#date').val('');
+        $('#slotData').html('');
+        $('.no-time-slot').removeClass('d-none');
+        let url = route('get-doctor');
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                'serviceId': $(this).val(),
+            },
+            success: function (result) {
+                if (result.success) {
+                    $('#date').removeAttr('disabled');
+                    $('#doctorId').empty();
+                    $('#doctorId').
+                    append($('<option value=""></option>').
+                    text('Pilih Dokter'));
+                    $.each(result.data, function (i, v) {
+                        $('#doctorId').
+                        append($('<option></option>').
+                        attr('value', v.id).
+                        text(v.user.full_name));
+                    });
+                }
+            },
+        });
+    });
+
 
     $(document).on('click', '.time-slot', function () {
         if ($('.time-slot').hasClass('activeSlot')) {
@@ -91,77 +132,6 @@ $(document).ready(function () {
         $('#toTime').val(toTime);
     });
 
-    let charge;
-    let addFees = parseInt($('#addFees').val());
-    let totalFees;
-    $(document).on('change', '#doctorId', function () {
-        $('#chargeId').val('');
-        $('#payableAmount').val('');
-        $('#date').val('');
-        $('#addFees').val('');
-        $('#slotData').html('');
-        $('.no-time-slot').removeClass('d-none');
-        let url = !isEmpty(userRole) ? route('patients.get-service') : route(
-            'get-service');
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                'doctorId': $(this).val(),
-            },
-            success: function (result) {
-                if (result.success) {
-                    $('#date').removeAttr('disabled');
-                    $('#serviceId').empty();
-                    $('#serviceId').
-                        append($('<option value=""></option>').
-                            text('Select Service'));
-                    $.each(result.data, function (i, v) {
-                        $('#serviceId').
-                            append($('<option></option>').
-                                attr('value', v.id).
-                                text(v.name));
-                    });
-                }
-            },
-        });
-    });
-
-    $(document).on('change', '#serviceId', function () {
-        let url = !isEmpty(userRole) ? route('patients.get-charge') : route(
-            'get-charge');
-
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                'chargeId': $(this).val(),
-            },
-            success: function (result) {
-                if (result.success) {
-                    $('#chargeId').val('');
-                    $('#addFees').val('');
-                    $('#payableAmount').val('');
-                    if (result.data) {
-                        $('#chargeId').val(result.data.charges);
-                        $('#payableAmount').val(result.data.charges);
-                        charge = result.data.charges;
-                    }
-                }
-            },
-        });
-    });
-
-    $(document).on('keyup', '#addFees', function (e) {
-        if (e.which != 8 && isNaN(String.fromCharCode(e.which))) {
-            e.preventDefault();
-        }
-        totalFees = '';
-        totalFees = parseFloat(charge) +
-            parseFloat($(this).val() ? $(this).val() : 0);
-        $('#payableAmount').val(totalFees.toFixed(2));
-    });
 });
 
 // $(document).on('submit', '#addAppointmentForm', function (e) {
@@ -272,19 +242,4 @@ $(document).ready(function () {
 //     });
 // });
 
-function storeFailedPayment (response) {
-    $.ajax({
-        type: 'POST',
-        url: route('razorpay.failed'),
-        data: {
-            data: response,
-        },
-        success: function (result) {
-            if (result.success) {
-                displaySuccessMessage(result.message);
-            }
-        },
-        error: function () {
-        },
-    });
-}
+

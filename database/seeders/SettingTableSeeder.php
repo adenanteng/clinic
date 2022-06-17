@@ -17,9 +17,9 @@ class SettingTableSeeder extends Seeder
         $logoUrl = ('assets/image/infycare-logo.png');
         $favicon = ('assets/image/infyCare-favicon.ico');
 
-        Setting::create(['key' => 'clinic_name', 'value' => 'Clinically']);
+        Setting::create(['key' => 'clinic_name', 'value' => 'Enola Clinic']);
         Setting::create(['key' => 'contact_no', 'value' => '1234567890']);
-        Setting::create(['key' => 'email', 'value' => 'info@clinically.com']);
+        Setting::create(['key' => 'email', 'value' => 'info@enola.com']);
         Setting::create(['key' => 'specialities', 'value' => '1']);
         Setting::create(['key' => 'currency', 'value' => '1']);
         Setting::create(['key' => 'address_one', 'value' => 'Jl. Mengkudu',]);
@@ -31,5 +31,6 @@ class SettingTableSeeder extends Seeder
         Setting::create(['key' => 'logo', 'value' => $logoUrl]);
         Setting::create(['key' => 'favicon', 'value' => $favicon]);
         Setting::create(['key' => 'region_code', 'value' => '62']);
+        Setting::create(['key' => 'slug', 'value' => 'universal']);
     }
 }

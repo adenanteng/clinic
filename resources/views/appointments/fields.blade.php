@@ -13,17 +13,17 @@
             </div>
         @endif
     @endrole
-        <div class="d-flex col-lg-6 col-sm-12 flex-column mb-7 fv-row">
+        <div class="d-flex col-lg-6 col-sm-12 flex-column mb-5 fv-row">
+            {{ Form::label('Date',__('messages.appointment.date').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}
+            {{ Form::text('date', null,['class' => 'form-control form-control-solid date','placeholder' => 'Select Date', 'id'=>'date', 'required','autocomplete'=>'off']) }}
+        </div>
+        <div class="d-flex col-lg-6 col-sm-12 flex-column mb-5 fv-row">
             {{ Form::label('Service',__('messages.appointment.service').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}
-            {{ Form::select('service_id', [], null,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id'=> 'serviceId','placeholder' => 'Select Service','required']) }}
+            {{ Form::select('service_id', $data['services'], null,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2", 'id'=> 'serviceId','placeholder' => 'Select Service','required']) }}
         </div>
-        <div class="d-flex col-sm-12 col-lg-6 flex-column mb-7 fv-row">
-            {{ Form::label('Doctor',__('messages.doctor.doctor').':' ,['class' => 'fs-6 fw-bolder text-gray-700 fw-bold mb-2 required']) }}
-            {{ Form::select('doctor_id', $data['doctors'], null,['class' => 'form-control form-control-solid form-select', 'id' => 'doctorId', 'data-control'=>"select2", 'required','placeholder' => 'Select Doctor']) }}
-        </div>
-        <div class="col-lg-6 mb-5 col-sm-12">
-            {{ Form::label('Date',__('messages.appointment.date').':' ,['class' => 'fs-6 fw-bolder text-gray-700 fw-bold mb-2 required']) }}
-            {{ Form::text('date', null,['class' => 'form-control form-control-solid date','placeholder' => 'Select Date', 'id'=>'date', 'required','autocomplete'=>'off','disabled' => true]) }}
+        <div class="d-flex col-sm-12 col-lg-6 flex-column mb-5 fv-row">
+            {{ Form::label('Doctor',__('messages.doctor.doctor').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}
+            {{ Form::select('doctor_id', [], null,['class' => 'form-control form-control-solid form-select', 'id' => 'doctorId', 'data-control'=>"select2", 'required','placeholder' => 'Select Doctor']) }}
         </div>
     @php
         $styleCss = 'style';
@@ -51,20 +51,20 @@
         {{ Form::label('Payment Type',__('Payment Method').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}
         {{ Form::select('payment_type', getPatientPayment($patient->id), null,['class' => 'form-control form-control-solid form-select', 'data-control'=>"select2",'placeholder' => 'Select Payment Method','required']) }}
     </div>
-    <div class="col-lg-6 col-sm-12 mt-4 mb-5">
-        {{ Form::label('Total Payable Amount',__('messages.appointment.total_payable_amount').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}
-        <div class="input-group">
-            <div class="input-group-text border-0">
-                <a class="fw-bolder text-gray-500">{{ getCurrencyIcon() }}</a>
-            </div>
-            {{ Form::number('payable_amount', 15000,['class' => 'form-control form-control-solid','placeholder' => 'Biaya Adm.', 'required']) }}
+{{--    <div class="col-lg-6 col-sm-12 mt-4 mb-5">--}}
+{{--        {{ Form::label('Total Payable Amount',__('messages.appointment.total_payable_amount').':' ,['class' => 'form-label fs-6 fw-bolder text-gray-700 mb-3 required']) }}--}}
+{{--        <div class="input-group">--}}
+{{--            <div class="input-group-text border-0">--}}
+{{--                <a class="fw-bolder text-gray-500">{{ getCurrencyIcon() }}</a>--}}
+{{--            </div>--}}
+{{--            {{ Form::number('payable_amount', 15000,['class' => 'form-control form-control-solid','placeholder' => 'Biaya Adm.', 'required']) }}--}}
 
-        </div>
-    </div>
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="d-flex">
         {{ Form::button(__('messages.common.save'),['type' => 'submit','class' => 'btn btn-primary me-2']) }}
-        &nbsp;
         <a href="{{ url()->previous() }}" type="reset"
            class="btn btn-light btn-active-light-primary me-2">{{__('messages.common.discard')}}</a>
     </div>
+{{--<x-layout.form-submit />--}}
 </div>

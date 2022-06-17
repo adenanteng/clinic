@@ -93,9 +93,9 @@ class AppointmentRepository extends BaseRepository
             $fromTime = explode(' ', $input['from_time']);
             $toTime = explode(' ', $input['to_time']);
             $input['from_time'] = $fromTime[0];
-            $input['from_time_type'] = $fromTime[1];
+//            $input['from_time_type'] = $fromTime[1];
             $input['to_time'] = $toTime[0];
-            $input['to_time_type'] = $toTime[1];
+//            $input['to_time_type'] = $toTime[1];
             $input['payment_type'] = Appointment::MANUALLY;
             $input['payment_method'] = Appointment::MANUALLY;
 
@@ -103,8 +103,10 @@ class AppointmentRepository extends BaseRepository
 
             $patient = Patient::whereId($input['patient_id'])->with('user')->first();
             $input['patient_name'] = $patient->user->full_name;
-            $input['original_from_time'] = $fromTime[0].' '.$fromTime[1];
-            $input['original_to_time'] = $toTime[0].' '.$toTime[1];
+            $input['original_from_time'] = $fromTime[0];
+            $input['original_to_time'] = $toTime[0];
+//            $input['original_from_time'] = $fromTime[0].' '.$fromTime[1];
+//            $input['original_to_time'] = $toTime[0].' '.$toTime[1];
             $service = Service::whereId($input['service_id'])->first();
             $input['service'] = $service->name;
 

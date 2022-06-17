@@ -219,8 +219,8 @@ const handleViewEvent = () => {
     let endDateMod;
 
     eventNameMod = '';
-    startDateMod = moment(data.startDate).format('Do MMM, YYYY - h:mm a');
-    endDateMod = moment(data.endDate).format('Do MMM, YYYY - h:mm a');
+    startDateMod = moment(data.startDate).format('d M YYYY - H:mm');
+    endDateMod = moment(data.endDate).format('d M YYYY - H:mm');
     viewEndDate.innerText = ': ' + endDateMod;
     viewStartDate.innerText = ': ' + startDateMod;
 
@@ -234,11 +234,11 @@ const handleViewEvent = () => {
         : ''}>Booked</option>
 <option value="${checkIn}" ${data.eventStatus == checkIn
         ? 'selected'
-        : ''} ${data.eventStatus == checkIn ? 'selected' : ''} 
+        : ''} ${data.eventStatus == checkIn ? 'selected' : ''}
     ${(data.eventStatus == cancel || data.eventStatus == checkOut)
         ? 'disabled'
         : ''}>Check In</option>
-<option value="${checkOut}" ${data.eventStatus == checkOut ? 'selected' : ''} 
+<option value="${checkOut}" ${data.eventStatus == checkOut ? 'selected' : ''}
     ${(data.eventStatus == cancel || data.eventStatus == book)
         ? 'disabled'
         : ''}>Check Out</option>
