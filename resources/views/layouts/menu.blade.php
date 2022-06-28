@@ -75,7 +75,7 @@
 @can('manage_appointments')
     <div class="menu-item menu-search sidebar-dropdown">
         <a class="menu-link {{ (Request::is('appointments*') || Request::is('admin-appointments-calendar*')) ? 'active' : '' }}"
-           href="{{ route('appointments.index') }}">
+           href="{{ route('appointments.opd') }}">
         <span class="menu-icon">
             <i class="fad mx-auto fa-calendar-alt fs-3"></i>
         </span>
@@ -84,24 +84,12 @@
         <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
             @foreach(getAllDepartment() as $depart)
             <li class="{{ (Request::is('appointments/'.$depart->slug.'*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ url('appointments/'.$depart->slug) }}">
+                <a class="menu-link py-3" href="{{ route('appointments.'.$depart->slug) }}">
                     <span class="menu-title {{ (Request::is('appointments/'.$depart->slug.'*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.'.$depart->slug) }}</span>
                 </a>
             </li>
             @endforeach
-
-{{--            <li class="{{ (Request::is('appointments/opd*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">--}}
-{{--                <a class="menu-link py-3" href="{{ route('appointments.opd') }}">--}}
-{{--                    <span class="menu-title {{ (Request::is('appointments/opd*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.opd') }}</span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
-{{--            <li class="{{ (Request::is('appointments/ipd*') || Request::is('admin-appointments-calendar*')) ? 'menu-li-hover-color' : '' }}">--}}
-{{--                <a class="menu-link py-3" href="{{ route('appointments.ipd') }}">--}}
-{{--                    <span class="menu-title {{ (Request::is('appointments/ipd*') || Request::is('admin-appointments-calendar*')) ? 'text-primary' : '' }}">{{ __('messages.appointment.ipd') }}</span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
         </ul>
-
     </div>
 @endcan
 @if(!getLogInUser()->hasRole('doctor'))
@@ -123,18 +111,23 @@
         </div>
     @endcan
 @endif
-@can('manage_pharmacys')
+@can('manage_pharmacies')
     <div class="menu-item menu-search sidebar-dropdown">
-        <a class="menu-link {{ Request::is('pharmacys*') ? 'active' : '' }}" href="{{ route('pharmacys.index') }}">
+        <a class="menu-link {{ Request::is('pharmacies*')||Request::is('inventories*') ? 'active' : '' }}" href="{{ route('pharmacies.index') }}">
                 <span class="menu-icon">
                     <i class="fad mx-auto fa-capsules fs-3"></i>
                 </span>
-            <span class="menu-title">{{__('messages.pharmacys')}}</span>
+            <span class="menu-title">{{__('messages.pharmacies')}}</span>
         </a>
         <ul class="ps-md-0 hoverable-dropdown list-unstyled shadow">
-            <li class="{{ Request::is('visits*') ? 'menu-li-hover-color' : '' }}">
-                <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
-                    <span class="menu-title {{ Request::is('pharmacys*') ? 'text-primary' : '' }}">{{ __('messages.transactions') }}</span>
+            <li class="{{ Request::is('pharmacies*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('pharmacies.index') }}">
+                    <span class="menu-title {{ Request::is('pharmacies*') ? 'text-primary' : '' }}">{{ __('messages.transactions') }}</span>
+                </a>
+            </li>
+            <li class="{{ Request::is('inventories*') ? 'menu-li-hover-color' : '' }}">
+                <a class="menu-link py-3" href="{{ route('inventories.index') }}">
+                    <span class="menu-title {{ Request::is('inventories*') ? 'text-primary' : '' }}">{{ __('messages.inventories') }}</span>
                 </a>
             </li>
         </ul>

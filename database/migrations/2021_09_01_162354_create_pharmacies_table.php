@@ -15,11 +15,11 @@ class CreatePharmaciesTable extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('category');
+            $table->unsignedInteger('dept_id');
+            $table->unsignedInteger('category_id');
             $table->string('name');
-            $table->string('brand')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedInteger('unit');
+            $table->unsignedInteger('unit_id');
             $table->timestamps();
         });
     }

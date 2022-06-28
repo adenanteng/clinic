@@ -176,14 +176,22 @@
             </a>
         </div>
     </div>
+@endcan
 
-    <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('pharmacys*')) ? 'd-none' : '' }}">
-        <div class="menu-item me-lg-1 {{ Request::is('pharmacys*') ? 'show' : ''  }}">
-            <a class="menu-link py-3" href="{{ route('pharmacys.index') }}">
+@can('manage_pharmacies')
+    <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ !(Request::is('pharmacies*') || Request::is('inventories*')) ? 'd-none' : '' }}">
+        <div class="menu-item me-lg-1 {{ Request::is('pharmacies*') ? 'show' : ''  }}">
+            <a class="menu-link py-3" href="{{ route('pharmacies.index') }}">
                 <span class="menu-title">{{ __('messages.transactions') }}</span>
             </a>
         </div>
+        <div class="menu-item me-lg-1 {{ Request::is('inventories*') ? 'show' : ''  }}">
+            <a class="menu-link py-3" href="{{ route('inventories.index') }}">
+                <span class="menu-title">{{ __('messages.inventories') }}</span>
+            </a>
+        </div>
     </div>
+
 @endcan
 <div class="menu menu-lg-rounded menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary fw-bold {{ (!Request::is('profile/edit*')) ? 'd-none' : '' }}">
     <div class="menu-item me-lg-1 {{ Request::is('profile/edit*') ? 'show' : ''  }}">

@@ -1,4 +1,4 @@
-<script id="appointmentsTemplate" type="text/x-jsrender">
+<script id="pharmaciesTemplate" type="text/x-jsrender">
     {{if role == 1}}
     {{if canceled == 1}}
 

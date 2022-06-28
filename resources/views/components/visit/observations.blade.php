@@ -12,6 +12,7 @@
             <x-slot name="ppja_anamnesis"></x-slot>
             <x-slot name="subjective"></x-slot>
             <x-slot name="idk"></x-slot>
+            <x-slot name="ttv"></x-slot>
 
         </x-visit.observation.form-template>
 

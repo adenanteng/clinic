@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.pharmacys')}}
+    {{__('messages.pharmacies')}}
 @endsection
 @section('page_css')
     <link rel="stylesheet" href="{{asset('assets/css/plugins/daterangepicker.css')}}">
@@ -33,13 +33,13 @@
             <x-layout.index-filter-appointment :appointmentStatus="$appointmentStatus" />
         </x-slot>
 
-        <x-slot name="button_url">{{ route('pharmacys.create') }}</x-slot>
+        <x-slot name="button_url">{{ route('pharmacies.create') }}</x-slot>
         <x-slot name="button_title">{{__('messages.common.add')}}</x-slot>
 
         <div class="card-body pt-0">
-            @include('pharmacys.table')
+            @include('pharmacies.table')
             @include('layouts.templates.actions')
-            @include('pharmacys.templates.templates')
+            @include('pharmacies.templates.templates')
         </div>
     </x-layout.index>
 
@@ -61,6 +61,6 @@
         let pending = "{{\App\Models\Appointment::PENDING}}";
         let paid = "{{\App\Models\Appointment::PAID}}";
     </script>
-    <script src="{{mix('assets/js/pharmacys/pharmacys.js')}}"></script>
+    <script src="{{mix('assets/js/pharmacies/pharmacies.js')}}"></script>
 
 @endsection

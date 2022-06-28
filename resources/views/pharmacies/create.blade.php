@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.service.edit_service')}}
+    {{__('messages.pharmacy.add')}}
+@endsection
+@section('page_css')
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/flatpickr.css')}}">
 @endsection
 @section('header_toolbar')
     <div class="toolbar" id="kt_toolbar">
@@ -9,20 +12,21 @@
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">@yield('title')</h1>
             </div>
             <div class="d-flex align-items-center py-1 ms-auto">
-                <a href="{{ route('services.index') }}"
-                   class="btn btn-sm btn-primary">{{ __('messages.common.back') }}</a>
+                <a href="{{ route('pharmacies.index') }}"
+                   class="btn btn-sm btn-primary">{{ __('messages.common.back') }}
+                </a>
             </div>
         </div>
     </div>
 @endsection
 @section('content')
     <x-layout.create-edit>
-        {{ Form::model($service, ['route' => ['services.update', $service->id], 'method' => 'PUT', 'files' => true]) }}
-        @include('services.fields')
+        {{ Form::open(['route' => 'pharmacies.store','id' => 'saveForm']) }}
+        @include('pharmacies.fields')
         {{ Form::close() }}
     </x-layout.create-edit>
-    @include('service_categories.create-modal')
 @endsection
 @section('page_js')
-    <script src="{{mix('assets/js/services/create-edit.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/flatpickr.js')}}"></script>
+    <script src="{{mix('assets/js/pharmacies/create-edit.js')}}"></script>
 @endsection

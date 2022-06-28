@@ -16,28 +16,28 @@ class PharmacySeeder extends Seeder
     {
         $input = [
             [
+                'dept_id' => Pharmacy::PHARMACY,
                 'name' => 'PARACETAMOL 50MG',
-                'brand' => 'KIMIA FARMING',
-                'category' => Pharmacy::OBAT,
-                'unit' => Pharmacy::TABLET,
+                'category_id' => Pharmacy::OBAT,
+                'unit_id' => Pharmacy::TABLET,
             ],
             [
+                'dept_id' => Pharmacy::PHARMACY,
                 'name' => 'VALDOXAN 100MG',
-                'brand' => 'KALDU FARMA',
-                'category' => Pharmacy::OBAT,
-                'unit' => Pharmacy::TABLET,
+                'category_id' => Pharmacy::OBAT,
+                'unit_id' => Pharmacy::TABLET,
             ],
             [
+                'dept_id' => Pharmacy::PHARMACY,
                 'name' => 'OMEPRAZOL-500MG',
-                'brand' => 'UNKNOWN',
-                'category' => Pharmacy::OBAT,
-                'unit' => Pharmacy::TABLET,
+                'category_id' => Pharmacy::BHP,
+                'unit_id' => Pharmacy::TABLET,
             ],
             [
+                'dept_id' => Pharmacy::GENERAL,
                 'name' => 'OERANG TUA',
-                'brand' => 'VISIT INDONESIA',
-                'category' => Pharmacy::OBAT,
-                'unit' => Pharmacy::VIAL,
+                'category_id' => Pharmacy::OBAT,
+                'unit_id' => Pharmacy::VIAL,
             ],
         ];
 

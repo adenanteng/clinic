@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Controllers\AppBaseController;
 use App\Models\Doctor;
+use App\Models\Pharmacy;
 use App\Models\Service;
 use App\Models\Treatment;
 use App\Models\TreatmentCategory;
@@ -16,17 +17,13 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * @package App\Repositories
  * @version August 2, 2021, 12:09 pm UTC
  */
-class TreatmentsRepository extends AppBaseController
+class InventoryRepository extends AppBaseController
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'category_id',
-        'name',
-        'charges',
-//        'doctors',
-        'status'
+
     ];
 
     /**
@@ -44,7 +41,7 @@ class TreatmentsRepository extends AppBaseController
      **/
     public function model()
     {
-        return Treatment::class;
+        return Pharmacy::class;
     }
 
     /**
@@ -57,13 +54,8 @@ class TreatmentsRepository extends AppBaseController
         try {
             DB::beginTransaction();
 
-            $input['charges'] = str_replace(',', '', $input['charges']);
-            $input['status'] = (isset($input['status'])) ? 1 : 0;
-            $treatments = Treatment::create($input);
+            Pharmacy::create($input);
 
-            if (isset($input['icon']) && !empty('icon')) {
-                $treatments->addMedia($input['icon'])->toMediaCollection(Service::ICON, config('app.media_disc'));
-            }
             DB::commit();
             return true;
         } catch (Exception $e) {
@@ -104,9 +96,9 @@ class TreatmentsRepository extends AppBaseController
      */
     public function prepareData()
     {
-        $data['treatmentCategories'] = TreatmentCategory::orderBy('name', 'ASC')->pluck('name', 'id');
-        $data['doctors'] = Doctor::with('user')->get()->where('user.status', true)->pluck('user.full_name', 'id');
-
+        $data['dept_type'] = Pharmacy::DEPT_TYPE;
+        $data['drug_category'] = Pharmacy::DRUG_CATEGORY;
+        $data['unit'] = Pharmacy::UNIT_TYPE;
         return $data;
     }
 }

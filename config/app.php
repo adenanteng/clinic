@@ -204,7 +204,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+//        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         /*
          * Package Service Providers...

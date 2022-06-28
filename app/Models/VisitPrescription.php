@@ -94,7 +94,7 @@ class VisitPrescription extends Model
     /**
      * @return BelongsTo
      */
-    public function pharmacys()
+    public function pharmacies()
     {
         return $this->belongsTo(Pharmacy::class, 'drug_id');
     }

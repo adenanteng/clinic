@@ -16,6 +16,7 @@ use App\Models\Notification;
 use App\Models\Patient;
 use App\Models\Pharmacy;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Specialization;
 use App\Models\Transaction;
 use App\Models\User;
@@ -72,13 +73,29 @@ class PharmacyRepository extends BaseRepository
     }
 
     /**
-     * @param $input
+     * @param  array  $input
      *
-     * @return mixed
+     * @return bool
      */
-    public function store($input)
+    public function store(array $input): bool
     {
+        try {
+            DB::beginTransaction();
 
+            $input['status'] = (isset($input['status'])) ? 1 : 0;
+            $services = Service::create($input);
+            if (isset($input['doctors']) && !empty($input['doctors'])) {
+                $services->serviceDoctors()->sync($input['doctors']);
+            }
+            if (isset($input['icon']) && !empty('icon')) {
+                $services->addMedia($input['icon'])->toMediaCollection(Service::ICON, config('app.media_disc'));
+            }
+            DB::commit();
+            return true;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new UnprocessableEntityHttpException($e->getMessage());
+        }
     }
 
     /**
@@ -103,4 +120,14 @@ class PharmacyRepository extends BaseRepository
         return $prescription;
     }
 
+    /**
+     * @return array
+     */
+    public function prepareData()
+    {
+        $data['serviceCategories'] = ServiceCategory::orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['doctors'] = Doctor::with('user')->get()->where('user.status', true)->pluck('user.full_name', 'id');
+
+        return $data;
+    }
 }

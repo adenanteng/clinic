@@ -24,8 +24,8 @@ return [
     'doctors'                    => 'Dokter',
     'service_categories'         => 'Kategori Pelayanan',
     'specializations'            => 'Spesialisasi',
-    'services'                   => 'Pengaturan Pelayanan',
-    'treatments'                 => 'Pengaturan Jasa',
+    'services'                   => 'Pelayanan',
+    'treatments'                 => 'Jasa',
     'treatment_categories'      => 'Kategori Jasa',
     'roles'                      => 'Peran',
     'staffs'                     => 'Staf',
@@ -35,7 +35,9 @@ return [
     'login'                      => 'Masuk',
     'register'                   => 'Daftar',
     'visits'                     => 'Kasus',
-    'pharmacys'                  => 'Farmasi',
+    'pharmacies'                  => 'Farmasi',
+    'inventories'               => 'Barang',
+    'procurements'              => 'Pengadaan',
     'front_cms'                  => 'Pengaturan CMS',
     'sliders'                    => 'Slider',
     'front_services'             => 'Front Services',
@@ -404,7 +406,6 @@ return [
     'treatment' => [
         'add'       => 'Tambah Jasa',
         'edit'      => 'Ubah Jasa'
-
     ],
 
     'role' => [
@@ -580,6 +581,17 @@ return [
         'add' => 'Tambah Resep',
         'frequency' => 'Frekuensi',
         'duration'  => 'Durasi',
+        'unit'  => 'Satuan',
+    ],
+
+    'inventory' => [
+        'add' => 'Tambah Barang',
+        'edit'  => 'Ubah Barang',
+        'brand' => 'Merek',
+        'category' => 'Jenis',
+        'stock'  => 'Stok',
+        'price' => 'Harga Umum',
+        'price_bpjs'=> 'Harga BPJS'
     ],
 
     'lab' => [

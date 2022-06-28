@@ -15,7 +15,6 @@ class PharmacyProcurement extends Model
     public $table = 'pharmacy_procurements';
 
     public $fillable = [
-        'dept_id',
         'drug_id',
         'supplier_id',
         'expired_date',

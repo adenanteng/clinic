@@ -29,7 +29,7 @@
             @include('layouts.errors')
             <div class="card-title m-0">
                 <div class="d-flex flex-column flex-xl-row">
-                    @include('pharmacys.show_fields')
+                    @include('pharmacies.show_fields')
                 </div>
             </div>
         </div>
@@ -40,6 +40,6 @@
         let noRecordsFound = "{{ __('messages.common.no_records_found') }}";
         let doctorLogin = "{{ getLogInUser()->hasRole('doctor') }}";
     </script>
-    <script src="{{ mix('assets/js/pharmacys/show-page.js') }}"></script>
+    <script src="{{ mix('assets/js/pharmacies/show-page.js') }}"></script>
 @endsection
 

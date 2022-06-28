@@ -16,24 +16,12 @@
     </div>
 @endsection
 @section('content')
-    <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container">
-            <div class="d-flex flex-column flex-lg-row">
-                <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
-                    @include('layouts.errors')
-                    <div class="card">
-                        <div class="card-body p-12">
-                            {{ Form::open(['route' => 'treatments.store', 'files' => true]) }}
-                            <div class="card-body p-9">
-                                @include('treatments.fields')
-                                {{ Form::close() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-layout.create-edit>
+        {{ Form::open(['route' => 'treatments.store', 'files' => true]) }}
+
+        @include('treatments.fields')
+        {{ Form::close() }}
+    </x-layout.create-edit>
     @include('treatment_categories.create-modal')
 @endsection
 @section('page_js')

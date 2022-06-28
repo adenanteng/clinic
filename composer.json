@@ -14,7 +14,6 @@
         "anandsiddharth/laravel-paytm-wallet": "^2.0",
         "authorizenet/authorizenet": "^2.0",
         "barryvdh/laravel-debugbar": "^3.6",
-        "bugsnag/bugsnag-laravel": "^2.0",
         "doctrine/dbal": "^3.3",
         "fideloper/proxy": "^4.4",
         "firebase/php-jwt": "^5.5",

@@ -1,10 +1,10 @@
 'use strict';
 
-let tableName = '#appointmentsTable';
+let tableName = '#pharmaciesTable';
 $(document).ready(function () {
     let start = moment().startOf('week');
     let end = moment().endOf('week');
-    let filterDate = $('#appointmentDate');
+    let filterDate = $('#date');
 
     function cb (start, end) {
         filterDate.html(
@@ -78,7 +78,7 @@ $(document).ready(function () {
         columns: [
             {
                 data: function (row) {
-                    let url = !isEmpty(userRole) ? route('patients.appointments.show', row.id) : route('appointments.show', row.id);
+                    let url = route('appointments.show', row.id);
                     return `<div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                         <div class="symbol-label">
                             <img src="${row.doctor.user.profile_image}" alt="" class="w-100 object-cover">
@@ -162,13 +162,13 @@ $(document).ready(function () {
                             {
                                 'id': row.id,
                                 'role': userRole,
-                                'showUrl': route('pharmacys.show', row.appointment_unique_id),
+                                'showUrl': route('pharmacies.show', row.appointment_unique_id),
                                 'visitUrl': route('visits.show', row.appointment_unique_id)
                             },
                         ];
 
                     console.log(row)
-                    return prepareTemplateRender('#appointmentsTemplate', data);
+                    return prepareTemplateRender('#pharmaciesTemplate', data);
                 }, name: 'id',
             },
 

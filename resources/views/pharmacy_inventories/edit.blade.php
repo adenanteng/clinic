@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__('messages.service.edit_service')}}
+    {{__('messages.inventory.edit')}}
 @endsection
 @section('header_toolbar')
     <div class="toolbar" id="kt_toolbar">
@@ -9,7 +9,7 @@
                 <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">@yield('title')</h1>
             </div>
             <div class="d-flex align-items-center py-1 ms-auto">
-                <a href="{{ route('services.index') }}"
+                <a href="{{ route('inventories.index') }}"
                    class="btn btn-sm btn-primary">{{ __('messages.common.back') }}</a>
             </div>
         </div>
@@ -17,12 +17,12 @@
 @endsection
 @section('content')
     <x-layout.create-edit>
-        {{ Form::model($service, ['route' => ['services.update', $service->id], 'method' => 'PUT', 'files' => true]) }}
-        @include('services.fields')
+        {{ Form::model($treatment, ['route' => ['inventories.update', $treatment->id], 'method' => 'PUT', 'files' => true]) }}
+        @include('pharmacy_inventories.fields')
         {{ Form::close() }}
     </x-layout.create-edit>
-    @include('service_categories.create-modal')
+    @include('treatment_categories.create-modal')
 @endsection
 @section('page_js')
-    <script src="{{mix('assets/js/services/create-edit.js')}}"></script>
+    <script src="{{mix('assets/js/pharmacy_inventories/create-edit.js')}}"></script>
 @endsection

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\InventoryDataTable;
 use App\DataTables\ServiceDataTable;
 use App\DataTables\TreatmentDataTable;
 use App\Models\Appointment;
+use App\Models\Pharmacy;
 use App\Models\Service;
 use App\Models\Treatment;
+use App\Repositories\InventoryRepository;
 use App\Repositories\TreatmentRepository;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -24,14 +27,14 @@ use Illuminate\Routing\Redirector;
 use Yajra\DataTables\DataTables;
 use function Symfony\Component\String\s;
 
-class TreatmentController extends AppBaseController
+class InventoryController extends AppBaseController
 {
-    /** @var  TreatmentRepository */
-    private $treatmentsRepository;
+    /** @var  InventoryRepository */
+    private $inventoryRepository;
 
-    public function __construct(TreatmentRepository $treatmentsRepo)
+    public function __construct(InventoryRepository $inventoryRepo)
     {
-        $this->treatmentsRepository = $treatmentsRepo;
+        $this->inventoryRepository = $inventoryRepo;
     }
 
     /**
@@ -44,11 +47,11 @@ class TreatmentController extends AppBaseController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return Datatables::of((new TreatmentDataTable())->get($request->only('status')))->make(true);
+            return Datatables::of((new InventoryDataTable())->get($request->only('status')))->make(true);
         }
-        $status = Service::STATUS;
+        $status = Pharmacy::DEPT_TYPE;
 
-        return view('treatments.index',compact('status'));
+        return view('pharmacy_inventories.index',compact('status'));
     }
 
     /**
@@ -58,9 +61,9 @@ class TreatmentController extends AppBaseController
      */
     public function create()
     {
-        $data = $this->treatmentsRepository->prepareData();
+        $data = $this->inventoryRepository->prepareData();
 
-        return view('treatments.create', compact('data'));
+        return view('pharmacy_inventories.create', compact('data'));
     }
 
     /**
@@ -73,11 +76,11 @@ class TreatmentController extends AppBaseController
     public function store(Request $request)
     {
         $input = $request->all();
-        $this->treatmentsRepository->store($input);
+        $this->inventoryRepository->store($input);
 
         Flash::success('Treatment created successfully.');
 
-        return redirect(route('treatments.index'));
+        return redirect(route('pharmacy_inventories.index'));
     }
 
     /**
@@ -88,10 +91,10 @@ class TreatmentController extends AppBaseController
      */
     public function edit(Treatment $treatment)
     {
-        $data = $this->treatmentsRepository->prepareData();
+        $data = $this->inventoryRepository->prepareData();
 //        $selectedDoctor = $treatment->serviceDoctors()->pluck('doctor_id')->toArray();
 
-        return view('treatments.edit', compact('treatment', 'data'));
+        return view('pharmacy_inventories.edit', compact('treatment', 'data'));
     }
 
     /**
@@ -103,7 +106,7 @@ class TreatmentController extends AppBaseController
      */
     public function update(Request $request, Treatment $treatment)
     {
-        $this->treatmentsRepository->update($request->all(), $treatment);
+        $this->inventoryRepository->update($request->all(), $treatment);
 
         Flash::success('Treatment updated successfully.');
 
@@ -151,15 +154,4 @@ class TreatmentController extends AppBaseController
         return $this->sendResponse($charge, 'Retrieved successfully.');
     }
 
-    /**
-     * @param  Request  $request
-     * @return mixed
-     */
-    public function changeServiceStatus(Request $request)
-    {
-        $status = Service::findOrFail($request->id);
-        $status->update(['status' => ! $status->status]);
-
-        return $this->sendResponse($status, 'Status updated successfully.');
-    }
 }

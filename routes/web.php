@@ -18,6 +18,7 @@ use App\Http\Controllers\Front\FrontPatientTestimonialController;
 use App\Http\Controllers\Front\SliderController;
 use App\Http\Controllers\Front\SubscribeController;
 use App\Http\Controllers\GoogleCalendarController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PaypalController;
@@ -269,9 +270,10 @@ Route::group(['middleware' => ['auth', 'xss', 'checkUserStatus', 'checkImpersona
 
     });
 
-    // Pharmacy route
+    // Pharmacies route
     Route::group(['middleware' => ['permission:manage_appointments']], function () {
-        Route::resource('pharmacys', PharmacyController::class);
+        Route::resource('pharmacies', PharmacyController::class);
+        Route::resource('inventories', InventoryController::class);
         Route::get('send-prescription/{id}', [PharmacyController::class, 'sendPrescription'])->name('send.prescription');
         Route::get('done-prescription/{id}', [PharmacyController::class, 'donePrescription'])->name('done.prescription');
 //        Route::post('appointments/{appointment}', [AppointmentController::class, 'changeStatus'])->name('change-status');

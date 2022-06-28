@@ -7,23 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Pharmacy extends Model
+class Pharmacy extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     public $table = 'pharmacies';
 
     public $fillable = [
-        'category',
+        'dept_id',
+        'category_id',
         'name',
-        'brand',
-        'unit',
+        'unit_id',
     ];
 
+    const ALL = 0;
     const PHARMACY = 1;
     const GENERAL = 2;
     const DEPT_TYPE = [
+        self::ALL => 'Semua',
         self::PHARMACY => 'Farmasi',
         self::GENERAL  => 'Umum',
     ];
@@ -74,7 +78,7 @@ class Pharmacy extends Model
 
     const ICON = 'icon';
 
-    protected $appends = ['icon'];
+    protected $appends = ['icon', 'stock','unit_text','category_text','total_procurement','price','price_bpjs'];
 
     /**
      *
@@ -83,6 +87,62 @@ class Pharmacy extends Model
     public function procurements()
     {
         return $this->hasMany(PharmacyProcurement::class, 'drug_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTotalProcurementAttribute(): string
+    {
+        return PharmacyProcurement::where('drug_id', $this->id)->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStockAttribute(): string
+    {
+        return PharmacyProcurement::where('drug_id', $this->id)->where('remaining', '>', 0)->sum('remaining');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceAttribute(): ?string
+    {
+        if ($this->total_procurement > 0) {
+            return PharmacyProcurement::where('drug_id', $this->id)->where('remaining', '>', 0)->first()->selling_price;
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceBpjsAttribute(): ?string
+    {
+        if ($this->total_procurement > 0) {
+            return PharmacyProcurement::where('drug_id', $this->id)->where('remaining', '>', 0)->first()->selling_price_bpjs;
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnitTextAttribute(): string
+    {
+        return Pharmacy::UNIT_TYPE[$this->unit];
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryTextAttribute(): string
+    {
+        return Pharmacy::DRUG_CATEGORY[$this->unit];
     }
 
     /**

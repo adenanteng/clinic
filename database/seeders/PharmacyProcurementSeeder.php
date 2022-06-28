@@ -18,7 +18,6 @@ class PharmacyProcurementSeeder extends Seeder
     {
         $input = [
             [
-                'dept_id' => Pharmacy::PHARMACY,
                 'drug_id' => 1,
                 'supplier_id' => Pharmacy::TOKO_ABADI,
                 'expired_date' => Carbon::parse('2024-01-01'),
@@ -31,7 +30,6 @@ class PharmacyProcurementSeeder extends Seeder
                 'selling_price_bpjs' => 23000,
             ],
             [
-                'dept_id' => Pharmacy::PHARMACY,
                 'drug_id' => 2,
                 'supplier_id' => Pharmacy::TOKO_ABADI,
                 'expired_date' => Carbon::parse('2024-01-01'),
@@ -44,7 +42,6 @@ class PharmacyProcurementSeeder extends Seeder
                 'selling_price_bpjs' => 23000,
             ],
             [
-                'dept_id' => Pharmacy::PHARMACY,
                 'drug_id' => 3,
                 'supplier_id' => Pharmacy::TOKO_ABADI,
                 'expired_date' => Carbon::parse('2024-01-01'),
@@ -57,7 +54,6 @@ class PharmacyProcurementSeeder extends Seeder
                 'selling_price_bpjs' => 23000,
             ],
             [
-                'dept_id' => Pharmacy::GENERAL,
                 'drug_id' => 4,
                 'supplier_id' => Pharmacy::TOKO_ABADI,
                 'expired_date' => Carbon::parse('2024-01-01'),
@@ -70,7 +66,6 @@ class PharmacyProcurementSeeder extends Seeder
                 'selling_price_bpjs' => 23000,
             ],
             [
-                'dept_id' => Pharmacy::PHARMACY,
                 'drug_id' => 1,
                 'supplier_id' => Pharmacy::TOKO_ABADI,
                 'expired_date' => Carbon::parse('2026-01-01'),

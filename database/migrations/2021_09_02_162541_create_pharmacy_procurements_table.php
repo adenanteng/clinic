@@ -15,7 +15,6 @@ class CreatePharmacyProcurementsTable extends Migration
     {
         Schema::create('pharmacy_procurements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('dept_id');
             $table->unsignedInteger('drug_id');
             $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedBigInteger('amount');

@@ -206,10 +206,16 @@ mix.js('resources/assets/js/custom/custom.js',
         'public/assets/js/custom/create-account.js').
     js('resources/assets/js/live_consultations/live_consultations.js',
         'public/assets/js/live_consultations/live_consultations.js').
-    js('resources/assets/js/pharmacys/pharmacys.js',
-        'public/assets/js/pharmacys/pharmacys.js').
-    js('resources/assets/js/pharmacys/show-page.js',
-        'public/assets/js/pharmacys/show-page.js').
+    js('resources/assets/js/pharmacies/pharmacies.js',
+        'public/assets/js/pharmacies/pharmacies.js').
+    js('resources/assets/js/pharmacies/show-page.js',
+        'public/assets/js/pharmacies/show-page.js').
+    js('resources/assets/js/pharmacies/create-edit.js',
+        'public/assets/js/pharmacies/create-edit.js').
+    js('resources/assets/js/pharmacy_inventories/inventories.js',
+        'public/assets/js/pharmacy_inventories/inventories.js').
+    js('resources/assets/js/pharmacy_inventories/create-edit.js',
+        'public/assets/js/pharmacy_inventories/create-edit.js').
     js('resources/js/alpine.js',
         'public/assets/js/alpine.js').
     js('resources/js/turbo.js',
